@@ -17,10 +17,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: files-browser_development
+  database: filesbrowser
   pool: 5
-  username: files-browser
-  password:
+  username: filesbrowser
+  password: 0uXlgNVogOE2
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -46,15 +46,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: files-browser_test
+  database: filesbrowser
   pool: 5
-  username: files-browser
-  password:
+  username: filesbrowser
+  password: 0uXlgNVogOE2
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: files-browser_production
+  database: filesbrowser
   pool: 5
-  username: files-browser
-  password:
+  username: filesbrowser
+  password: 0uXlgNVogOE2
