@@ -1,0 +1,956 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"un",
+				"unless	unless … end"
+			],
+			[
+				"sel",
+				"self"
+			],
+			[
+				"vali",
+				"validator"
+			],
+			[
+				"curr",
+				"current_session"
+			],
+			[
+				"Sess",
+				"session"
+			],
+			[
+				"sess",
+				"session"
+			],
+			[
+				"ex",
+				"expires_at"
+			],
+			[
+				"pa",
+				"params"
+			],
+			[
+				"app",
+				"approved"
+			],
+			[
+				"th",
+				"thead	Tag"
+			],
+			[
+				"git",
+				"gitignore"
+			],
+			[
+				"gi",
+				"gitignore"
+			],
+			[
+				"em",
+				"employee"
+			],
+			[
+				"fo",
+				"for	for (…) {…}"
+			],
+			[
+				"cre",
+				"credential"
+			],
+			[
+				"on",
+				"onload"
+			],
+			[
+				"ne",
+				"New-Object"
+			],
+			[
+				"en",
+				"engine"
+			],
+			[
+				"ord",
+				"order_price"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"txn",
+				"txn_id"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"flo",
+				"floatval"
+			],
+			[
+				"re",
+				"result"
+			],
+			[
+				"array_s",
+				"array_shift"
+			],
+			[
+				"per",
+				"permission_name"
+			],
+			[
+				"pe",
+				"permission_name"
+			],
+			[
+				"conte",
+				"context_id"
+			],
+			[
+				"lo",
+				"login"
+			],
+			[
+				"pass",
+				"password_login"
+			],
+			[
+				"boo",
+				"book_id"
+			],
+			[
+				"user",
+				"user_id"
+			],
+			[
+				"tra",
+				"transaction_category_fkey"
+			],
+			[
+				"se",
+				"security"
+			],
+			[
+				"user_",
+				"user_id"
+			],
+			[
+				"use",
+				"user_role"
+			],
+			[
+				"pas",
+				"password_login"
+			],
+			[
+				"s",
+				"security"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"inde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"Inde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"folder",
+				"Project: Refresh Folders"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"fold",
+				"Project: Refresh Folders"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"Install",
+				"Package Control: Install Package"
+			],
+			[
+				"Remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"INDEX",
+				"Indent XML"
+			],
+			[
+				"xml",
+				"Set Syntax: XML"
+			],
+			[
+				"fol",
+				"Project: Refresh Folders"
+			],
+			[
+				"re",
+				"Project: Refresh Folders"
+			],
+			[
+				"folde",
+				"Project: Refresh Folders"
+			],
+			[
+				"erb",
+				"ERB: Insert/Switch Block"
+			],
+			[
+				"In",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"ref",
+				"Project: Refresh Folders"
+			],
+			[
+				"",
+				"BeautifyRuby"
+			],
+			[
+				"in",
+				"Auto indent"
+			],
+			[
+				"indent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"rails",
+				"Set Syntax: HTML (Rails)"
+			],
+			[
+				"ruby",
+				"BeautifyRuby"
+			],
+			[
+				"beatu",
+				"BeautifyRuby"
+			],
+			[
+				"bea",
+				"BeautifyRuby"
+			],
+			[
+				"bue",
+				"BeautifyRuby"
+			],
+			[
+				"syntax",
+				"Set Syntax: HTML (Rails)"
+			],
+			[
+				"inden",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"Indent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"git co",
+				"Git: Commit"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Instal",
+				"Package Control: Install Package"
+			],
+			[
+				"be",
+				"BeautifyRuby"
+			],
+			[
+				"rub",
+				"Set Syntax: Ruby"
+			],
+			[
+				"package",
+				"Package Control: Remove Package"
+			],
+			[
+				"for",
+				"Format Code"
+			],
+			[
+				"format",
+				"Format Code"
+			],
+			[
+				"refre",
+				"Project: Refresh Folders"
+			],
+			[
+				"refres",
+				"Project: Refresh Folders"
+			],
+			[
+				"scss",
+				"Set Syntax: SCSS"
+			],
+			[
+				"ind",
+				"Indent XML"
+			],
+			[
+				"installp",
+				"Package Control: Install Package"
+			],
+			[
+				"Markdown",
+				"Markdown Preview: Github Flavored Markdown: Preview in Browser"
+			],
+			[
+				"MarkDown",
+				"Markdown Preview: Open Markdown Cheat sheet"
+			],
+			[
+				"ma",
+				"Set Syntax: Markdown Extended"
+			],
+			[
+				"c#",
+				"Set Syntax: C#"
+			],
+			[
+				"java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"index",
+				"Indent XML"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"xm",
+				"Set Syntax: XML"
+			],
+			[
+				"json",
+				"Pretty JSON: Reformat (Pretty Print) JSON"
+			],
+			[
+				"insall",
+				"Package Control: Install Package"
+			],
+			[
+				"nums",
+				"InsertNums"
+			],
+			[
+				"tasks",
+				"Set Syntax: Tasks"
+			],
+			[
+				"Tasks",
+				"Set Syntax: Tasks"
+			],
+			[
+				"remve",
+				"Package Control: Remove Package"
+			],
+			[
+				"tas",
+				"Set Syntax: Tasks"
+			],
+			[
+				"list ",
+				"Package Control: List Packages"
+			],
+			[
+				"plain",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"markdo",
+				"Set Syntax: Markdown"
+			],
+			[
+				"snipper",
+				"SnippetMaker: Make Snippet"
+			],
+			[
+				"snipp",
+				"Snippet: #!/usr/bin/env"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 458.0
+	},
+	"console":
+	{
+		"height": 398.0,
+		"history":
+		[
+			"git",
+			"fdsg",
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/P/ffinances/ffinances.sublime-project",
+		"/P/ffinances/app/controllers/admin/currency_controller.rb",
+		"/P/ffinances/config/routes.rb",
+		"/P/ffinances/app/controllers/admin/admin_controller.rb",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/User/JSON.sublime-settings",
+		"/P/ffinances/config/locales/ru-other.yml",
+		"/P/ffinances/Rakefile",
+		"/P/ffinances/app/models/currency.rb",
+		"/P/ffinances/app/views/layouts/_navbar.html.erb",
+		"/P/ffinances/app/views/layouts/application.html.erb",
+		"/P/ffinances/app/controllers/application_controller.rb",
+		"/P/ffinances/app/controllers/profile_controller.rb",
+		"/P/ffinances/app/views/profile/index.html.erb",
+		"/E/projects/family-finances-2/database/public/tables/currency.sql",
+		"/P/ffinances/db/migrate/20140402102414_create_users.rb",
+		"/P/ffinances/db/migrate/20140402100650_create_security_schema.rb",
+		"/P/ffinances/test/helpers/user_helper_test.rb",
+		"/P/ffinances/test/controllers/user_controller_test.rb",
+		"/P/ffinances/app/controllers/admin/user_controller.rb",
+		"/P/ffinances/app/assets/stylesheets/user.css.scss",
+		"/P/ffinances/app/assets/javascripts/user.js.coffee",
+		"/P/ffinances/test/models/user_test.rb",
+		"/P/ffinances/app/helpers/user_helper.rb",
+		"/P/ffinances/test/fixtures/users.yml",
+		"/P/ffinances/app/models/user.rb",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/Emmet/Emmet.sublime-settings",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/Emmet/Default (Windows).sublime-keymap",
+		"/P/ffinances/app/views/session/new.html.erb",
+		"/P/ffinances/app/helpers/validation_helper.rb",
+		"/P/ffinances/app/assets/javascripts/application.js",
+		"/P/ffinances/Gemfile",
+		"/P/ffinances/config/initializers/client_side_validations.rb",
+		"/C/Users/AEC0A~1.PRO/AppData/Local/Temp/Rar$DRa0.580/lib/underscore/http.rb",
+		"/C/Users/AEC0A~1.PRO/AppData/Local/Temp/Rar$DRa0.443/lib/underscore/html.rb",
+		"/C/Users/AEC0A~1.PRO/AppData/Local/Temp/Rar$DRa0.974/lib/underscore/css.rb",
+		"/C/Users/a.prokopyev/AppData/Local/Temp/Rar$DIa0.996/underscore.rb",
+		"/C/Users/a.prokopyev/AppData/Local/Temp/Rar$DIa0.629/naive.rb",
+		"/P/ffinances/app/views/layouts/_footer.html.erb",
+		"/P/ffinances/app/assets/stylesheets/application.css.scss",
+		"/E/projects/family-finances-2/FamilyFinances.Site/static/scripts/utils.js",
+		"/P/ffinances/app/assets/stylesheets/bootstrap-custom.css.scss",
+		"/P/ffinances/app/helpers/application_helper.rb",
+		"/P/ffinances/app/assets/stylesheets/mixins.css.scss",
+		"/E/ws/2014-04-11_15.log",
+		"/E/work/providers/Оплата штрафов/app.js",
+		"/C/Users/a.prokopyev/AppData/Local/Microsoft/Windows/INetCache/Content.Outlook/LRJQ03YW/db.txt",
+		"/E/work/aso/site/js/custom/krisha/osmp.functions.js",
+		"/P/ffinances/app/helpers/session_helper.rb",
+		"/P/ffinances/app/controllers/session_controller.rb",
+		"/P/ffinances/config/initializers/01_settings.rb",
+		"/P/ffinances/log/development.log",
+		"/P/ffinances/db/seeds.rb",
+		"/P/ffinances/config/settings.yml",
+		"/P/ffinances/app/assets/javascripts/session.js.coffee",
+		"/P/ffinances/app/assets/javascripts/session.js.cofee",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/PlainTasks/messages/Tutorial.todo",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/Default/Default (Windows).sublime-keymap",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/PlainTasks/PlainTasks (Windows).sublime-settings",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/AdvancedNewFile/AdvancedNewFile.sublime-settings",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/SideBarEnhancements/Side Bar.sublime-settings",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/Pretty JSON/Pretty JSON.sublime-settings",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/User/Plain text.sublime-settings",
+		"/P/ffinances/app/models/session.rb",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/User/Side Bar Folders.sublime-settings",
+		"/E/ws/tian.txt",
+		"/E/work/docs/Приглашения ACO.js",
+		"/E/work/aso/site/config/rus/-12305.js",
+		"/E/work/aso/site/config/kaz/14125.js",
+		"/E/work/aso/site/config/rus/14125.js",
+		"/E/work/aso/site/config/kaz/-12305.js",
+		"/E/ws/14125.js",
+		"/E/work/aso/site/config/kaz/13654.js",
+		"/E/work/aso/site/config/kaz/14118.js",
+		"/E/work/aso/site/config/rus/14118.js",
+		"/E/work/aso/site/config/kaz/-804.js",
+		"/E/work/aso/site/config/rus/-804.js",
+		"/E/ws/14118.js",
+		"/P/ffinances/public/robots.txt",
+		"/P/ffinances/app/views/home/index.html.erb",
+		"/P/ffinances/app/models/login.rb",
+		"/P/ffinances/app/assets/stylesheets/session.css.scss",
+		"/E/ws/test.rb",
+		"/P/ffinances/app/views/layouts/_messages.html.erb",
+		"/P/ffinances/config/locales/ru-errors.yml",
+		"/P/ffinances/config/locales/ru.yml",
+		"/P/ffinances/config/locales/ru-datetime.yml",
+		"/E/ws/vital.txt",
+		"/P/ffinances/log/migration.log",
+		"/P/ffinances/db/migrate/20140409174046_create_sessions.rb",
+		"/E/projects/family-finances-2/database/security/tables/session.sql",
+		"/P/ffinances/app/views/admin/admin/index.html.erb",
+		"/E/projects/family-finances-2/FamilyFinances.Site/views/Admin/Index.cshtml",
+		"/P/ffinances/config/application.rb",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/E/projects/family-finances-2/FamilyFinances.Site/static/styles/site.less",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/P/ffinances/vendor/assets/fonts/glyphicons-halflings-regular.eot",
+		"/P/ffinances/vendor/assets/javascripts/bootstrap.js",
+		"/P/ffinances/config/initializers/inflections.rb",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/BeautifyRuby/Default (Windows).sublime-keymap",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/BeautifyRuby/BeautifyRuby.sublime-settings",
+		"/C/Program Files/Sublime Text 3/Packages/Rails.sublime-package",
+		"/P/ffinances/app/controllers/home_controller.rb",
+		"/E/projects/family-finances-2/FamilyFinances.Site/views/shared/UserMenu.cshtml",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/AdvancedNewFile/Default (Windows).sublime-keymap",
+		"/D/log/pstu/TianDe.09042014025935.log",
+		"/D/log/pstu/TianDe.09042014025905.log",
+		"/C/Users/a.prokopyev/AppData/Roaming/Sublime Text 3/Packages/BeautifyRuby/README.md",
+		"/E/projects/family-finances-2/FamilyFinances.Site/views/shared/_layout.cshtml",
+		"/P/ffinances/app/controllers/user_controller.rb",
+		"/D/downloads/SamplePlugin-2.09-Source/SamplePluginExt.cs",
+		"/D/log/pstu/Антивирусный центр.09042014021753.log",
+		"/D/log/pstu/TianDe.09042014022204.log",
+		"/D/log/pstu/TianDe.09042014022231.log",
+		"/D/log/pstu/TianDe.09042014022319.log",
+		"/D/log/pstu/Антивирусный центр.09042014100814.log",
+		"/C/Users/a.prokopyev/AppData/Local/Temp/Temp1_KeePassFloatingPanel-6.1.zip/History.txt",
+		"/D/log/pstu/Антивирусный центр.09042014100358.log",
+		"/E/ws/UpdatePayment.sql",
+		"/D/log/pstu/Антивирусный центр.08042014021224.log",
+		"/E/ws/penalty_orig.wsdl",
+		"/E/app.js",
+		"/E/projects/apples.kz/process.php",
+		"/D/log/pstu/Антивирусный центр.08042014021259.log",
+		"/C/Users/a.prokopyev/AppData/Local/Microsoft/Windows/INetCache/Content.Outlook/LRJQ03YW/Реестр_ОСМП_20140404.csv",
+		"/D/log/pstu/Антивирусный центр.08042014021159.log"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 92.0,
+		"where_history":
+		[
+			"E:\\work\\aso\\site\\js",
+			"E:\\work\\aso\\site\\config\\rus",
+			"P:\\ffinances",
+			"",
+			"\\\\apache\\qiwi-site-v2\\views",
+			"D:\\ws\\2014-03-18",
+			"*.txt",
+			"D:\\work\\aso\\site",
+			"D:\\ws\\terminalxml",
+			"D:\\work\\aso\\site",
+			"D:\\ws\\2014-02-17",
+			"D:\\ws\\logs",
+			"D:\\work\\aso\\site\\config\\rus",
+			"D:\\work\\aso\\site\\config",
+			"\\\\almws5430-dev\\C\\Bitrix\\www\\bitrix",
+			"D:\\work\\projects\\QTracker",
+			"D:\\work\\projects\\QTracker\\QTracker.Site\\src",
+			"D:\\work\\aso\\site\\config\\rus",
+			"D:\\work\\aso\\site\\config",
+			"D:\\work\\aso\\site\\config\\rus",
+			"D:\\ws\\153",
+			"D:\\ws\\2013-12-26",
+			"D:\\ws\\121",
+			"D:\\ws\\log2",
+			"D:\\work\\aso\\site\\config\\rus"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"ClientSideValidations",
+			"'",
+			"stringify",
+			"font",
+			"номер заказа",
+			"params[:login]",
+			"login",
+			"  ",
+			"^\\s+",
+			"\n",
+			"^\\s*",
+			"name",
+			"email",
+			"name",
+			"email",
+			"locked",
+			"approved",
+			"email",
+			"name",
+			"ctrl\\+d",
+			"name",
+			"=\"",
+			"14926238399004",
+			"connectionString",
+			"PayToNonHandle",
+			"fixed",
+			"fixed_sum",
+			">\n",
+			"application.html.erb",
+			"\".*",
+			"GetCarsInfo",
+			"GetCarsInfoRequest",
+			"IP",
+			"GetCarsInfo",
+			"SayHello",
+			"say",
+			"sayhello",
+			"\"/>",
+			"3d",
+			"  ",
+			"&lt;",
+			"&ly",
+			"4",
+			"&lt;",
+			"-94",
+			"lovecity3d",
+			"&lt;br&gt;",
+			"&quot;",
+			"&lt;br/&gt;",
+			"middle-banner",
+			"101396",
+			"happybox",
+			"http://happybox.me/qiwikz/index/info/",
+			">",
+			"filter",
+			"ldap",
+			"Filter",
+			"ldap",
+			"ldap:che",
+			"ldap",
+			"^(\\t*)  ",
+			"^\\t*  ",
+			"^\\t*      ",
+			"^ +",
+			"^\\s+",
+			"alert",
+			"try\\s*\\{",
+			"&lt;br&gt;",
+			"&lt;br/&gt;",
+			"&quot;",
+			"myAjax",
+			"XHConn",
+			"myAjax",
+			"currency",
+			"online_auth_tele2",
+			"XHCo",
+			"<r",
+			"<",
+			"xmlHttpTimeout",
+			"XHConn",
+			"validate_confirm.html",
+			"`",
+			"XHConn",
+			"XML",
+			"^(\\d+) +",
+			"650609401674",
+			"^(\\s+)(.*?)Security(\\..*)\\n",
+			"(\\s+)(.*?)Security(\\..*)",
+			"C",
+			"classic",
+			">",
+			"<",
+			"<pre class",
+			"highlight",
+			"<source lang=\"(.*)\">",
+			"</source>",
+			"Conn",
+			"Con",
+			":",
+			"1601",
+			"mobipos",
+			"1604",
+			"initDraggableNode",
+			"beginDragging",
+			"<item .*name=\"(.*?\" type=\"group\".*>",
+			"onload",
+			"myAjax",
+			"resp.fields.(field\\d)",
+			"^(.+)\\n(.+)",
+			"\\@gmail",
+			"\\@qiwi",
+			"Send mail 9",
+			".*\\{(.*?)\\}.*",
+			"email",
+			"\\t",
+			"&lt",
+			">",
+			"<",
+			"SendRequest",
+			"http://omg.com.kz/ibus/api/payment/qiwi",
+			"^(\\s+)(.*)",
+			">",
+			"<",
+			"^(\\s+)(.*)",
+			"договора",
+			"телефон",
+			"Ведите ло",
+			"адрес"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"\"",
+			"    ",
+			"",
+			" ",
+			"\"",
+			"",
+			"$1\\t",
+			"\\t",
+			" ",
+			"",
+			"\"",
+			"unit",
+			"",
+			"$1\\t",
+			"$1using (var securityManager = new SecurityManager(ApplicationContext, new ApplicationDatabaseContext(ApplicationContext))) {\n\\t$1$2securityManager$3\n$1}\\n",
+			"$1using (var securityManager = new SecurityManager(ApplicationContext, new ApplicationDatabaseContext(ApplicationContext))) {\n\\t$1$2securityManager$3\n$1}",
+			"&gt;",
+			"&lt;",
+			"<pre name=\"code\" class",
+			"<pre class=\"$1\">",
+			"</pre>",
+			" =",
+			"\"$1: \" + $0",
+			"new Tuple<string, string>(\"$2\", \"$1\"),",
+			"'$1',",
+			"</code></td><td><code>",
+			"&lt;",
+			"&gt;",
+			"&lt",
+			"$1<li><code>$2</code></li>",
+			"&gt;",
+			"&lt;",
+			"$1<li>$2</li>",
+			"{\"__type\":\"provider\",\"id\":\"$1\",\"tag\":\"visible\",\"logo\":\"$1.gif\",\"sName\":\"$3\",\"small_logo\":\"\"},",
+			";",
+			"{\"__type\":\"provider\",\"id\":\"$1\",\"tag\":\"visible\",\"logo\":\"$1.gif\",\"sName\":\"$3\",\"small_logo\":\"\"},",
+			";",
+			"{\"__type\":\"provider\",\"id\":\"$1\",\"tag\":\"visible\",\"logo\":\"$1.gif\",\"sName\":\"$3\",\"small_logo\":\"\"},",
+			"{\"__type\":\"provider\",\"id\":\"$1\",\"tag\":\"visible\",\"logo\":\"$1.gif\",\"sName\":\"$3\",\"small_logo\":\"\"}",
+			";",
+			"$1",
+			"$0",
+			"  ",
+			" ",
+			"",
+			">",
+			"<",
+			"",
+			"\\t",
+			"\"$0\" => array( 2, 3, 4, 5, 6),",
+			"\"$1\" => array( 2, 3, 4, 5, 6),",
+			"logger",
+			"$1'$2' + ",
+			".",
+			"",
+			"Avalarin",
+			"passwoed_login",
+			"0",
+			"$0 ",
+			"",
+			"$1",
+			"",
+			" ",
+			"valid=\"true\"",
+			"<answer $1 text=\"$2\"/>",
+			"</question>",
+			"<question text=\"$1\">",
+			" ",
+			"valid=\"true\"",
+			" ",
+			"<answer $1 text=\"$2\"/>",
+			"<answer $1 text=\"$2\">",
+			"<question text=\"$1\">",
+			"<header>$1</header>",
+			"Q ",
+			"A$1 ",
+			"Q ",
+			"$1\nA $2",
+			" $1\n A $2",
+			" ",
+			"\nQ $1"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.exec":
+	{
+		"height": 102.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 102.0
+	},
+	"project": "files-browser.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"rou",
+				"config\\routes.rb"
+			],
+			[
+				"new",
+				"app\\views\\session\\new.html.erb"
+			],
+			[
+				"seed",
+				"db\\seeds.rb"
+			],
+			[
+				"user",
+				"app\\models\\user.rb"
+			],
+			[
+				"createuser",
+				"db\\migrate\\20140402102414_create_users.rb"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 373.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 1
+	}
+}
