@@ -1,0 +1,10 @@
+@import "bootstrap";
+
+a, a:hover {
+  color: #333333;
+}
+
+.navbar-condensed a {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}

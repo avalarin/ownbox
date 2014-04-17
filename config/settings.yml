@@ -1,5 +1,18 @@
 defaults: &defaults
-
+  file_types:
+    image: [ '.jpg', '.jpeg', '.png' ]
+    document: [ '.doc', '.docx', '.pdf', '.txt', '.djvu', '.epub', 'fb2' ]
+    archive: [ '.rar', '.zip' ]
+    video: [ '.avi', '.mkv' ]
+    table: [ '.xls', '.xlsx' ]
+  type_images:
+    directory: 'directory.png'
+    image: 'image.png'
+    document: 'document.png'
+    archive: 'archive.png'
+    video: 'video.png'
+    table: 'table.png'
+    other: 'file.png'
 development:
   <<: *defaults
 

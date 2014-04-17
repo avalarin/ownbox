@@ -1,0 +1,59 @@
+.browser-toolbar {
+  .browser-location {
+    float: left;
+    padding: 2px 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+
+    >li {
+      list-style-type: none;
+      display: inline-block;
+
+      +li:before {
+        font-family: FontAwesome;
+        content: "\f105";
+        padding: 0 5px;
+      }
+
+    }
+  }
+  
+  .btn-toolbar {
+    display: inline-block;
+    float: right;
+  }
+}
+
+.browser-table {
+  width: 100%;
+
+  thead {
+    th {
+      font-size: 85%;
+      margin-bottom: 30px;
+      padding: 3px 5px;
+    }
+  }
+
+  tbody {
+    tr:hover > td {
+      background-color: #f5f5f5;
+    }
+
+    td {
+      border-top: 1px solid #ddd;
+      padding: 3px 5px;
+    }
+  }
+
+  .column-icon {
+    width: 40px;
+  }
+  .column-name {
+    font-size: 90%;
+  }
+  .column-size {
+    font-size: 90%;
+    width: 100px;
+  }
+}

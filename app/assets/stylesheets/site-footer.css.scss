@@ -1,0 +1,29 @@
+$header-height: 51px;
+$footer-height: 26px;
+
+html,
+body {
+    height: 100%;
+}
+
+.site-content {
+    min-height: 100%;
+    height: auto;
+    margin-bottom: -$footer-height;
+    padding: 0 0 $footer-height;
+}
+
+.site-footer {
+    height: $footer-height;
+
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    font-size: 12px;
+}

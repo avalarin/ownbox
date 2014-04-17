@@ -11,5 +11,5 @@ User.create!(name: 'admin',
     password: 'admin', 
     password_confirmation: 'admin', 
     approved: true,
-    home_directory: '/avalarin'
+    home_directory: 'avalarin'
 )

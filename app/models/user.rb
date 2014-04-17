@@ -10,4 +10,9 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, length: { minimum: 5 }
 
+  def full_home_directory
+    base = File.expand_path(Settings['home_directories_path'])
+    File.expand_path(home_directory, base)
+  end
+
 end

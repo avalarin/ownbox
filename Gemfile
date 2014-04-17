@@ -36,6 +36,7 @@ gem 'validates_email_format_of'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'font-awesome-sass'
 gem 'settingslogic'
+gem "mini_magick"
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
