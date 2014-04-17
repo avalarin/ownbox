@@ -1,0 +1,30 @@
+ru: 
+    layouts:
+        application:
+            admin_area: 'Административная часть'
+        navbar:
+            settings: 'Настройки'
+            logout: 'Выйти'
+    admin:
+        admin:
+            index:
+                section_general: 'Основное'
+                section_security: 'Безопасность'
+                section_status: 'Статус'
+    session:
+        new:
+            login_to_continue: 'Введите ваш email и пароль'
+            login: 'Войти'
+            create_new_account: Создать аккаунт
+            email: 'Email'
+            password: 'Пароль'
+    data:
+        index:
+            home_directory: 'Домашняя папка'
+            name_column: 'Название'
+            size_column: 'Размер'
+    menu:
+        admin:
+            currencies: 'Валюты'
+            units: 'Ед. измерения'
+            users: 'Пользователи'
