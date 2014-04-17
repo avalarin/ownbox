@@ -18,11 +18,13 @@ ru:
             create_new_account: Создать аккаунт
             email: 'Email'
             password: 'Пароль'
-    data:
+    browse:
         index:
             home_directory: 'Домашняя папка'
             name_column: 'Название'
             size_column: 'Размер'
+            create_directory: 'Создать папку'
+            upload_file: 'Загрузить'
     menu:
         admin:
             currencies: 'Валюты'

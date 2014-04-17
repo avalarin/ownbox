@@ -2,6 +2,7 @@ ru:
     errors: &errors
         format: ! '%{attribute} %{message}'
         messages:
+            access_denied: 'Доступ запрещен'
             invalid_email_or_password: 'Email или пароль введены неверно'
             user_locked: 'Пользователь заблокирован'
             accepted: нужно подтвердить
