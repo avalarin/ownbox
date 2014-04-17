@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
 
   def authorize
     unless authenticated?
-      flash[:error] = "unauthorized access"
-      redirect_to root_path
+      flash[:error] = t 'errors.messages.access_denied'
+      redirect_to login_path
       false
     end
   end
