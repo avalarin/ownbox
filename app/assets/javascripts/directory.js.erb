@@ -1,0 +1,12 @@
+//= require knockout
+//= require fileapi
+//= require modules/http
+//= require modules/messages
+//= require directory/browser
+
+<% environment.context_class.instance_eval { include ActionView::Helpers::UrlHelper } %>
+<% environment.context_class.instance_eval { include ActionView::Helpers::TagHelper } %>
+
+browser = new Browser(window.currentItem);
+delete window.currentItem;
+ko.applyBindings(browser);

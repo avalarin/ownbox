@@ -1,0 +1,230 @@
+function Browser(currentItem) {
+  var http = require('http')
+  var messages = require('messages')
+  var modals = require('messages')
+
+  browser = this
+  this.currentItem = ko.observable(currentItem)
+  this.items = ko.observableArray([])
+  this.path = ko.observableArray([])
+  this.selected = ko.observableArray([])
+
+  this.uploadingFiles = ko.observableArray([])
+  this.waitConfirmFiles = ko.observableArray([])
+
+  window.history.replaceState(currentItem, currentItem.name)
+  window.onpopstate = function() { browser.go(history.state); }
+
+  this.refresh = function() {
+    browser.go(browser.currentItem())
+  }
+
+  this.go = function(item, event) {
+    if (event) event.stopPropagation()
+    if (item.type != 'directory') {
+      return browser.goFile(item);
+    }
+    $('.browser').addClass('loading')
+    http.request({
+      url: item.url,
+      success: function(data) {
+        browser.items.removeAll()
+        browser.selected.removeAll()
+        var items = data.items
+        for (var i = 0; i < items.length; i++) {
+          browser.items.push(wrapItem(items[i]))
+        }
+        browser.path.removeAll()
+        var path = data.path
+        for (var i = 0; i < path.length; i++) {
+          browser.path.push(wrapItem(path[i]))
+        }
+        if (item.url != history.state.url) {
+          history.pushState(item.historyState, item.name, item.url)
+        }
+        $('title').text(item.name)
+        browser.currentItem(item)
+        $('.browser').removeClass('loading')
+      }
+    })
+  }
+
+  this.goFile = function(item) {
+    location.href = item.url;
+  }
+
+  this.canCreateDir = ko.observable(true)
+  this.createDir = function(data, event) {
+    browser.canCreateDir(false)
+    var newDirectory = $('#new-directory')
+    var input = newDirectory.find('input[name=name]')
+    newDirectory.removeClass('hidden')
+    var validate = function() {
+      var value = input.val()
+      if (value.trim() == '') {
+        messages.danger('<%= I18n.t "errors.messages.directory_name_cannot_be_empty" %>')
+        return false
+      }
+      return true
+    }
+    var save = function () {
+      if (!validate()) return
+      http.request({
+        url: '/directory/create',
+        type: 'POST',
+        data: {
+          user_name: browser.currentItem().owner,
+          path: browser.currentItem().path,
+          name: input.val()
+        },
+        success: function() {
+          browser.refresh()
+          messages.info('.directory_created')
+        }
+      })
+      close()
+    }
+    var close = function () {
+      input.val('')
+      newDirectory.addClass('hidden')
+      input.off('.createdir')
+      browser.canCreateDir(true)
+    }
+    input.on('keyup.createdir', function (e) {
+      var code = e.keyCode || e.which
+      if(code == 13) {
+        save()
+      } else if (code == 27) {
+        close()
+      }
+    }).on('blur.createdir', function (e) {
+      if (input.val().trim() == '') {
+        close()
+      } else {
+        save()
+      }
+    })
+    input.focus()
+  }
+
+  this.uploadFile = function() { 
+    $('#upload-file-modal').modal();
+  }
+
+  this.startUpload = function() {
+    _.each(browser.waitConfirmFiles(), upload)
+    browser.waitConfirmFiles.removeAll()
+  }
+
+  this.deleteItem = function(item, event) {
+    if (confirm('<%= I18n.t "directory.index.confirm_item_deletion" %>')) {
+      http.request({
+        url: '/directory/destroy',
+        type: 'POST',
+        data: {
+          user_name: browser.currentItem().owner,
+          path: browser.currentItem().path,
+          name: _.map(browser.selected(), function(item) { return item.name; }).join()
+        },
+        success: function() {
+          browser.refresh()
+          messages.info('deleted')
+        }
+      })
+    }
+    browser.unselectAll()
+  }
+
+  this.unselectAll = function() {
+    browser.selected.removeAll()
+    for (var i = 0; i < browser.items().length; i++) {
+      browser.items()[i].selected(false)
+    }
+  }
+
+  this.selectUnselect = function(item, event) {
+    if (!event.ctrlKey) {
+      browser.unselectAll()
+    }
+    if (!item.selected()) {
+      browser.selected.push(item)
+      item.selected(true)
+    }
+  }
+
+  browser.refresh()
+
+  $('#upload-file-modal input[type=file]').on('change', function(e) {
+    var files = FileAPI.getFiles(this);
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i]
+      browser.waitConfirmFiles.push({
+        original: file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        delete: function() {
+          browser.waitConfirmFiles.remove(this)
+        }
+      })
+    }
+    FileAPI.reset(this)
+  })
+
+  function upload(file) {
+    var uploadingFile = {
+      name: file.name,
+      size: file.size,
+      type: file,
+      uploaded: ko.observable(0),
+      uploadedPercentage: ko.observable(0),
+      isError: ko.observable(false),
+      delete: function() {
+        browser.uploadingFiles.remove(this)
+        if (this.xhr && this.xhr.readystate != 4) {
+            this.xhr.abort();
+        }
+      }
+    }
+    browser.uploadingFiles.push(uploadingFile)
+    uploadingFile.xhr = FileAPI.upload({
+      url: '/file/upload',
+      files: { file: file.original },
+      data: {
+        path: browser.currentItem().path,
+        user_name: browser.currentItem().owner,
+      },
+      headers: {
+        "X-CSRF-Token": $('meta[name=csrf-token]').attr('content')
+      },
+      progress: function (evt){
+        uploadingFile.uploaded(evt.loaded)
+        uploadingFile.uploadedPercentage(evt.loaded/evt.total*100)
+      },
+      complete: function (err, xhr) {
+        if (err) {
+          uploadingFile.isError(true)
+        } else {
+          browser.uploadingFiles.remove(uploadingFile)
+          if (browser.uploadingFiles().length == 0) browser.refresh()
+        }
+      }
+    })
+  }
+
+  function wrapItem(item) {
+    return {
+      historyState: item,
+      owner: item.owner,
+      name: item.name,
+      path: item.path,
+      url: item.url,
+      preview_url: item.preview_url,
+      type: item.type,
+      size: item.size,
+      human_size: item.human_size,
+      selected: ko.observable(false),
+      isRoot: item.path.trim() == '/' || item.path.trim() == ''
+    }
+  }
+}

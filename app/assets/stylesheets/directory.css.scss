@@ -1,0 +1,145 @@
+.browser-toolbar {
+  .browser-location {
+    float: left;
+    padding: 2px 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+
+    >li {
+      list-style-type: none;
+      display: inline-block;
+
+      +li:before {
+        font-family: FontAwesome;
+        content: "\f105";
+        padding: 0 5px;
+      }
+
+    }
+  }
+  
+  .btn-toolbar {
+    display: inline-block;
+    float: right;
+  }
+}
+
+.browser-table {
+  width: 100%;
+  transition: opacity 0.2s;
+
+  thead {
+    th {
+      font-size: 85%;
+      margin-bottom: 30px;
+      padding: 3px 5px;
+    }
+  }
+
+  tbody {
+    tr {
+      height: 31px;
+    }
+    
+    
+
+    tr:hover > td {
+      background-color: #f5f5f5;
+    }
+
+    tr.selected > td {
+      background-color: #dff0d8;
+    }
+
+    td {
+      border-top: 1px solid #ddd;
+      padding: 3px 5px;
+    }
+  }
+
+  .column-icon {
+    width: 40px;
+  }
+  .column-name {
+    font-size: 90%;
+  }
+  .column-size {
+    font-size: 90%;
+    width: 100px;
+  }
+}
+
+.browser.loading {
+  .browser-table {
+    opacity: 0;
+  }
+}
+
+#new-directory input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  outline-width: 0!important;
+}
+
+#upload-file-modal {
+  .column-name {
+    width: auto;
+  }
+  .column-size {
+    width: 100px;
+  }
+  .column-actions {
+    width: 20px;
+  }
+}
+
+.browser-uploading {
+  border-radius: 4px 4px 0 0;
+
+  table {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    tr > td {
+      border-bottom: 1px solid #ddd;
+      padding: 0;
+      height: 24px;
+      position: relative;
+
+      .item-progress {
+        z-index: 0;
+        margin: 0;
+        float: left;
+        height: 24px;
+        background: #dff0d8;
+        transition: width 0.2s;
+      }
+
+      .item-text {
+        z-index: 1;
+        position: absolute;
+        left: 0px;
+        padding: 3px 5px;
+      }
+
+      .item-delete {
+        position: absolute;
+        right: 5px;
+        top: 3px;
+      }
+
+    }
+
+    tr.error > td {
+      color: #a94442;
+
+      .item-progress {
+        background: #f2dede;
+      }
+    }
+  }
+
+}

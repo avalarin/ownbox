@@ -1,15 +1,16 @@
 module DataItemHelper
   def create_item_link item
     if item.type == 'directory' 
-      url_for({ 
-        controller: :browse, 
+      url_for({ only_path: true,
+        controller: :directory, 
         action: :index, 
         # генерация пути вида /home/... если текущий пользователь является владельцем
         user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
         path: item.path
       })
     else
-      url_for({ controller: :browse, 
+      url_for({ only_path: true,
+        controller: :file, 
         action: :get, 
         user_name: item.owner.name, 
         path: item.path
@@ -19,8 +20,8 @@ module DataItemHelper
 
   def create_item_preview_link item, size = 24
     if item.type == 'image'
-      url_for({ 
-        controller: :browse, 
+      url_for({ only_path: true,
+        controller: :file, 
         action: :preview, 
         user_name: item.owner.name, 
         path: item.path

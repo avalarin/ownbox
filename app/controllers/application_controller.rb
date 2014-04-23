@@ -10,7 +10,13 @@ class ApplicationController < ActionController::Base
   def authorize
     unless authenticated?
       flash[:error] = t 'errors.messages.access_denied'
-      redirect_to login_path
+      if request.xhr?
+        render_api_resp :unauthorized, data: {
+          login_page: login_path
+        }
+      else
+        redirect_to login_path
+      end
       false
     end
   end
