@@ -1,4 +1,8 @@
 ru: 
+    commands:
+        close: 'Закрыть'
+        upload: 'Загрузить'
+        choose: 'Выбрать'
     layouts:
         application:
             admin_area: 'Административная часть'
@@ -18,13 +22,23 @@ ru:
             create_new_account: Создать аккаунт
             email: 'Email'
             password: 'Пароль'
-    browse:
+    directory:
         index:
-            home_directory: 'Домашняя папка'
+            root_directory: 'Домашняя папка'
             name_column: 'Название'
             size_column: 'Размер'
             create_directory: 'Создать папку'
             upload_file: 'Загрузить'
+            delete_item: 'Удалить'
+            uploading: 'Загрузка...'
+            refresh: 'Обновить'
+            directory_created: 'Папка создана'
+            confirm_item_deletion: 'Подтвердите удаление.'
+            upload_modal:
+                header: 'Загрузить файлы'
+                message: 'Выберите файлы которые вы хотите загрузить в папку <b data-bind="text: currentItem().name"></b>.'
+                name_column: 'Название'
+                size_column: 'Размер'
     menu:
         admin:
             currencies: 'Валюты'
