@@ -34,7 +34,6 @@
         </a>
       </li>
     </ul>
-
     <div class="btn-toolbar">
       <a href="javascript:" class="btn btn-xs btn-default" data-bind="click: refresh">
         <%= icon 'refresh' %>
@@ -120,10 +119,10 @@
         <!-- /ko -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-uploader">
+        <div type="button" class="btn btn-primary btn-uploader">
           <span><%= t 'commands.choose' %></span>
           <input type="file" multiple="true"/>
-        </button>
+        </div>
         <button type="button" class="btn btn-primary" data-dismiss="modal" 
                 data-bind="visible: waitConfirmFiles().length > 0, click: startUpload">
           <%= t 'commands.upload' %>
