@@ -45,7 +45,7 @@ class DirectoryController < ItemsController
   private
 
   def get_path_parts path
-    parts = [ { name: target_user.name, path: '/', url: create_part_link(''), type: 'directory' } ]
+    parts = [ { name: target_user.name, path: '/', url: create_part_link(''), type: 'directory', owner: target_user.name } ]
     current = ''
     path.split('/').each do |part|  
       current += part;
@@ -53,7 +53,8 @@ class DirectoryController < ItemsController
         name: part,
         path: current,
         url: create_part_link(current), 
-        type: 'directory', 
+        type: 'directory',
+        owner: target_user.name
       })
       current += '/'
     end
