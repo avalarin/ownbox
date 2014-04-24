@@ -71,7 +71,7 @@
         <td class="column-size"></td>
       </tr>
       <!-- ko foreach: items -->
-      <tr data-bind="css: { selected: isSelected() }, click: $parent.selectUnselect">
+      <tr data-bind="css: { selected: isSelected, deleted: isDeleted, new: isNew }, click: $parent.selectUnselect">
         <td class="column-icon">
           <img data-bind="attr: { src: preview_url }" />
         </td>

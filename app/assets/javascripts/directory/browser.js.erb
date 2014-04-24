@@ -116,7 +116,8 @@ function Browser(currentItem) {
     browser.waitConfirmFiles.removeAll()
   }
 
-  this.deleteItem = function(item, event) {
+  this.deleteItem = function(data, event) {
+    var selected = _.clone(browser.selected());
     if (confirm('<%= I18n.t "directory.index.confirm_item_deletion" %>')) {
       http.request({
         url: '/directory/destroy',
@@ -124,10 +125,17 @@ function Browser(currentItem) {
         data: {
           user_name: browser.currentItem().owner,
           path: browser.currentItem().path,
-          name: _.map(browser.selected(), function(item) { return item.name; }).join()
+          name: _.map(selected, function(item) { return item.name; }).join()
         },
         success: function() {
-          browser.refresh()
+          _.each(selected, function(item) {
+            item.isDeleted(true)
+          })
+          setTimeout(function() {
+            _.each(selected, function(item) {
+              browser.items.remove(item)
+            })
+          }, 450);
           messages.info('deleted')
         }
       })
