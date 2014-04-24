@@ -138,7 +138,7 @@ function Browser(currentItem) {
   this.unselectAll = function() {
     browser.selected.removeAll()
     for (var i = 0; i < browser.items().length; i++) {
-      browser.items()[i].selected(false)
+      browser.items()[i].isSelected(false)
     }
   }
 
@@ -146,9 +146,9 @@ function Browser(currentItem) {
     if (!event.ctrlKey) {
       browser.unselectAll()
     }
-    if (!item.selected()) {
+    if (!item.isSelected()) {
       browser.selected.push(item)
-      item.selected(true)
+      item.isSelected(true)
     }
   }
 
@@ -223,8 +223,10 @@ function Browser(currentItem) {
       type: item.type,
       size: item.size,
       human_size: item.human_size,
-      selected: ko.observable(false),
-      isRoot: item.path.trim() == '/' || item.path.trim() == ''
+      isSelected: ko.observable(false),
+      isRoot: item.path.trim() == '/' || item.path.trim() == '',
+      isNew: ko.observable(false),
+      isDeleted: ko.observable(false)
     }
   }
 }
