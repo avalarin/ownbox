@@ -13,7 +13,11 @@ class Settings < Settingslogic
     
     # Настройки безопасности   
     Settings['security'] ||= Settingslogic.new({})
-    Settings.security['session_lifetime'] = 1.hours
-    Settings.security['persistent session_lifetime'] = 30.days
+    Settings.security['session_lifetime'] ||= 1.hours
+    Settings.security['persistent_session_lifetime'] ||= 30.days
+
+    # Настройки отправки почты
+    Settings['mailer'] ||= Settingslogic.new({})
+    Settings.mailer['from'] ||= 'files@example.com'
 
 end
