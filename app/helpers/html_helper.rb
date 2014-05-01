@@ -1,5 +1,5 @@
 module HtmlHelper
-  def icon(name, options = nil) 
+  def icon name, options = nil
     options ||= {}
     tag_class = "fa fa-#{name} "
     if options[:icon_size] == :large
@@ -16,8 +16,12 @@ module HtmlHelper
     "<i class=\"#{tag_class}\"></i>".html_safe
   end
 
-  def link_with_icon(text, icon, url, html = nil)
+  def link_with_icon text, icon, url, html = nil
     body = icon(icon) + " " + text;
     link_to body, url;
+  end
+
+  def validation_errors model
+    render partial: 'shared/validation_errors', locals: { model: model }
   end
 end
