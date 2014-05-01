@@ -2,14 +2,15 @@ ru:
     errors: &errors
         format: ! '%{attribute} %{message}'
         messages:
-            access_denied: 'Доступ запрещен'
-            directory_name_cannot_be_empty: 'Введите имя папки'
-            directory_already_exists: 'Папка уже существует'
-            invalid_email_or_password: 'Email или пароль введены неверно'
-            user_locked: 'Пользователь заблокирован'
+            access_denied: Доступ запрещен.
+            directory_name_cannot_be_empty: Введите имя папки.
+            directory_already_exists: Папка уже существует.
+            invalid_email_or_password: Email или пароль введены неверно.
+            user_locked: Пользователь заблокирован.
+            account_not_activated: Аккаунт не активирован.
             accepted: нужно подтвердить
             blank: не может быть пустым
-            confirmation: 'не совпадает со значением поля %{attribute}'
+            confirmation: не совпадает со значением поля %{attribute}
             empty: не может быть пустым
             equal_to: может иметь лишь значение, равное %{count}
             even: может иметь лишь нечетное значение

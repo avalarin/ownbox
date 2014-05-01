@@ -3,6 +3,8 @@ ru:
         close: 'Закрыть'
         upload: 'Загрузить'
         choose: 'Выбрать'
+        create: 'Создать'
+        register: 'Зарегистрироваться'
     layouts:
         application:
             admin_area: 'Административная часть'
@@ -19,9 +21,11 @@ ru:
         new:
             login_to_continue: 'Введите ваш email и пароль'
             login: 'Войти'
-            create_new_account: Создать аккаунт
+            create_new_account: 'Создать аккаунт'
             email: 'Email'
             password: 'Пароль'
+            remember: 'Запомнить меня'
+            need_help: 'Нужна помощь?'
     directory:
         index:
             root_directory: 'Домашняя папка'
@@ -33,12 +37,31 @@ ru:
             uploading: 'Загрузка...'
             refresh: 'Обновить'
             directory_created: 'Папка создана'
+            item_deleted: 'Удалено'
             confirm_item_deletion: 'Подтвердите удаление.'
+
             upload_modal:
                 header: 'Загрузить файлы'
                 message: 'Выберите файлы которые вы хотите загрузить в папку <b data-bind="text: currentItem().name"></b>.'
                 name_column: 'Название'
                 size_column: 'Размер'
+    registration:
+        new:
+            page_header: 'Регистрация нового пользователя'
+            name: 'Имя пользователя'
+            display_name: 'Отображаемое имя'
+            email: 'Email'
+            password: 'Пароль'
+            password_confirmation: 'Подтверждение пароля'
+        success:
+            page_header: 'Регистрация нового пользователя'
+            success_registration_message: 'Вы успешно зарегистрированы на сайте, но ваш аккаунт пока не активен.<br/> Для активации аккаунта перейдите по ссылке которая отправлена вам в письме на адрес указанный при регистрации.'
+        activate:
+            account_activated: 'Аккаунт активирован. Используйте email и пароль указанные при регистрации для входа на сайт.'
+    user_mailer:
+        success_registration:
+            mail_subject: 'Регистрация на сайте %{app_name}'
+            mail_content: 'Вы успешно зарегистрированы на сайте %{app_name}, но ваш аккаунт пока не активен.<br/> Для активации аккаунта перейдите по <a href="%{activation_url}">ссылке</a>.'
     menu:
         admin:
             currencies: 'Валюты'
