@@ -4,10 +4,11 @@ class DirectoryController < ItemsController
     return render_not_found if item.type != 'directory'
     if  request.xhr?
       items = service.get_items(item_path).collect { |i| collect_item i }
-      render json: { items: items, path: get_path_parts(item_path) }
+      path = service.get_path_parts(item_path).collect { |i| collect_item i }
+      render json: { items: items, path: path }
     else
       @items = service.get_items item_path
-      @path_parts = get_path_parts item_path
+      @path_parts = service.get_path_parts item_path
       @current_item = collect_item item
     end
   end
@@ -44,33 +45,6 @@ class DirectoryController < ItemsController
 
   private
 
-  def get_path_parts path
-    parts = [ { name: target_user.name, path: '/', url: create_part_link(''), type: 'directory', owner: target_user.name } ]
-    current = ''
-    path.split('/').each do |part|  
-      current += part;
-      parts.push({
-        name: part,
-        path: current,
-        url: create_part_link(current), 
-        type: 'directory',
-        owner: target_user.name
-      })
-      current += '/'
-    end
-    parts[-1][:active] = true
-    parts
-  end
-
-  def create_part_link path
-    url_for({ only_path: true,
-      controller: :directory, 
-      action: :index, 
-      user_name: nil, 
-      path: path
-    })
-  end
-  
   def collect_item item
     nitem = {
       name: item.name,

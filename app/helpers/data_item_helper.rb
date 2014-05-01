@@ -12,7 +12,8 @@ module DataItemHelper
       url_for({ only_path: true,
         controller: :file, 
         action: :get, 
-        user_name: item.owner.name, 
+        # генерация пути вида /home/... если текущий пользователь является владельцем
+        user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
         path: item.path
       })
     end
@@ -23,7 +24,8 @@ module DataItemHelper
       url_for({ only_path: true,
         controller: :file, 
         action: :preview, 
-        user_name: item.owner.name, 
+        # генерация пути вида /home/... если текущий пользователь является владельцем
+        user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
         path: item.path
       })
     else

@@ -34,7 +34,6 @@ class DataService < BaseService
     end
   end
 
-
   def get_items path
     full_path = File.join home_directory, path
     Dir.entries(full_path)
@@ -51,6 +50,28 @@ class DataService < BaseService
           a.type == 'directory' ? -1 : 1
         end
       end
+  end
+
+  def get_path_parts path
+    home_part = DirectoryItem.new({
+      name: target_user.name,
+      path: '',
+      # full_path: item_full_path,
+      owner: target_user
+    })
+    parts = [ home_part ]
+    current = ''
+    path.split('/').each do |part|  
+      current += part;
+      parts.push(DirectoryItem.new({
+        name: part,
+        path: current,
+        # full_path: item_full_path,
+        owner: target_user
+      }))
+      current += '/'
+    end
+    parts
   end
 
   def get_item_preview path, size = 24
