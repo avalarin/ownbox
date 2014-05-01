@@ -79,7 +79,7 @@ function Browser(currentItem) {
         },
         success: function() {
           browser.refresh()
-          messages.info('.directory_created')
+          messages.info('<%= I18n.t "directory.index.directory_created" %>')
         }
       })
       close()
@@ -136,7 +136,7 @@ function Browser(currentItem) {
               browser.items.remove(item)
             })
           }, 450);
-          messages.info('deleted')
+          messages.info('<%= I18n.t "directory.index.item_deleted" %>')
         }
       })
     }
