@@ -7,12 +7,20 @@
                 <%= form_for @login, url: login_post_path, html: { class: "form-signin" } do |f| %>
                     <%= f.email_field :email, class: "form-control", placeholder: t(".email") %>
                     <%= f.password_field :password, class: "form-control", placeholder: t(".password") %>
-
+                    <label class="checkbox" for="login_remember">
+                        <%= f.check_box :remember %>
+                        <%= t '.remember' %>
+                    </label>
                     <%= f.submit t(".login"), class: "btn btn-lg btn-primary btn-block" %>
-                    
+                    <br/>
+                    <a href="<%= register_user_path %>" class="">
+                        <%= t ".create_new_account" %>
+                    </a>
+                    <a href="#" class="pull-right">
+                        <%= t ".need_help" %>
+                    </a>
                 <% end %>
             </div>
-            <a href="#" class="text-center new-account"><%= t ".create_new_account" %></a>
         </div>
     </div>
 </div>
