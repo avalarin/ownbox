@@ -10,6 +10,5 @@ User.create!(name: 'admin',
     display_name: 'Administrator', 
     password: 'admin', 
     password_confirmation: 'admin', 
-    approved: true,
-    home_directory: 'avalarin'
+    approved: true
 )
