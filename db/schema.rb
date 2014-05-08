@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140426211515) do
+ActiveRecord::Schema.define(version: 20140501174944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(version: 20140426211515) do
     t.string  "path"
     t.integer "size"
     t.binary  "data"
+  end
+
+  create_table "shares", force: true do |t|
+    t.integer "user_id"
+    t.string  "name"
+    t.string  "path"
   end
 
 end

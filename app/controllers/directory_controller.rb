@@ -48,7 +48,7 @@ class DirectoryController < ItemsController
   def collect_item item
     nitem = {
       name: item.name,
-      path: item.path,
+      path: item.path.to_s_non_rooted,
       owner: item.owner.name,
       type: item.type,
       url: create_item_link(item),

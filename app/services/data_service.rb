@@ -5,67 +5,41 @@ class DataService < BaseService
     super current_user, params
     @target_user = target_user
     @home_directory = target_user.full_home_directory
+    @use_shares = (@current_user.id != @target_user.id)
 
     check_home_directory_exists
   end
 
   def get_item path
-    item_full_path = File.join home_directory, path
-    item_name = File.basename(path)
-    item_name = target_user.name if (item_name.strip == '') 
-    return nil unless File.exists? item_full_path
-    if (File.directory? item_full_path)
-      DirectoryItem.new({
-        name: item_name,
-        path: path,
-        full_path: item_full_path,
-        owner: target_user
-      })
+    if @current_user.id == @target_user.id
+      get_private_item path
     else
-      item_type = get_file_type(File.extname(item_name))
-      FileItem.new({
-        name: item_name,
-        path: path,
-        full_path: item_full_path,
-        type: item_type,
-        size: File.size(item_full_path),
-        owner: target_user
-      })
+      get_shared_item path
     end
   end
 
   def get_items path
-    full_path = File.join home_directory, path
-    Dir.entries(full_path)
-      .select { |item| item != '.' && item != '..' }
-      .map do |item| 
-        item_path = File.join path, item
-        item_path[0] = '' if item_path[0] == '/'
-        get_item item_path
-      end
-      .sort do |a, b| 
-        if a.type == b.type
-          a.name <=> b.name
-        else
-          a.type == 'directory' ? -1 : 1
-        end
-      end
+    if @current_user.id == @target_user.id
+      get_private_items path
+    else
+      get_shared_items path
+    end    
   end
 
   def get_path_parts path
     home_part = DirectoryItem.new({
       name: target_user.name,
-      path: '',
+      path: Path.new([], rooted: false),
       # full_path: item_full_path,
       owner: target_user
     })
     parts = [ home_part ]
     current = ''
-    path.split('/').each do |part|  
+    path.parts.each do |part|  
       current += part;
       parts.push(DirectoryItem.new({
         name: part,
-        path: current,
+        path: Path.parse(current),
         # full_path: item_full_path,
         owner: target_user
       }))
@@ -91,18 +65,19 @@ class DataService < BaseService
   end
 
   def create_directory path, name
-    full_path = File.join home_directory, path    
-    raise IOError, "Directory #{full_path} does not exists." unless (File.directory? full_path)
-    full_path = File.join full_path, name
+    item = get_item path
+    raise IOError, "Directory #{path} does not exists." unless (item && item.type == 'directory')
+    full_path = File.join item.full_path, name
     raise IOError, "Item #{full_path} already exists." if (File.exists? full_path)
     FileUtils.mkdir full_path
   end
 
   def upload_file path, file
-    directory_path = File.join home_directory, path
-    raise IOError, "Directory #{directory_path} does not exists." unless (File.directory? directory_path)
+    item = get_item path
+    raise IOError, "Directory #{path} does not exists." unless (item && item.type == 'directory')
+
     file_name = file.original_filename
-    full_path = File.join directory_path, file_name
+    full_path = File.join item.path, file_name
     iteration = 1
     while File.exists? full_path
       if (iteration == 1)
@@ -110,7 +85,7 @@ class DataService < BaseService
         base_name = File.basename file.original_filename, extension
       end
       file_name = base_name + "_" + iteration.to_s + extension
-      full_path = File.join directory_path, file_name
+      full_path = File.join item.path, file_name
       iteration += 1
     end
     File.open(full_path, 'wb') do |newfile|
@@ -120,20 +95,20 @@ class DataService < BaseService
   end
 
   def delete_directory path, recursive = false
-    full_path = File.join home_directory, path
-    raise IOError, "Directory #{full_path} does not exists." unless (File.directory? full_path)
+    item = get_item path
+    raise IOError, "Directory #{path} does not exists." unless (item && item.type == 'directory')
     if (recursive)
-      FileUtils.rm_r full_path
+      FileUtils.rm_r item.full_path
     else
-      raise IOError, "Directory #{full_path} is not empty." if Dir.entries(full_path).length > 0
-      FileUtils.rmdir full_path
+      raise IOError, "Directory #{path} is not empty." if Dir.entries(item.full_path).length > 0
+      FileUtils.rmdir item.full_path
     end
   end
 
   def delete_file path
-    full_path = File.join home_directory, path
-    raise IOError, 'Directory #{full_path} does not exists.' unless (File.file? full_path)
-    FileUtils.rm full_path
+    item = get_item path
+    raise IOError, "Directory #{path} does not exists." unless (item && item.type != 'directory')
+    FileUtils.rm item.full_path
   end
 
   private
@@ -146,6 +121,109 @@ class DataService < BaseService
     Settings.file_types.each do |type, extensions|
       return type if extensions.include? extension
     end
+  end
+
+  def get_full_path path
+    Path.parse(File.join home_directory, path.to_s)
+  end
+
+  def get_shared_item path
+    if path.parts.length == 0
+      return DirectoryItem.new({
+        name: target_user.name,
+        path: path,
+        full_path: home_directory,
+        owner: target_user
+      })
+    end
+    share = get_share path.parts[0]
+    return nil unless share
+    return share if path.parts.length == 1
+    path_in_share = Path.new(path.parts.slice(1, path.parts.length - 1), rooted: false)
+    item_full_path = File.join share.full_path, path_in_share
+    get_item_safe item_full_path, path
+  end
+
+  def get_private_item path
+    full_path = File.join home_directory, path
+    get_item_safe full_path, path
+  end
+
+  def get_item_safe full_path, item_path
+    item_name = File.basename(full_path)
+    item_name = target_user.name if (item_name.strip == '') 
+    return nil unless File.exists? full_path
+    if (File.directory? full_path)
+      DirectoryItem.new({
+        name: item_name,
+        path: item_path,
+        full_path: full_path,
+        owner: target_user
+      })
+    else
+      item_type = get_file_type(File.extname(item_name))
+      FileItem.new({
+        name: item_name,
+        path: item_path,
+        full_path: full_path,
+        type: item_type,
+        size: File.size(full_path),
+        owner: target_user
+      })
+    end
+  end
+
+  def get_share name
+    share = Share.find_by_user_and_name target_user, name
+    return nil unless share
+    DirectoryItem.new({
+      name: share.name,
+      path: Path.new([ share.name ], rooted: true),
+      full_path: get_full_path(share.path),
+      owner: target_user
+    })
+  end
+
+  def get_shares
+    Share.get_by_user(target_user)
+      .map do |share|
+        DirectoryItem.new({
+          name: share.name,
+          path: Path.new([ share.name ], rooted: true),
+          full_path: get_full_path(share.path),
+          owner: target_user
+        })
+       end
+  end
+
+  def get_shared_items path
+    return get_shares if path.is_empty?
+    share = get_share path.parts[0]
+    return nil unless share
+    path_in_share = Path.new(path.parts.slice(1, path.parts.length - 1), rooted: false)
+    item_full_path = File.join share.full_path, path_in_share
+    get_items_safe item_full_path, path
+  end
+
+  def get_private_items path
+    full_path = File.join home_directory, path
+    get_items_safe full_path, path
+  end
+
+  def get_items_safe full_path, path
+    Dir.entries(full_path)
+      .select { |item| item != '.' && item != '..' }
+      .map do |item| 
+        item_path = Path.parse(File.join path, item)
+        get_item item_path
+      end
+      .sort do |a, b| 
+        if a.type == b.type
+          a.name <=> b.name
+        else
+          a.type == 'directory' ? -1 : 1
+        end
+      end
   end
 
 end

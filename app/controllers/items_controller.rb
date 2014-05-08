@@ -26,7 +26,6 @@ class ItemsController < ApplicationController
 
   def get_path
     path = params['path'] || ''
-    path[0] = '' if path[0] == '/'
-    path
+    Path.parse path
   end
 end

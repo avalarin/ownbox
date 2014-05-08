@@ -6,7 +6,7 @@ module DataItemHelper
         action: :index, 
         # генерация пути вида /home/... если текущий пользователь является владельцем
         user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
-        path: item.path
+        path: item.path.to_s_non_rooted
       })
     else
       url_for({ only_path: true,
@@ -14,7 +14,7 @@ module DataItemHelper
         action: :get, 
         # генерация пути вида /home/... если текущий пользователь является владельцем
         user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
-        path: item.path
+        path: item.path.to_s_non_rooted
       })
     end
   end
@@ -26,7 +26,7 @@ module DataItemHelper
         action: :preview, 
         # генерация пути вида /home/... если текущий пользователь является владельцем
         user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
-        path: item.path
+        path: item.path.to_s_non_rooted
       })
     else
       if Settings.type_images.include? item.type
