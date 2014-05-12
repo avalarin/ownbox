@@ -9,6 +9,7 @@ ru:
         application:
             admin_area: 'Административная часть'
         navbar:
+            home: 'Домашняя страница'
             settings: 'Настройки'
             logout: 'Выйти'
     admin:
