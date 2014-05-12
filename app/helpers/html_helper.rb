@@ -17,8 +17,10 @@ module HtmlHelper
   end
 
   def link_with_icon text, icon, url, html = nil
+    html ||= {}
+    html[:title] ||= text
     body = icon(icon) + " " + text;
-    link_to body, url;
+    link_to body, url, html;
   end
 
   def validation_errors model
