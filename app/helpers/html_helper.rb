@@ -26,4 +26,15 @@ module HtmlHelper
   def validation_errors model
     render partial: 'shared/validation_errors', locals: { model: model }
   end
+
+  def page_header text, options = nil
+    options ||= {}
+    options[:type] ||= :big
+    if (options[:type] == :big)
+      render partial: 'shared/page_header_big', locals: { text: text }
+    elsif (options[:type] == :small)
+      render partial: 'shared/page_header_small', locals: { text: text }
+    end
+  end
+
 end
