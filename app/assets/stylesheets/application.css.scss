@@ -45,6 +45,13 @@
   }
 }
 
-a i.fa {
-  text-decoration: inherit;
+a {
+  color: #333;
+  i.fa {
+    text-decoration: inherit;
+  }
+}
+
+a:hover {
+  color: #333;
 }
