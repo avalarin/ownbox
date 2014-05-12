@@ -11,6 +11,9 @@
         </div>
         <ul class="nav navbar-nav navbar-right nav-condensed">
             <% if authenticated? %>
+                <li>
+                    <%= link_with_icon "", "home", current_user_items_index_path, title: t(".home") %>
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <%= current_user.display_name %> <span class="caret"></span>
