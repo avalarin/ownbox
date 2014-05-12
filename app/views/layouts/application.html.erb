@@ -18,8 +18,8 @@
     <div class="site-content">
         <%= render 'layouts/navbar' %>
         <div class="container">
-            <%= render 'layouts/messages' %>
-            <%= yield %>
+            <%= render('layouts/messages') if !@hide_messages %>
+            <%= content_for?(:content) ? yield(:content) : yield %>
         </div>
     </div>
     <%= render 'layouts/footer' %>

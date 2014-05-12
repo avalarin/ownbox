@@ -5,9 +5,14 @@ ru:
         choose: 'Выбрать'
         create: 'Создать'
         register: 'Зарегистрироваться'
+        save: 'Сохранить'
     layouts:
         application:
             admin_area: 'Административная часть'
+        settings:
+            profile: 'Профиль'
+            shares: 'Общие папки'
+            security: 'Безопасность'
         navbar:
             home: 'Домашняя страница'
             settings: 'Настройки'
@@ -18,6 +23,15 @@ ru:
                 section_general: 'Основное'
                 section_security: 'Безопасность'
                 section_status: 'Статус'
+    settings:
+        profile:
+            edit:
+                page_header: 'Профиль'
+                name: 'Имя пользователя'
+                display_name: 'Отображаемое имя'
+                email: 'Email'
+            update:
+                profile_updated: 'Профиль обновлен'
     session:
         new:
             login_to_continue: 'Введите ваш email и пароль'

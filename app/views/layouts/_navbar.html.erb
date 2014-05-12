@@ -23,7 +23,7 @@
                         <li role="presentation" class="dropdown-header"><%= current_user.email %></li>
                         <li role="presentation" class="divider"></li>
                         <li role="button">
-                            <%= link_with_icon t(".settings"), "gears", '' %>
+                            <%= link_with_icon t(".settings"), "gears", settings_edit_profile_path %>
                         </li>
                         <li role="button">
                             <%= link_with_icon t(".logout"), "sign-out", logout_path %>

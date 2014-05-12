@@ -21,4 +21,9 @@ FilesBrowser::Application.routes.draw do
 
   post '/file/upload', to: 'file#upload'
 
+  namespace :settings do
+    get '/profile', to: 'profile#edit', as: :edit_profile
+    patch '/profile', to: 'profile#update', as: :update_profile
+  end
+
 end
