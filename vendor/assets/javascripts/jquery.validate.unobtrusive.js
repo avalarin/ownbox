@@ -38,7 +38,7 @@
 
     function escapeAttributeValue(value) {
         // As mentioned on http://api.jquery.com/category/selectors/
-        return value.replace(/([!"#$%&'()*+,./:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
+        return value.replace(/([!"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
     }
 
     function getModelPrefix(fieldName) {
@@ -52,87 +52,29 @@
         return value;
     }
 
-    function onError(error, inputElement) {  // 'this' is the form element
-        var container = $(this).find("[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"),
-            replaceAttrValue = container.attr("data-valmsg-replace"),
-            replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
-
-        container.removeClass("field-validation-valid").addClass("field-validation-error");
-        error.data("unobtrusiveContainer", container);
-
-        if (replace) {
-            container.empty();
-            error.removeClass("input-validation-error").appendTo(container);
-        }
-        else {
-            error.hide();
-        }
-    }
-
-    function onErrors(event, validator) {  // 'this' is the form element
-        var container = $(this).find("[data-valmsg-summary=true]"),
-            list = container.find("ul");
-
-        if (list && list.length && validator.errorList.length) {
-            list.empty();
-            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
-
-            $.each(validator.errorList, function () {
-                $("<li />").html(this.message).appendTo(list);
-            });
-        }
-    }
-
-    function onSuccess(error) {  // 'this' is the form element
-        var container = error.data("unobtrusiveContainer"),
-            replaceAttrValue = container.attr("data-valmsg-replace"),
-            replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
-
-        if (container) {
-            container.addClass("field-validation-valid").removeClass("field-validation-error");
-            error.removeData("unobtrusiveContainer");
-
-            if (replace) {
-                container.empty();
-            }
-        }
-    }
-
-    function onReset(event) {  // 'this' is the form element
-        var $form = $(this);
-        $form.data("validator").resetForm();
-        $form.find(".validation-summary-errors")
-            .addClass("validation-summary-valid")
-            .removeClass("validation-summary-errors");
-        $form.find(".field-validation-error")
-            .addClass("field-validation-valid")
-            .removeClass("field-validation-error")
-            .removeData("unobtrusiveContainer")
-            .find(">*")  // If we were using valmsg-replace, get the underlying error
-                .removeData("unobtrusiveContainer");
-    }
-
     function validationInfo(form) {
         var $form = $(form),
-            result = $form.data(data_validation),
-            onResetProxy = $.proxy(onReset, form);
+            result = $form.data(data_validation);
 
         if (!result) {
             result = {
-                options: {  // options structure passed to jQuery Validate's validate() method
-                    //errorClass: "input-validation-error",
-                    //errorElement: "span",
-                    //errorPlacement: $.proxy(onError, form),
-                    //invalidHandler: $.proxy(onErrors, form),
+                options: {
                     messages: {},
                     rules: {},
-                    //success: $.proxy(onSuccess, form)
+                    highlight: function (element) {
+                      $(element).closest('.form-group').addClass('has-error');
+                    },
+                    unhighlight: function (element) {
+                      $(element).addClass('valid').closest('.form-group').removeClass('has-error');
+                    },
+                    errorPlacement: function (error, el) {
+                        error.insertAfter(el);
+                    },
+                    errorElement: 'small',
+                    errorClass: 'text-danger'
                 },
                 attachValidation: function () {
-                    $form
-                        //.unbind("reset." + data_validation, onResetProxy)
-                        //.bind("reset." + data_validation, onResetProxy)
-                        .validate(this.options);
+                    $form.validate(this.options);
                 },
                 validate: function () {  // a validation function that is called by unobtrusive Ajax
                     $form.validate();
