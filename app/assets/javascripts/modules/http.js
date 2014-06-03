@@ -1,29 +1,34 @@
 define('http', ['jquery'], function ($) {
-  $(document).ajaxStart(function () {
 
+  var requestsCount = 0;
+
+  function showLoader() {
+    var element = $('.site-loader');
+    element.removeClass('hiding').addClass('visible');
+  } 
+
+  function hideLoader() {
+    var element = $('.site-loader');
+    element.removeClass('visible').addClass('hiding');
+    setTimeout(function() {
+      element.removeClass('hiding');
+    }, 2000);
+  }
+
+  function defaultErrorHandler(status, message, data) {
+    var modal = $('#unhandled-error');
+    modal.find('.details').text(message);
+    modal.modal('show');
+  }
+
+  $(document).ajaxStart(function () {
+    requestsCount++;
   });
   
   $(document).ajaxStop(function () {
-      $('.site-loader').hide();
-  });
-
-  $(document).ajaxError(function (event, xhr, ajaxOptions, thrownError) {
-      //if (xhr.status == 401) {
-      //    var eModal = $('#loginModal');
-      //    if (eModal.size() == 0) {
-      //        $.get('/account/loginmodal', { redirect: location.pathname + location.search }, function (modal) {
-      //            $('body').append(modal);
-      //            $('#loginModal').modal('show');
-      //        });
-      //    } else {
-      //        eModal.modal('show');
-      //    }
-      //}
-      $('#errorModal').modal('show');
-  });
-
-  $(document).ajaxComplete(function () {
-    
+    if (--requestsCount == 0) {
+      hideLoader();
+    }
   });
 
   $(document).on('click', 'a[data-action=load-html]', function (e) {
@@ -59,7 +64,7 @@ define('http', ['jquery'], function ($) {
     }, data);
 
     var origSuccess = data.success || function () { };
-    var origError = data.error || function () { };
+    var origError = data.error || defaultErrorHandler;
     var origComplete = data.complete || function () { };
     var origBeforeSend = data.beforeSend;
     var origHtml;
@@ -69,7 +74,6 @@ define('http', ['jquery'], function ($) {
     var sourceElement;
     var isCompleted;
     
-
     if (data.loader) {
         if (typeof (data.loader) == "string") {
             loaderElement = $(data.loader);
@@ -96,7 +100,7 @@ define('http', ['jquery'], function ($) {
             if (resp.status == '200') {
                 origSuccess(resp.data);
             } else {
-                origError(resp.status, resp.data);
+                origError(resp.status, resp.message, resp.data);
             }
         } else {
             origSuccess(resp);
@@ -114,14 +118,19 @@ define('http', ['jquery'], function ($) {
             sourceElement.removeClass('disabled');
         }
         if (resp.hasOwnProperty('status')) {
-            origComplete(resp.status, resp.data, xhr);
+            origComplete(resp.status, resp.message, resp.data, xhr);
         } else {
-            origComplete('ok', resp, xhr);
+            origComplete('200', 'ok', resp, xhr);
         }
     };
 
     data.error = function(xhr, textStatus) {
-        origError(textStatus, textStatus, null);
+      var resp = xhr.responseJSON;
+      if (resp && resp.hasOwnProperty('status')) {
+            origError(resp.status, resp.message, resp.data);
+      } else {
+          origError(xhr.status, textStatus, null);
+      }
     };
 
     data.beforeSend = function (xhr) {
@@ -133,7 +142,7 @@ define('http', ['jquery'], function ($) {
                 origHtml = sourceElement.html();
                 sourceElement.css({ width: sourceElement.outerWidth(), height: sourceElement.outerHeight() }).html(loaderHtml);
             } else {
-                $('.site-loader').show();
+                showLoader();
             }
             return false;
         }, 200);
