@@ -4,7 +4,7 @@ module RenderHelper
     render :file => 'public/404.html', :status => :not_found, :layout => false
   end
 
-  def render_api_resp status, h = nil
+  def render_api_resp status, options = {}
     default_message = ''
     status_code = case status
     when :ok
@@ -33,13 +33,13 @@ module RenderHelper
     end
     resp = {}
     resp['status'] = status_code
-    if(h)
-      resp['message'] = h[:message] || default_message
-      resp['data'] = h[:data]
-    else
-      resp['message'] = default_message
-    end
+    resp['message'] = options[:message] || default_message
+    resp['data'] = options[:data]
     render json: resp, status: status_code
+  end
+
+  def render_model_errors_api_resp model
+    render_api_resp :bad_request, message: 'Invalid request', data: model.errors
   end
 
 end
