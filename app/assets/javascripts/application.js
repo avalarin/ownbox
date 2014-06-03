@@ -1,5 +1,6 @@
 //= require jquery
 //= require jquery.validate
+//= require jquery.validate.unobtrusive
 //= require jquery_ujs
 //= require bootstrap
 //= require underscore
