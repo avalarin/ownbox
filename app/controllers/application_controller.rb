@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   include SessionHelper
   include RenderHelper
 
+  helper Bootstrap::Helpers
+
   def authorize
     unless authenticated?
       flash[:error] = t 'errors.messages.access_denied'
