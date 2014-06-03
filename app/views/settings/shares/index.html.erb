@@ -1,0 +1,56 @@
+<%= bt_panel header: t(".page_header") do |p| %>
+  <% p.body do %>
+    <%= bt_button icon: "plus", text: t("commands.create"), size: :small, data: { toggle: "modal", target: "#edit-modal" } %>
+    <%= bt_button icon: "refresh", text: t("commands.refresh"), size: :small, data: { bind: 'click: refresh' } %>
+  <% end %>
+  <% p.table do %>
+    <table class="table table-bordered table-stripped">
+      <thead>
+        <tr>
+          <th class="column-name"><%= t '.name_column' %></th>
+          <th class="column-path"><%= t '.path_column' %></th>
+          <th class="column-actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ko foreach: items -->
+        <tr>
+          <td class="column-name" data-bind="text: name"></td>
+          <td class="column-path" data-bind="text: path"></td>
+          <td class="column-actions">
+            <%= bt_button icon: 'shield', size: :xsmall, title: t('commands.security'), 
+                          data: { bind: 'click: $data.editSecurity' } %>
+            <%= bt_button icon: 'pencil', size: :xsmall, title: t('commands.edit'), 
+                          data: { bind: 'click: $data.edit' } %>
+            <%= bt_button icon: 'trash-o', size: :xsmall, style: :danger, title: t('commands.delete'), 
+                          data: { bind: 'click: $data.delete' } %>
+          </td>
+        </tr>
+        <!-- /ko -->
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
+
+<%= bt_modal id: "edit-modal", header: t('.create_share_modal_header'), data: { bind: 'with: editModal' } do |m| %>
+  <% m.body do %>
+    <%= bt_form_for :share, label_col_size: 3, controls_col_size: 9 do |f| %>
+      <%= f.hidden_input property: :id, data: { bind: 'value: id' } %>
+      <%= f.group property: :name, label: t('.share_name') do |g| %>
+        <%= g.text_input data: { bind: 'value: name' } %>
+      <% end %>
+      <%= f.group property: :path, label: t('.share_path') do |g| %>
+        <%= g.text_input data: { bind: 'value: path' } %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% m.footer do %>
+    <!-- ko if: mode() == 'create' -->
+    <%= bt_button style: :primary, text: t("commands.create"), data: { bind: "click: $root.createShare" } %>
+    <!-- /ko -->
+    <!-- ko if: mode() == 'edit' -->
+    <%= bt_button style: :primary, text: t("commands.save"), data: { bind: "click: $root.updateShare" } %>
+    <!-- /ko -->
+    <%= bt_button text: t("commands.cancel"), size: :small, data: { bind: "click: close" } %>
+  <% end %>
+<% end %>

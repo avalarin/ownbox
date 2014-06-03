@@ -1,0 +1,138 @@
+//= require knockout
+//= require modules/http
+//= require modules/messages
+
+function Datatable() {
+
+  // private variables
+
+  var http = require('http')
+  var messages = require('messages')
+  var modals = require('messages')
+  var $ = require('jquery')
+  var sharesPath = '/settings/shares/'
+  var table = this
+
+  // public methods
+
+  table.items = ko.observableArray([])
+
+  table.editModal = {
+    element: $('#edit-modal'),
+    formElement: $('#edit-modal form'),
+    mode: ko.observable('create'),
+    id: ko.observable(-1),
+    name: ko.observable(''),
+    path: ko.observable(''),
+
+    reset: function () {
+      this.mode('create')
+      this.name('')
+      this.path('')
+      this.id(-1)
+    },
+    editMode: function(item) {
+      this.mode('edit')
+      this.name(item.name)
+      this.path(item.path)
+      this.id(item.id)
+    },
+    show: function() {
+      this.element.modal('show')
+    },
+    close: function() {
+      this.element.modal('hide')
+      this.reset()
+    },
+    valid: function() {
+      return this.formElement.valid()
+    },
+    getData: function() {
+      return this.formElement.serialize()
+    }
+  }
+
+  table.refresh = function() {
+    http.request({
+      url: sharesPath,
+      success: function (data) {
+        items = data.items
+        table.items.removeAll()
+        _.each(items, function(item) {
+          table.items.push({
+            id: item.id,
+            name: item.name,
+            path: item.path,
+            edit: editItem,
+            editSecurity: editSecurity,
+            delete: deleteItem
+          })
+        })
+      }
+    })
+  }
+
+  table.createShare = function() {
+    if (!table.editModal.valid()) return
+    var data = table.editModal.getData()
+    http.request({
+      url: sharesPath,
+      data: data,
+      success: function() {
+        table.refresh()
+      },
+      type: 'POST'
+    })
+    table.editModal.close()
+  }
+
+  table.updateShare = function() {
+    if (!table.editModal.valid()) return
+    var data = table.editModal.getData()
+    http.request({
+      url: sharesPath,
+      data: data,
+      success: function() {
+        table.refresh()
+      },
+      type: 'PATCH'
+    })
+    table.editModal.close()
+  }
+
+  // private methods
+
+  function deleteItem() {
+    var item = this
+    if (confirm('<%= I18n.t "messages.confirm_deletion" %>')) {
+      http.request({
+        url: sharesPath,
+        type: 'DELETE',
+        data: { id: item.id },
+        success: function() {
+          table.refresh()
+        }
+      })
+    }
+  }
+
+  function editItem() {
+    var item = this
+    table.editModal.editMode(this)
+    table.editModal.show()
+  }
+
+  
+
+  function editSecurity() {
+    var item = this
+    alert('edit_security')
+  }
+
+  // initialization
+
+  table.refresh()
+}
+
+dt = new Datatable()
+ko.applyBindings(dt)

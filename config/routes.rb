@@ -24,6 +24,11 @@ FilesBrowser::Application.routes.draw do
   namespace :settings do
     get '/profile', to: 'profile#edit', as: :edit_profile
     patch '/profile', to: 'profile#update', as: :update_profile
+
+    get '/shares', to: 'shares#index', as: :shares
+    post '/shares', to: 'shares#create', as: :create_share
+    patch '/shares', to: 'shares#update', as: :update_share
+    delete '/shares', to: 'shares#delete', as: :delete_share
   end
 
 end

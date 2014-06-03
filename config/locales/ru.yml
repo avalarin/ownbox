@@ -1,11 +1,19 @@
 ru: 
     commands:
+        ok: 'Ok'
         close: 'Закрыть'
         upload: 'Загрузить'
         choose: 'Выбрать'
         create: 'Создать'
         register: 'Зарегистрироваться'
         save: 'Сохранить'
+        cancel: 'Отмена'
+        delete: 'Удалить'
+        edit: 'Редактировать'
+        security: 'Безопасность'
+        refresh: 'Обновить'
+    messages:
+        confirm_deletion: 'Подтвердите удаление:'
     layouts:
         application:
             admin_area: 'Административная часть'
@@ -17,6 +25,10 @@ ru:
             home: 'Домашняя страница'
             settings: 'Настройки'
             logout: 'Выйти'
+        error_modal:
+            modal_header: 'Ошибка'
+            modal_message: 'Возникла непредвиденная ошибка. Скорее всего мы уже работаем над ее решением.'
+            error_details: 'Детали ошибки:'
     admin:
         admin:
             index:
@@ -32,6 +44,14 @@ ru:
                 email: 'Email'
             update:
                 profile_updated: 'Профиль обновлен'
+        shares:
+            index:
+                create_share_modal_header: 'Новая общая папка'
+                page_header: 'Общие папки'
+                name_column: 'Название'
+                path_column: 'Путь к папке'
+                share_name: 'Название'
+                share_path: 'Путь к папке'
     session:
         new:
             login_to_continue: 'Введите ваш email и пароль'
