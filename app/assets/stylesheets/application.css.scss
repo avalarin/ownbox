@@ -2,9 +2,10 @@
  *= require_self
  */
 @import "bootstrap-custom";
-@import "site-footer";
-@import "font-awesome";
 @import "mixins";
+@import "font-awesome";
+@import "site-footer";
+@import "site-loader";
 
 .avatar {
   float: left;
@@ -50,8 +51,7 @@ a {
   i.fa {
     text-decoration: inherit;
   }
-}
-
-a:hover {
-  color: #333;
+  &:hover {
+    color: #333;
+  }
 }
