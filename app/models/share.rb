@@ -1,6 +1,6 @@
 class Share < ActiveRecord::Base
-  validates :name, :path, presence: true
-  validates :name, length: { minimum: 5 }
+  validates :name, :path, :user, presence: true
+  validates :name, length: { minimum: 3 }
 
   belongs_to :user
 
