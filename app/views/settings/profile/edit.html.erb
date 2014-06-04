@@ -1,29 +1,17 @@
 <%= bt_panel header: t('.page_header') do %>
   <%= validation_errors @user %>
-  <%= form_for @user, url: settings_update_profile_path, html: { class: "form-horizontal" } do |f| %>
-    <div class="form-group">
-      <label for="user_name" class="col-sm-3 control-label"><%= t(".name") %></label>
-      <div class="col-sm-4">
-        <p class="form-control-static"><%= @user.name %></p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="user_email" class="col-sm-3 control-label"><%= t(".email") %></label>
-      <div class="col-sm-4">
-        <p class="form-control-static"><%= @user.email %></p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="user_display_name" class="col-sm-3 control-label"><%= t(".display_name") %></label>
-      <div class="col-sm-4">
-        <%= f.text_field :display_name, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-4">
-        <%= f.submit t("commands.save"), class: "btn btn-primary" %>
-      </div>
-    </div>
+  <%= bt_form_for @user, url: settings_update_profile_path, method: :patch do |f| %>
+    <%= f.group property: :name, label: t('.name') do |g| %>
+      <%= g.text_input %>
+    <% end %>
+    <%= f.group property: :email, label: t('.email') do |g| %>
+      <%= g.text_input %>
+    <% end %>
+    <%= f.group property: :display_name, label: t('.display_name') do |g| %>
+      <%= g.text_input %>
+    <% end %>
+    <%= f.group do |g| %>
+      <%= g.submit_button style: :primary, text: t("commands.save") %>
+    <% end %>
   <% end %>
 <% end %>
