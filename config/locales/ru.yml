@@ -52,6 +52,12 @@ ru:
                 path_column: 'Путь к папке'
                 share_name: 'Название'
                 share_path: 'Путь к папке'
+        security:
+            edit:
+                change_password_header: 'Смена пароля'
+                old_password: 'Старый пароль'
+                new_password: 'Новый пароль'
+                password_confirmation: 'Подтверждение пароля'
     session:
         new:
             login_to_continue: 'Введите ваш email и пароль'

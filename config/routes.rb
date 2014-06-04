@@ -29,6 +29,9 @@ FilesBrowser::Application.routes.draw do
     post '/shares', to: 'shares#create', as: :create_share
     patch '/shares', to: 'shares#update', as: :update_share
     delete '/shares', to: 'shares#delete', as: :delete_share
+
+    get '/security', to: 'security#edit', as: :edit_security
+    patch '/security', to: 'security#update', as: :update_security
   end
 
 end

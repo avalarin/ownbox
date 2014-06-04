@@ -1,0 +1,21 @@
+<%= bt_panel header: t('.change_password_header') do %>
+  <%= validation_errors @user %>
+  <%= bt_form_for @user, url: settings_update_security_path, method: :patch do |f| %>
+    
+    <%= f.group property: :old_password, label: t('.old_password') do |g| %>
+      <%= g.password_input %>
+    <% end %>
+
+    <%= f.group property: :password, label: t('.new_password') do |g| %>
+        <%= g.password_input %>
+    <% end %>
+
+    <%= f.group property: :password_confirmation, label: t('.password_confirmation') do |g| %>
+      <%= g.password_input %>
+    <% end %>
+
+    <%= f.group do |g| %>
+      <%= g.submit_button style: :primary, text: t("commands.save") %>
+    <% end %>
+  <% end %>
+<% end %>
