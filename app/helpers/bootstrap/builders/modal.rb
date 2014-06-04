@@ -31,7 +31,9 @@ module Bootstrap
         @body_html ||= ""
         @footer_html ||= ""
         
-        html = get_html_attributes "modal fade", [ :id ], options
+        html = get_html_attributes "modal fade", options, {
+          id: options[:id]
+        }
 
         template.content_tag :div, html do
           template.content_tag :div, class: "modal-dialog" do

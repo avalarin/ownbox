@@ -29,14 +29,14 @@ module Bootstrap
         block ? template.capture(self, &block) : ""
       end
 
-      def get_html_attributes base_css = "", from_options = [], options = {}
+      def get_html_attributes base_css = "", options = {}, defaults = {}
         html = options[:html] || {}
         if html[:class] && base_css
           html[:class] = base_css + " " + html[:class]
         elsif base_css
           html[:class] = base_css
         end
-        from_options.each { |e| html[e] ||= options[e] }
+        defaults.each { |k, v| html[k] = v }
         if (options[:data] && options[:data].class == Hash)
           options[:data].each do |k, v|
             html["data-" + k.to_s] = v
