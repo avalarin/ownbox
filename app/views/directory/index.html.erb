@@ -12,10 +12,10 @@
           <td>
             <div class="item-progress" data-bind="style: { width: uploadedPercentage() + '%' }"></div>
             <div class="item-text">
-              <%= icon 'upload' %>
+              <%= bt_icon 'upload' %>
               <span data-bind="text: name"></span>
             </div>
-            <a href="javascript:" class="item-delete" data-bind="click: $data.delete"><%= icon 'times' %></a>
+            <a href="javascript:" class="item-delete" data-bind="click: $data.delete"><%= bt_icon 'times' %></a>
           </td>
         </tr>
       </tbody>
@@ -28,7 +28,7 @@
       <li>
         <a href="javascript:" data-bind="click: $parent.go">
           <!-- ko if: isRoot -->
-          <%= icon 'home' %>
+          <%= bt_icon 'home' %>
           <!-- /ko -->
           <span data-bind="html: name"></span>
         </a>
@@ -36,19 +36,19 @@
     </ul>
     <div class="btn-toolbar">
       <a href="javascript:" class="btn btn-xs btn-default" data-bind="click: refresh">
-        <%= icon 'refresh' %>
+        <%= bt_icon 'refresh' %>
         <%= t ".refresh" %>
       </a>
       <a href="javascript:" class="btn btn-xs btn-default" data-bind="click: createDir, visible: canCreateDir">
-        <%= icon 'folder' %>
+        <%= bt_icon 'folder' %>
         <%= t ".create_directory" %>
       </a>
       <a href="javascript:" class="btn btn-xs btn-default" data-bind="click: uploadFile">
-        <%= icon 'upload' %>
+        <%= bt_icon 'upload' %>
         <%= t ".upload_file" %>
       </a>
       <a href="javascript:" class="btn btn-xs btn-danger" data-bind="click: deleteItem, visible: selected().length">
-        <%= icon 'trash-o' %>
+        <%= bt_icon 'trash-o' %>
         <%= t ".delete_item" %>
       </a>
     </div>
@@ -64,7 +64,7 @@
     </thead>
     <tbody>
       <tr class="hidden" id="new-directory">
-        <td class="column-icon">
+        <td class="column-bt_icon">
           <%= image_tag image_path('directory.png') %>
         </td>
         <td class="column-name"><input name="name" type="text"></input></td>
@@ -111,7 +111,7 @@
               <td class="column-name" data-bind="text: name"></td>
               <td class="column-size" data-bind="text: size"></td>
               <td class="column-actions">
-                <a href="javascript:" data-bind="click: $data.delete"><%= icon 'times' %></a>
+                <a href="javascript:" data-bind="click: $data.delete"><%= bt_icon 'times' %></a>
               </td>
             </tr>
           </tbody>
