@@ -37,6 +37,8 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem 'settingslogic'
 gem "mini_magick"
 
+gem 'haml-rails'
+
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
