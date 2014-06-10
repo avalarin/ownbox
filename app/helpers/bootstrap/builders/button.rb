@@ -17,6 +17,7 @@ module Bootstrap
 
         css = Button.get_button_class options
         html = get_html_attributes css, options, {
+          id: options[:id],
           title: options[:title],
           href: options[:href]
         }
