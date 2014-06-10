@@ -1,13 +1,17 @@
 module DataItemHelper
   def create_item_link item
-    if item.type == 'directory' 
-      url_for({ only_path: true,
-        controller: :directory, 
-        action: :index, 
-        # генерация пути вида /home/... если текущий пользователь является владельцем
-        user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
-        path: item.path.to_s_non_rooted
-      })
+    if item.is_a? DirectoryItem 
+      if item.directory_type == :users_directory
+        shares_index_path
+      else
+        url_for({ only_path: true,
+          controller: :directory, 
+          action: :index, 
+          # генерация пути вида /home/... если текущий пользователь является владельцем
+          user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
+          path: item.path.to_s_non_rooted
+        })
+      end
     else
       url_for({ only_path: true,
         controller: :file, 
@@ -23,8 +27,7 @@ module DataItemHelper
       url_for({ only_path: true,
         controller: :file, 
         action: :preview, 
-        # генерация пути вида /home/... если текущий пользователь является владельцем
-        user_name: item.owner.name == current_user.name ? nil : item.owner.name, 
+        user_name: item.owner.name, 
         path: item.path.to_s_non_rooted
       })
     else

@@ -1,6 +1,7 @@
 //= require knockout
 //= require modules/http
 //= require modules/messages
+//= require typeahead
 
 function Datatable() {
 
@@ -11,6 +12,9 @@ function Datatable() {
   var modals = require('messages')
   var $ = require('jquery')
   var sharesPath = '/settings/shares/'
+  var usersPath = '/users.json'
+  var userPath = '/users/{userName}.json'
+  var sharePermissionsPath = '/settings/shares/{shareId}/permissions.json'
   var table = this
 
   // public methods
@@ -50,6 +54,95 @@ function Datatable() {
     getData: function() {
       return this.formElement.serialize()
     }
+  }
+
+  table.securityModal = {
+    element: $('#security-modal'),
+    userNameInput: $('#security-modal #user-name'),
+    items: ko.observableArray([]),
+    share: undefined,
+
+    reset: function() {
+      shareId = undefined
+      this.items.removeAll()
+    },
+    show: function(share) {
+      this.share = share
+      var modal = this
+      http.request({
+        url: sharePermissionsPath.replace("{shareId}", share.id),
+        success: function(data) {
+          _.each(data, function(p) {
+            modal.items.push(modal.wrapItem(p.user.name, p.user.email, p.user.displayName, p.permission))
+          })
+          modal.element.modal('show')
+        }
+      })
+    },
+    close: function() {
+      this.element.modal('hide')
+      this.reset()
+    },
+    save: function() {
+      var modal = this
+      http.request({
+        url: sharePermissionsPath.replace("{shareId}", modal.share.id),
+        type: 'PATCH',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({ permissions: _.map(modal.items(), function (p) { return { user: p.name, permission: p.mode() } }) }),
+        success: function() {
+          messages.success('<%= I18n.t "settings.shares.index.permissions_updated" %>')
+        }
+      })
+      this.close() 
+    },
+
+    addUser: function() {
+      var userName = this.userNameInput.val()
+      if (!userName) return
+      var modal = this
+      http.request({
+        url: userPath.replace("{userName}", userName),
+        error: function(status, message, data) {
+          if (status == 404) {
+            alert('<%= I18n.t "messages.user_not_found" %>')
+          } else {
+            http.defaultErrorHandler(status, message, data)
+          }
+        },
+        success: function(data) {
+          if (_.find(modal.items(), function (u) { return u.name == data.name })) {
+            alert('<%= I18n.t "messages.item_already_found" %>')
+            return
+          }
+          modal.items.push(modal.wrapItem(data.name, data.email, data.displayName, "readonly"))
+          modal.userNameInput.val("")
+        }
+      })
+
+      
+    },
+    wrapItem: function(name, email, displayName, permission) {
+      return {
+        name: name,
+        email: email,
+        displayName: displayName,
+        mode: ko.observable(permission),
+
+        switchReadOnly: function() {
+          this.mode("readonly")
+        },
+        switchReadWrite: function() {
+          this.mode("readwrite")
+        },
+        remove: function() {
+          table.securityModal.items.remove(this)
+        }
+      }
+    }
+
+
   }
 
   table.refresh = function() {
@@ -123,15 +216,31 @@ function Datatable() {
   }
 
   
-
   function editSecurity() {
     var item = this
-    alert('edit_security')
+    table.securityModal.show(item)
   }
 
   // initialization
-
   table.refresh()
+
+  var usersList = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    limit: 10,
+    prefetch: usersPath
+  })
+  usersList.initialize()
+
+  $("#security-modal #user-name").typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 1
+  },
+  { name: 'users',
+    displayKey: 'name',
+    source: usersList.ttAdapter() 
+  })
 }
 
 dt = new Datatable()

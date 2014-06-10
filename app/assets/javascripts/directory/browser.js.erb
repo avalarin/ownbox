@@ -39,11 +39,12 @@ function Browser(currentItem) {
         for (var i = 0; i < path.length; i++) {
           browser.path.push(wrapItem(path[i]))
         }
-        if (item.url != history.state.url) {
-          history.pushState(item.historyState, item.name, item.url)
+        currentItem = wrapItem(data.currentItem)
+        if (currentItem.url != history.state.url) {
+          history.pushState(currentItem.historyState, currentItem.name, currentItem.url)
         }
-        $('title').text(item.name)
-        browser.currentItem(item)
+        $('title').text(currentItem.name)
+        browser.currentItem(currentItem)
         $('.browser').removeClass('loading')
       }
     })
@@ -125,7 +126,7 @@ function Browser(currentItem) {
         data: {
           user_name: browser.currentItem().owner,
           path: browser.currentItem().path,
-          name: _.map(selected, function(item) { return item.name; }).join()
+          name: _.map(selected, function(item) { return item.name; }).join('|')
         },
         success: function() {
           _.each(selected, function(item) {
@@ -161,6 +162,13 @@ function Browser(currentItem) {
   }
 
   browser.refresh()
+
+  $('#private-data, #shared-data').click(function(e) {
+    var url = $(this).attr('href');
+    var item = { type: 'directory', url: url }
+    browser.go(item)
+    return false
+  });
 
   $('#upload-file-modal input[type=file]').on('change', function(e) {
     var files = FileAPI.getFiles(this);
@@ -227,12 +235,13 @@ function Browser(currentItem) {
       name: item.name,
       path: item.path,
       url: item.url,
-      preview_url: item.preview_url,
+      previewUrl: item.preview_url,
       type: item.type,
       size: item.size,
-      human_size: item.human_size,
+      permission: item.permission,
+      humanSize: item.human_size,
+      directoryType: item.directory_type,
       isSelected: ko.observable(false),
-      isRoot: item.path.trim() == '/' || item.path.trim() == '',
       isNew: ko.observable(false),
       isDeleted: ko.observable(false)
     }

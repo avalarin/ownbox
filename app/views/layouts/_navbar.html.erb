@@ -12,11 +12,20 @@
                 <span><%= Settings.app_name %></span>
             </a>
         </div>
-        <ul class="nav navbar-nav navbar-right nav-condensed">
+        <ul class="nav navbar-nav">
             <% if authenticated? %>
                 <li>
-                    <%= link_with_icon "", "home", current_user_items_index_path, title: t(".home") %>
+                    <%= bt_button id: "private-data", text: t(".private_data"), icon: "home", 
+                                  href: current_user_items_index_path, style: :link %>
                 </li>
+                <li>
+                    <%= bt_button id: "shared-data", text: t(".shared_data"), icon: "group", 
+                                  href: shares_index_path, style: :link %>
+                </li>
+            <% end %>       
+        </ul>
+        <ul class="nav navbar-nav navbar-right nav-condensed">
+            <% if authenticated? %>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <%= current_user.display_name %> <span class="caret"></span>

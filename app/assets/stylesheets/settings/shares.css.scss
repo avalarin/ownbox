@@ -1,3 +1,5 @@
+@import "typeahead";
+
 .column-name {
   width: 150px;
 }
@@ -6,4 +8,40 @@
 }
 .column-actions {
   width: 90px;
+}
+
+#security-modal {
+  .select-user {
+    margin-bottom: 10px;
+  }
+
+  .modal-body {
+    padding-bottom: 0px;
+  }
+
+  table {
+    padding-bottom: 0px;
+
+    .column-security-name {
+      width: auto;
+
+      .user-name, .user-email {
+        font-size: 70%;
+        color: #999999;
+      }
+
+    }
+
+    .column-security-actions {
+      width: 155px;
+      text-align: right;
+      vertical-align: middle;
+    }
+
+  }
+
+  .modal-footer {
+    margin-top: 10px;
+  }
+
 }

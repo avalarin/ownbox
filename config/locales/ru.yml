@@ -14,6 +14,8 @@ ru:
         refresh: 'Обновить'
     messages:
         confirm_deletion: 'Подтвердите удаление:'
+        user_not_found: 'Пользователь не существует'
+        item_already_found: 'Запись уже существует'
     layouts:
         application:
             admin_area: 'Административная часть'
@@ -22,6 +24,8 @@ ru:
             shares: 'Общие папки'
             security: 'Безопасность'
         navbar:
+            private_data: 'Мои файлы'
+            shared_data: 'Общие папки'
             home: 'Домашняя страница'
             settings: 'Настройки'
             logout: 'Выйти'
@@ -47,11 +51,18 @@ ru:
         shares:
             index:
                 create_share_modal_header: 'Новая общая папка'
+                security_modal_header: 'Доступ к общей папке'
                 page_header: 'Общие папки'
                 name_column: 'Название'
                 path_column: 'Путь к папке'
                 share_name: 'Название'
                 share_path: 'Путь к папке'
+                user_name: 'Имя пользователя'
+                security_user_name_column: 'Пользователь'
+                unvisible_share: 'Эта папка никому не видна. Добавьте пользователей для управления разрешениями.'
+                security_readonly: 'Только чтение'
+                security_readwrite: 'Чтение и запись'
+                permissions_updated: 'Разрешения обновлены'
         security:
             edit:
                 change_password_header: 'Смена пароля'
@@ -80,6 +91,7 @@ ru:
             directory_created: 'Папка создана'
             item_deleted: 'Удалено'
             confirm_item_deletion: 'Подтвердите удаление.'
+            shared_directories: 'Общие папки'
 
             upload_modal:
                 header: 'Загрузить файлы'

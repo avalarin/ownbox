@@ -1,0 +1,73 @@
+= bt_panel header: t(".page_header") do |p|
+  - p.body do
+    = bt_button icon: "plus", text: t("commands.create"), size: :small, data: { toggle: "modal", target: "#edit-modal" }
+    = bt_button icon: "refresh", text: t("commands.refresh"), size: :small, data: { bind: 'click: refresh' }
+  - p.table do
+    %table.table.table-bordered.table-stripped
+      %thead
+        %tr
+          %th.column-name= t '.name_column'
+          %th.column-path= t '.path_column'
+          %th.column-actions
+      %tbody
+        / ko foreach: items
+        %tr
+          %td.column-name{ "data-bind" => "text: name" }
+          %td.column-path{ "data-bind" => "text: path" }
+          %td.column-actions
+            = bt_button icon: 'shield', size: :xsmall, title: t('commands.security'), data: { bind: 'click: $data.editSecurity' }
+            = bt_button icon: 'pencil', size: :xsmall, title: t('commands.edit'), data: { bind: 'click: $data.edit' }
+            = bt_button icon: 'trash-o', size: :xsmall, style: :danger, title: t('commands.delete'), data: { bind: 'click: $data.delete' }
+        / /ko
+
+= bt_modal id: "edit-modal", header: t('.create_share_modal_header'), data: { bind: 'with: editModal' } do |m| 
+  - m.body do 
+    = bt_form_for :share, label_col_size: 3, controls_col_size: 9 do |f| 
+      = f.hidden_input property: :id, data: { bind: 'value: id' } 
+      = f.group property: :name, label: t('.share_name') do |g| 
+        = g.text_input data: { bind: 'value: name' } 
+      = f.group property: :path, label: t('.share_path') do |g| 
+        = g.text_input data: { bind: 'value: path' } 
+  - m.footer do 
+    / ko if: mode() == 'create'
+    = bt_button style: :primary, text: t("commands.create"), data: { bind: "click: $root.createShare" } 
+    / /ko
+    / ko if: mode() == 'edit'
+    = bt_button style: :primary, text: t("commands.save"), data: { bind: "click: $root.updateShare" } 
+    / /ko
+    = bt_button text: t("commands.cancel"), size: :small, data: { bind: "click: close" } 
+
+= bt_modal id: "security-modal", header: t('.security_modal_header'), data: { bind: 'with: securityModal' } do |m| 
+  - m.body do 
+    .input-group.select-user
+      %input#user-name.form-control{ "type" => "text", "placeholder" => t(".user_name") }
+      %span.input-group-btn
+        = bt_button icon: "plus", data: { bind: "click: addUser" }
+    / ko if: items().length == 0
+    .alert.alert-warning
+      = t ".unvisible_share"
+    / /ko
+    / ko if: items().length > 0
+    %table.table.table-condensed.table-bordered
+      %tbody
+        / ko foreach: items
+        %tr
+          %td.column-security-name
+            .user-main-name
+              %span.user-display-name{ "data-bind" => "text: displayName" }
+              %span.user-name{ "data-bind" => "text: name" }
+            .user-second-name
+              %span.user-email{ "data-bind" => "text: email" }
+          %td.column-security-actions
+            / ko if: mode() == 'readonly' 
+            = bt_button icon: 'shield', size: :xsmall, style: :success, text: t('.security_readonly'), data: { bind: 'click: switchReadWrite' }
+            / /ko
+            / ko if: mode() == 'readwrite' 
+            = bt_button icon: 'pencil', size: :xsmall, style: :warning, text: t('.security_readwrite'), data: { bind: 'click: switchReadOnly' }
+            / /ko
+            = bt_button icon: 'trash-o', size: :xsmall, style: :danger, title: t('commands.delete'), data: { bind: 'click: remove' }
+        / /ko
+    / /ko
+  - m.footer do 
+    = bt_button style: :primary, text: t("commands.save"), data: { bind: "click: save" } 
+    = bt_button text: t("commands.cancel"), size: :small, data: { bind: "click: close" } 

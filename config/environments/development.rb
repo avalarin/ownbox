@@ -17,11 +17,11 @@ FilesBrowser::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => '2003640b3b27ccb8a',
-    :password => '74e5d5b78cb073',
+    :user_name => '20036b2e9528404e3',
+    :password => '544c1a215adfd7',
     :address => 'mailtrap.io',
     :domain => 'mailtrap.io',
-    :port => '2525',
+    :port => '25',
     :authentication => :cram_md5,
     :enable_starttls_auto => true
   }

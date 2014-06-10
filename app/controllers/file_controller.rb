@@ -1,4 +1,5 @@
 class FileController < ItemsController
+
   def get
     File.open(item.full_path) do |f|
       send_data f.read, disposition: 'attachment'
@@ -15,4 +16,5 @@ class FileController < ItemsController
     uploaded = service.upload_file item.path, file
     render_api_resp :ok
   end
+  
 end

@@ -27,8 +27,17 @@
     <ul class="browser-location" data-bind="foreach: path">
       <li>
         <a href="javascript:" data-bind="click: $parent.go">
-          <!-- ko if: isRoot -->
+          <!-- ko if: directoryType == "home_directory" -->
           <%= bt_icon 'home' %>
+          <!-- /ko -->
+          <!-- ko if: directoryType == "users_directory" -->
+          <%= bt_icon 'group' %>
+          <!-- /ko -->
+          <!-- ko if: directoryType == "shares_directory" -->
+          <%= bt_icon 'user' %>
+          <!-- /ko -->
+          <!-- ko if: directoryType == "general" -->
+          <%= bt_icon 'folder' %>
           <!-- /ko -->
           <span data-bind="html: name"></span>
         </a>
@@ -39,6 +48,7 @@
         <%= bt_icon 'refresh' %>
         <%= t ".refresh" %>
       </a>
+      <!-- ko if: currentItem().permission == "readwrite" -->
       <a href="javascript:" class="btn btn-xs btn-default" data-bind="click: createDir, visible: canCreateDir">
         <%= bt_icon 'folder' %>
         <%= t ".create_directory" %>
@@ -51,6 +61,7 @@
         <%= bt_icon 'trash-o' %>
         <%= t ".delete_item" %>
       </a>
+      <!-- /ko -->
     </div>
   </div>
 
@@ -73,12 +84,12 @@
       <!-- ko foreach: items -->
       <tr data-bind="css: { selected: isSelected, deleted: isDeleted, new: isNew }, click: $parent.selectUnselect">
         <td class="column-icon">
-          <img data-bind="attr: { src: preview_url }" />
+          <img data-bind="attr: { src: previewUrl }" />
         </td>
         <td class="column-name">
           <a href="javascript:" data-bind="click: $parent.go, text: name"></a>
         </td>
-        <td class="column-size" data-bind="text: human_size"></td>
+        <td class="column-size" data-bind="text: humanSize"></td>
       </tr>
       <!-- /ko -->
     </tbody>

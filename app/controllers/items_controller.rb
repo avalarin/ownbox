@@ -1,14 +1,19 @@
 class ItemsController < ApplicationController
   include DataItemHelper
   attr_reader :target_user, :item_path, :service, :item
+
   before_filter :authorize
   before_action do
     @target_user = get_user
     @item_path = get_path
-    @service = DataService.new current_user, target_user 
-    @item = service.get_item item_path
 
-    if !@item
+    if (!target_user || target_user.id != current_user.id)
+      @service = SharedDataService.new current_user, target_user
+    else
+      @service = PrivateDataService.new current_user 
+    end
+    @item = service.get_item item_path
+    unless @item
       render_not_found
       false
     end
@@ -19,8 +24,10 @@ class ItemsController < ApplicationController
   def get_user
     if (params['user_name'] == :current_user)
       current_user
-    else
+    elsif params['user_name']
       User.find_by_name(params['user_name'])
+    else
+      nil
     end
   end
 
