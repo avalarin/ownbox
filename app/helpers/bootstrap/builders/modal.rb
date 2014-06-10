@@ -8,7 +8,7 @@ module Bootstrap
         header do
           template.concat(template.link_to("×", "#",class: 'close', data: { dismiss: 'modal'}))
           
-          template.concat(template.content_tag(:h3, options[:header]))
+          template.concat(template.content_tag(:h4, options[:header], class: "modal-title"))
         end
       end
 
