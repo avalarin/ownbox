@@ -1,7 +1,13 @@
 module RenderHelper
 
   def render_not_found
-    render :file => 'public/404.html', :status => :not_found, :layout => false
+
+    respond_to do |format|
+      format.html { render :file => 'public/404.html', :status => :not_found, :layout => false }
+      format.json { render_api_resp :not_found }
+    end
+
+    
   end
 
   def render_api_resp status, options = {}
