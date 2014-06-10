@@ -3,7 +3,7 @@ class Settings < Settingslogic
     namespace Rails.env
 
     # Настройки по умолчанию
-    Settings['app_name'] ||= 'Files'
+    Settings['app_name'] ||= 'Ownbox'
 
     # Папка для хранения пользовательских данных
     Settings['home_directories_path'] ||= 'data'
@@ -18,6 +18,6 @@ class Settings < Settingslogic
 
     # Настройки отправки почты
     Settings['mailer'] ||= Settingslogic.new({})
-    Settings.mailer['from'] ||= 'files@example.com'
+    Settings.mailer['from'] ||= 'ownbox@example.com'
 
 end
