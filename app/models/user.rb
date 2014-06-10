@@ -19,4 +19,13 @@ class User < ActiveRecord::Base
     File.expand_path(home_directory, base)
   end
 
+  def roles= roles
+    write_attribute(:roles, roles.join(';'))
+  end
+
+  def roles
+    roles_str = read_attribute(:roles)
+    roles_str ? roles_str.split(';') : []
+  end
+
 end
