@@ -1,0 +1,52 @@
+- content_for :filters do
+  = search_box
+  = filters_list @filters
+= bt_panel data: { bind: 'with: datatable' } do |p|
+  - p.header do
+    %span=t('.page_header')
+    %span{ "data-bind" => "text: '(' + items().length + ')'" }
+  - p.body do
+    = bt_button icon: "plus", text: t("commands.create"), size: :small, style: :success, data: { bind: 'click: $root.createModal.show' }
+    = bt_button icon: "refresh", text: t("commands.refresh"), size: :small, data: { bind: 'click: refresh' }
+  - p.table do
+    %table.table.table-bordered.table-stripped.table-hover
+      %tbody
+        / ko if: items().length == 0
+        %tr
+          %td
+            %div.datatable-empty-message=t('.no_users')
+        / /ko
+        / ko foreach: items
+        %tr
+          %td.column-left
+            = bt_icon :user
+            %a{ "href" => "javascript:", "data-bind" => "text: displayName" }
+            = bt_label t('.is_current_user'), style: :success, data: { bind: 'visible: current' }
+            = bt_label t('.is_admin_user'), style: :warning, data: { bind: 'visible: _.contains(roles, "admin")' }
+            = bt_label t('.is_locked'), style: :danger, data: { bind: 'visible: locked' }
+            = bt_label t('.not_approved'), style: :warning, data: { bind: 'visible: !approved' }
+          %td.column-right
+            = bt_icon :envelope
+            %span{ "data-bind" => "text: email" }
+            = bt_button icon: 'envelope', size: :xsmall, title: t('commands.send_activation_email'), data: { bind: 'click: $parent.sendActivationEmail, visible: !approved' }
+            = bt_button icon: 'lock', size: :xsmall, style: :danger, title: t('commands.lock'), data: { bind: 'click: $parent.lockUser, visible: !locked && !current' }
+            = bt_button icon: 'lock', size: :xsmall, style: :success, title: t('commands.unlock'), data: { bind: 'click: $parent.unlockUser, visible: locked' }
+        / /ko
+
+= bt_modal id: "create-modal", header: t('.create_modal_header'), data: { bind: 'with: createModal' } do |m| 
+  - m.body do 
+    = bt_form_for :user, label_col_size: 4, controls_col_size: 8 do |f| 
+      = f.group property: :name, label: t('.user_name') do |g| 
+        = g.text_input data: { bind: 'value: name' } 
+      = f.group property: :display_name, label: t('.user_display_name') do |g| 
+        = g.text_input data: { bind: 'value: displayName' } 
+      = f.group property: :email, label: t('.user_email') do |g| 
+        = g.text_input data: { bind: 'value: email' } 
+      = f.group property: :password, label: t('.user_password') do |g| 
+        = g.password_input data: { bind: 'value: password' } 
+      = f.group property: :password_confirmation, label: t('.user_password_confirmation') do |g| 
+        = g.password_input data: { bind: 'value: passwordConfirmation' } 
+
+  - m.footer do 
+    = bt_button style: :success, text: t("commands.create"), data: { bind: "click: save" } 
+    = bt_button text: t("commands.cancel"), size: :small, data: { bind: "click: close" } 

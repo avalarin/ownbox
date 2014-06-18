@@ -1,0 +1,17 @@
+- content_for :sub_nav do
+  .navbar.navbar-default.navbar-second.navbar-static-top
+    .container
+      %ul.nav.navbar-nav.navbar-nav-justified
+        %li=link_with_icon t('.settings'), "sliders", admin_users_index_path
+        %li=link_with_icon t('.users'), "users", admin_users_index_path
+        %li=link_with_icon t('.ivites'), "ticket", admin_users_index_path
+-content_for :content do
+  .row
+    .col-md-3
+      = content_for?(:filters) ? yield(:filters) : ''
+    .col-md-9
+      -content_for :messages do '' end
+      =render 'layouts/messages'
+      =yield
+-@hide_messages = true
+=render template: "layouts/application"

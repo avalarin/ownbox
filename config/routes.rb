@@ -41,4 +41,13 @@ FilesBrowser::Application.routes.draw do
     patch '/security', to: 'security#update', as: :update_security
   end
 
+  namespace :admin do
+    get '/', to: 'home#index', as: :home
+
+    get '/users', to: 'users#index', as: :users_index
+    post '/users', to: 'users#create', as: :create_user
+    post '/users/:user_name/send_email', to: 'users#send_activation_email', as: :send_user_activation_email
+    patch '/users/:user_name', to: 'users#update', as: :update_user
+  end
+
 end

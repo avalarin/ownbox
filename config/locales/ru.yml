@@ -12,10 +12,19 @@ ru:
         edit: 'Редактировать'
         security: 'Безопасность'
         refresh: 'Обновить'
+        lock: 'Заблокировать'
+        unlock: 'Разблокировать'
+        search: 'Поиск'
+        send_activation_email: 'Отправить запрос на активацию'
     messages:
         confirm_deletion: 'Подтвердите удаление:'
         user_not_found: 'Пользователь не существует'
         item_already_found: 'Запись уже существует'
+
+        user:
+            locked: 'Пользователь заблокирован'
+            unlocked: 'Пользователь разблокирован'
+            activation_email_sended: 'Письмо отправлено'
     layouts:
         application:
             admin_area: 'Административная часть'
@@ -23,9 +32,14 @@ ru:
             profile: 'Профиль'
             shares: 'Общие папки'
             security: 'Безопасность'
+        admin:
+            users: 'Пользователи'
+            settings: 'Настройки'
+            ivites: 'Инвайты'
         navbar:
             private_data: 'Мои файлы'
             shared_data: 'Общие папки'
+            admin_area: 'Администрирование'
             home: 'Домашняя страница'
             settings: 'Настройки'
             logout: 'Выйти'
@@ -34,11 +48,28 @@ ru:
             modal_message: 'Возникла непредвиденная ошибка. Скорее всего мы уже работаем над ее решением.'
             error_details: 'Детали ошибки:'
     admin:
-        admin:
+        users:
             index:
-                section_general: 'Основное'
-                section_security: 'Безопасность'
-                section_status: 'Статус'
+                page_header: 'Пользователи'
+                name_column: 'Имя'
+                email_column: 'Email'
+                is_admin_user: 'Админ'
+                is_current_user: 'Вы'
+                is_locked: 'Заблокирован'
+                not_approved: 'Не активирован'
+
+                filter_all: 'Все пользователи'
+                filter_locked: 'Заблокированные'
+                filter_not_approved: 'Не активированные'
+
+                no_users: 'Пользователи не найдены.'
+
+                create_modal_header: 'Новый пользователь'
+                user_name: 'Имя пользователя'
+                user_display_name: 'Отображаемое имя'
+                user_email: 'Email'
+                user_password: 'Пароль'
+                user_password_confirmation: 'Подтверждение пароля'
     settings:
         profile:
             edit:
