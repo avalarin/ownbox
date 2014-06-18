@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
 
   helper Bootstrap::Helpers
 
-  def authorize
-    unless authenticated?
+  def authorize role = nil
+    if (!authenticated? || (role && !current_user.has_role?(role)))
       flash[:error] = t 'errors.messages.access_denied'
       if request.xhr?
         render_api_resp :unauthorized, data: {
