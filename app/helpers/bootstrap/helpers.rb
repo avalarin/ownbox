@@ -35,5 +35,16 @@ module Bootstrap
       builder.render
     end
 
+    def bt_label text, options = {}, &block
+      options[:text] = text
+      builder = ::Bootstrap::Builders::Label.new(self, options, &block)
+      builder.render
+    end
+
+    def bt_pills options = {}, &block
+      builder = ::Bootstrap::Builders::Pills.new(self, options, &block)
+      builder.render
+    end
+
   end
 end
