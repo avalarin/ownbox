@@ -25,6 +25,13 @@ define('messages', ['jquery'], function ($) {
     });
   }
 
+  function warning (message) {
+    show({
+        type: 'warning',
+        message: message
+    });
+  }
+
   function danger (message) {
     show({
         type: 'danger',
