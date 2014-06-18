@@ -1,5 +1,6 @@
 class DirectoryController < ItemsController
-
+  before_filter :authorize
+  
   def index
     return render_not_found if item.type != 'directory'
     if  request.xhr?

@@ -1,6 +1,8 @@
 class Settings::SharePermissionsController < ApplicationController
   layout "settings"
 
+  before_filter :authorize
+
   def index
     @share = Share.find_by_id params[:share_id]
     return render_not_found unless @share

@@ -1,6 +1,8 @@
 class Settings::SharesController < ApplicationController
   layout "settings"
-  
+    
+  before_filter :authorize
+
   def index
     @items = Share.get_by_user current_user
     @m = Settings::SharesController.included_modules

@@ -1,6 +1,8 @@
 class Settings::SecurityController < ApplicationController
   layout "settings"
   
+  before_filter :authorize
+  
   def edit
     @user = current_user
   end

@@ -1,4 +1,5 @@
 class FileController < ItemsController
+  before_filter :authorize
 
   def get
     File.open(item.full_path) do |f|
