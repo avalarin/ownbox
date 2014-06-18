@@ -38,9 +38,7 @@ module Admin
       permited = params.require(:user).permit(:display_name, :email, :password, 
         :password_confirmation, :approved, :locked)
       user = User.find_by_name params.require(:user_name)
-      if !user
-        render_not_found
-      end
+      return render_not_found unless user
       permited.each_pair do |k, v|
         user.send("#{k}=", v)
       end
@@ -54,9 +52,7 @@ module Admin
 
     def send_activation_email
       user = User.find_by_name params.require(:user_name)
-      if !user
-        render_not_found
-      end
+      return render_not_found unless user
       if (!user.approved)
         UserMailer.success_registration(user).deliver
         render_api_resp :ok, data: wrap_user(user)
