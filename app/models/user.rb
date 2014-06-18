@@ -19,6 +19,14 @@ class User < ActiveRecord::Base
     File.expand_path(home_directory, base)
   end
 
+  def is_admin?
+    has_role? :admin
+  end
+
+  def has_role? role
+    roles.include? role.to_s
+  end
+
   def roles= roles
     write_attribute(:roles, roles.join(';'))
   end
@@ -26,6 +34,29 @@ class User < ActiveRecord::Base
   def roles
     roles_str = read_attribute(:roles)
     roles_str ? roles_str.split(';') : []
+  end
+
+  def self.filters
+    [:all, :locked, :not_approved]
+  end
+
+  def self.filter f
+    case f
+      when :all
+        all
+      when :locked
+        where locked: true
+      when :not_approved
+        where approved: false
+      else
+        []
+      end
+  end
+
+  def self.search text
+    return all if text == nil || text.empty?
+    search = "%#{text}%"
+    all.where 'name like ? or display_name like ? or email like ?', search, search, search
   end
 
 end
