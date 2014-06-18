@@ -1,6 +1,65 @@
+$navbar-height:                    45px !default;
+$navbar-margin-bottom:             0 !default;
+
+// Inverted navbar
+// Reset inverted navbar basics
+$navbar-inverse-color:                      #E8EFF7;
+$navbar-inverse-bg:                         #527498;
+$navbar-inverse-border:                     #486A8E;
+
+// Inverted navbar links
+$navbar-inverse-link-color:                 $navbar-inverse-color;
+$navbar-inverse-link-hover-color:           #FFF;
+$navbar-inverse-link-hover-bg:              darken($navbar-inverse-bg, 5%);
+$navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color;
+$navbar-inverse-link-active-bg:             darken($navbar-inverse-bg, 10%);
+$navbar-inverse-link-disabled-color:        #444;
+$navbar-inverse-link-disabled-bg:           transparent;
+
+// Inverted navbar brand label
+$navbar-inverse-brand-color:                $navbar-inverse-link-color;
+$navbar-inverse-brand-hover-color:          $navbar-inverse-link-hover-color;
+$navbar-inverse-brand-hover-bg:             $navbar-inverse-link-hover-bg;
+
+// Inverted navbar toggle
+$navbar-inverse-toggle-hover-bg:            $navbar-inverse-link-hover-color;
+$navbar-inverse-toggle-icon-bar-bg:         $navbar-inverse-link-hover-bg;
+$navbar-inverse-toggle-border-color:        $navbar-inverse-border;
+
 @import "bootstrap";
+
+.navbar-brand {
+  img {
+    height: 28px;
+    width: 28px;
+    margin-top: -4px;
+  }
+}
 
 .nav-condensed a {
     padding-left: 8px !important;
     padding-right: 8px !important;
 } 
+
+.navbar-nav-justified {
+  margin: 0 auto;
+  display: table;
+  table-layout: auto;
+  float: none;
+  width: 100%;
+
+  li {
+    display: table-cell;
+    float: none;
+    text-align: center;
+  }
+
+}
+
+.navbar-second {
+  z-index: auto;
+}
+
+.site-content > .main-container {
+  margin-top: 20px;
+}

@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-static-top" role="navigation">
+<div class="navbar navbar-ownbox navbar-default navbar-static-top navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,6 +22,12 @@
                     <%= bt_button id: "shared-data", text: t(".shared_data"), icon: "group", 
                                   href: shares_index_path, style: :link %>
                 </li>
+                <% if current_user.is_admin? %>
+                    <li>
+                        <%= bt_button text: t(".admin_area"), icon: "gears", 
+                                      href: admin_home_path, style: :link %>
+                    <li>
+                <% end %>
             <% end %>       
         </ul>
         <ul class="nav navbar-nav navbar-right nav-condensed">
