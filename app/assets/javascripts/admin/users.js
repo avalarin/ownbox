@@ -21,7 +21,7 @@
       url: usersPath + "/" + this.name + "/send_email.json",
       success: function() {
         datatable.refresh()
-        messages.success(window.localization.activation_email_sended)
+        messages.success(window.localization.activationEmailSended)
       },
       type: 'POST'
     })
@@ -33,7 +33,7 @@
       data: { user: { locked: true } },
       success: function() {
         datatable.refresh()
-        messages.danger(window.localization.user_locked)
+        messages.danger(window.localization.userLocked)
       },
       type: 'PATCH'
     })
@@ -45,7 +45,7 @@
       data: { user: { locked: false } },
       success: function() {
         datatable.refresh()
-        messages.success(window.localization.user_unlocked)
+        messages.success(window.localization.userUnlocked)
       },
       type: 'PATCH'
     })
