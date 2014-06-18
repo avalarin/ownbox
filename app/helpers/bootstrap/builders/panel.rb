@@ -25,7 +25,12 @@ module Bootstrap
       def render
         @all_html = capture_content
         @body_html = @all_html if @capture_all
-        template.content_tag :div, class: "panel panel-default" do
+
+        html = get_html_attributes "panel panel-default", options, {
+          id: options[:id]
+        }
+
+        template.content_tag :div, html do
           template.concat(template.content_tag(:div, @header_html, class: "panel-heading"))
           template.concat(template.content_tag(:div, @body_html, class: "panel-body")) if @body_html
           template.concat(@table_html) if @table_html
