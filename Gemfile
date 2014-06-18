@@ -32,6 +32,8 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'will_paginate', '~> 3.0'
+
 gem 'validates_email_format_of'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'settingslogic'
