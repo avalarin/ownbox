@@ -1,0 +1,26 @@
+- content_for :filters do
+  = filters_list @filters
+= bt_panel data: { bind: 'with: datatable' } do |p|
+  - p.header do
+    %span=t('.page_header')
+    %span{ "data-bind" => "text: '(' + items().length + ')'" }
+  - p.body do
+    = bt_button icon: "plus", text: t("commands.create"), size: :small, style: :success, data: { bind: 'click: create' }
+    = bt_button icon: "refresh", text: t("commands.refresh"), size: :small, data: { bind: 'click: refresh' }
+  - p.table do
+    %table.table.table-bordered.table-stripped.table-hover
+      %tbody
+        / ko if: items().length == 0
+        %tr
+          %td
+            %div.datatable-empty-message=t('.no_invites')
+        / /ko
+        / ko foreach: items
+        %tr
+          %td.column-left
+            = bt_icon :ticket
+            %span{ "data-bind" => "text: code" }
+            = bt_label t('.is_activated'), style: :success, data: { bind: 'visible: activated' }
+          %td.column-right
+            = bt_button icon: 'trash-o', size: :xsmall, style: :danger, title: t('commands.delete'), data: { bind: 'click: $parent.delete, visible: !activated' }
+        / /ko

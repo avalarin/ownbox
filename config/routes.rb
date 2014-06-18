@@ -48,6 +48,10 @@ FilesBrowser::Application.routes.draw do
     post '/users', to: 'users#create', as: :create_user
     post '/users/:user_name/send_email', to: 'users#send_activation_email', as: :send_user_activation_email
     patch '/users/:user_name', to: 'users#update', as: :update_user
+
+    get '/invites', to: 'invites#index', as: :invites_index
+    post '/invites', to: 'invites#create', as: :create_invite
+    delete '/invites/:code', to: 'invites#delete', as: :delete_invite
   end
 
 end

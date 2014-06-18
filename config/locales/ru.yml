@@ -25,6 +25,10 @@ ru:
             locked: 'Пользователь заблокирован'
             unlocked: 'Пользователь разблокирован'
             activation_email_sended: 'Письмо отправлено'
+
+        invite: 
+            created: 'Инвайт создан'
+            deleted: 'Инвайт удален'
     layouts:
         application:
             admin_area: 'Административная часть'
@@ -70,6 +74,16 @@ ru:
                 user_email: 'Email'
                 user_password: 'Пароль'
                 user_password_confirmation: 'Подтверждение пароля'
+        invites:
+            index:
+                page_header: 'Инвайты'
+                no_invites: 'Инвайты не найдены'
+
+                is_activated: 'Активирован'
+
+                filter_all: 'Все инвайты'
+                filter_free: 'Не активированные'
+                filter_activated: 'Активированные'
     settings:
         profile:
             edit:
