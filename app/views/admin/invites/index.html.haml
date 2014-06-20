@@ -21,6 +21,9 @@
             = bt_icon :ticket
             %span{ "data-bind" => "text: code" }
             = bt_label t('.is_activated'), style: :success, data: { bind: 'visible: activated' }
+            %span{ "data-bind" => "visible: activated" }
+              = bt_icon :user
+              %span{ "data-bind" => "text: user ? user.displayName : ''" }
           %td.column-right
             = bt_button icon: 'trash-o', size: :xsmall, style: :danger, title: t('commands.delete'), data: { bind: 'click: $parent.delete, visible: !activated' }
         / /ko
