@@ -13,9 +13,11 @@
                     </label>
                     <%= f.submit t(".login"), class: "btn btn-lg btn-primary btn-block" %>
                     <br/>
+                    <% if Settings.security.registration_mode != :disabled %>
                     <a href="<%= register_user_path %>" class="">
                         <%= t ".create_new_account" %>
                     </a>
+                    <% end %>
                     <a href="#" class="pull-right">
                         <%= t ".need_help" %>
                     </a>
