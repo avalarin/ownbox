@@ -157,7 +157,8 @@ define('http', ['jquery'], function ($) {
 
   // public api
   return {
-    request: request
+    request: request,
+    defaultErrorHandler: defaultErrorHandler
   }
 
 });
