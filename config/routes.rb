@@ -1,4 +1,4 @@
-FilesBrowser::Application.routes.draw do
+Ownbox::Application.routes.draw do
   root 'home#index'
 
   get '/login', to: 'session#new', as: :login

@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-FilesBrowser::Application.load_tasks
+Ownbox::Application.load_tasks
