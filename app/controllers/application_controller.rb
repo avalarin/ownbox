@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   include HtmlHelper
   include SessionHelper
   include RenderHelper
+  include SecurityHelper
 
   helper Bootstrap::Helpers
 
