@@ -13,8 +13,15 @@ module Bootstrap
         if (method != :get && method != :post)
           method = :post;
         end
+        options[:style] ||= :default
+        case options[:style]
+        when :horizontal
+          css = "form-horizontal "
+        else
+          css = ""
+        end
 
-        html = get_html_attributes "form-horizontal", options, {
+        html = get_html_attributes css, options, {
           id: options[:id],
           action: options[:action],
           method: method
@@ -87,6 +94,7 @@ module Bootstrap
       end
 
       def submit_button options = {}
+        property_name = options[:property] || @property_name
         css = Button.get_button_class options
         html = get_html_attributes css, options, {
           id: options[:id] || @element_id || generate_element_id(property_name),
@@ -182,8 +190,21 @@ module Bootstrap
 
       def initialize template, options = {}, &block
         initialize_model options
-        @label_col_size = options[:label_col_size] || 3
-        @control_col_size = options[:controls_col_size] || 6
+
+        if (options[:label_col_size] && options[:controls_col_size])
+          @label_col_size = options[:label_col_size] || 3
+          @control_col_size = options[:controls_col_size] || 12
+        elsif options[:label_col_size]
+          @label_col_size = options[:label_col_size]
+          @control_col_size = 12 - @label_col_size
+        elsif options[:controls_col_size]
+          @control_col_size = options[:controls_col_size]
+          @label_col_size = 12 - @control_col_size
+        else
+          @label_col_size = 3
+          @control_col_size = 9
+        end
+                
         @property_name = options[:property] || ""
         @element_name = options[:input_name] || generate_full_name(@property_name)
         @element_id = options[:input_id] || generate_element_id(@property_name)
@@ -197,9 +218,21 @@ module Bootstrap
         content = capture_content
         
         template.capture do
-          template.content_tag :div, class: "form-group" do
-            html = template.content_tag(:label, options[:label], class: "col-sm-#{label_size} control-label", for: @element_id)
-            html << template.content_tag(:div, content, class: "col-sm-#{ctrl_size}")
+          if options[:style] == :horizontal
+            label_class = "col-sm-#{label_size} "
+            ctrl_class = "col-sm-#{ctrl_size} "
+          else
+            label_class = ""
+            ctrl_class = ""
+          end
+          template.content_tag(:div, class: "form-group") do
+            if options[:label]
+              html = template.content_tag(:label, options[:label], class: label_class + "control-label", for: @element_id)
+              html << template.content_tag(:div, content, class: ctrl_class)
+              html
+            else
+              content
+            end
           end
         end
       end
