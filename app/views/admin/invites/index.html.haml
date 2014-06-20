@@ -1,5 +1,7 @@
 - content_for :filters do
   = filters_list @filters
+.alert.alert-success=t('.registration_mode_' + Settings.security.registration_mode.to_s)
+
 = bt_panel data: { bind: 'with: datatable' } do |p|
   - p.header do
     %span=t('.page_header')
