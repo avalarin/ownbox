@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   self.table_name = 'security.users'
   before_save { 
     self.email = email.downcase 
+    self.name = name.downcase
     self.home_directory ||= name 
   }
   
