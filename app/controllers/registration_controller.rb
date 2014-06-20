@@ -1,5 +1,12 @@
 class RegistrationController < ApplicationController
 
+  before_filter do
+    if (Settings.security.registration_mode == :disabled)
+      render_not_found
+      false
+    end
+  end
+
   def new
     @user = User.new
   end
