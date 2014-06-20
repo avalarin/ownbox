@@ -2,6 +2,7 @@ ru:
     errors: &errors
         format: ! '%{attribute} %{message}'
         messages:
+            invalid_captcha: Текст с картинки введен не верно.
             invalid_invite_code: Неверный код приглашения.
             access_denied: Доступ запрещен.
             directory_name_cannot_be_empty: Введите имя папки.

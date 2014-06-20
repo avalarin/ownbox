@@ -3,25 +3,36 @@
 / ko with: form
 = bt_form_for :user, style: :no_labels, html: { :'class' => "col-sm-6" }, data: { bind: 'submit: submit' } do |f| 
 
+  %script(type="text/html" id="invite-template")
+    = f.group do |g|
+      = f.text_input property: :invite, name: 'invite', id: 'invite', placeholder: t('.invite'), data: { val: 'true', :'val-required' => t('errors.messages.blank'), bind: 'value: invite' }
+      %span.help-block= t('.invite_required')
+  
+  %script(type="text/html" id="default-template")
+    = f.group do |g|
+      = f.text_input property: :name, placeholder: t('.user_name'), data: { bind: 'value: name' }
+    = f.group do |g|
+      = f.text_input property: :display_name, placeholder: t('.user_display_name'), data: { bind: 'value: displayName' }
+    = f.group do |g|
+      = f.text_input property: :email, placeholder: t('.user_email'), data: { bind: 'value: email' }
+    = f.group do |g|
+      = f.password_input property: :password, placeholder: t('.user_password'), data: { bind: 'value: password' }
+
   / ko if: inviteRequired() && !inviteProvided()
-  = f.group do |g|
-    = f.text_input property: :invite, name: 'invite', id: 'invite', placeholder: t('.invite'), data: { val: 'true', :'val-required' => t('errors.messages.blank'), bind: 'value: invite' }
-    %span.help-block= t('.invite_required')
-  = bt_button text: t('commands.next'), style: :default, data: { bind: 'click: checkInvite' }
+  %div(data-bind="template: { name: 'invite-template', afterRender: updateValidation }")
   / /ko
 
   / ko if: !inviteRequired() || inviteProvided()
-  = f.group do |g|
-    = f.text_input property: :name, placeholder: t('.user_name'), data: { bind: 'value: name' }
-  = f.group do |g|
-    = f.text_input property: :display_name, placeholder: t('.user_display_name'), data: { bind: 'value: displayName' }
-  = f.group do |g|
-    = f.text_input property: :email, placeholder: t('.user_email'), data: { bind: 'value: email' }
-  = f.group do |g|
-    = f.password_input property: :password, placeholder: t('.user_password'), data: { bind: 'value: password' }
-  / ko if: inviteRequired() && inviteProvided()
-  = bt_button text: t('commands.back'), style: :default, data: { bind: 'click: back' }
-  / /ko
-  = bt_button text: t('commands.register'), style: :success, data: { bind: 'click: register' }
+  %div(data-bind="template: { name: 'default-template', afterRender: updateValidation }")
   / /ko  
+
+  / ko if: !inviteRequired() || !inviteProvided()
+  = f.group do |g|
+    = f.captcha @captcha
+  / /ko
+  
+  = bt_button text: t('commands.next'), style: :default, data: { bind: 'click: checkInvite, visible: inviteRequired() && !inviteProvided()' }
+  = bt_button text: t('commands.back'), style: :default, data: { bind: 'click: back, visible: inviteRequired() && inviteProvided()' }
+  = bt_button text: t('commands.register'), style: :success, data: { bind: 'click: register, visible: !inviteRequired() || inviteProvided()' }
+
 / /ko

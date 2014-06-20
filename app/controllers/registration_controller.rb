@@ -9,9 +9,13 @@ class RegistrationController < ApplicationController
 
   def new
     @user = User.new
+    @captcha = Captcha::Data.generate
+    @captcha.save
   end
 
   def create
+    return render_api_resp :bad_request, message: 'invalid_captcha' unless captcha_valid?
+    
     invite = nil
     if Settings.security.registration_mode == :invites
       invite = Invite.find_by_code params.require(:invite)
@@ -42,11 +46,13 @@ class RegistrationController < ApplicationController
   end
 
   def check_invite
-    invite = Invite.find_by_code params.require(:code)
+    return render_api_resp :bad_request, message: 'invalid_captcha' unless captcha_valid?
+
+    invite = Invite.find_by_code params.require(:invite)
     if (invite && !invite.activated)
       render_api_resp :ok
     else
-      render_not_found
+      return render_api_resp :bad_request, message: 'invalid_invite'
     end
   end
 
