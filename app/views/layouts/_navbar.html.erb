@@ -50,7 +50,7 @@
                 </li>
             <% else %>
                 <li role="button">
-                    <%= link_with_icon "", "sign-in", login_path %>
+                    <%= bt_button text: t("commands.login"), icon: "sign-in", href: login_path, style: :link %>
                 </li>
             <% end %>
         </ul>
