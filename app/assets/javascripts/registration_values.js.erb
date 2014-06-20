@@ -1,0 +1,9 @@
+if (!window.values) window.values = {}
+if (!window.urls) window.urls = {}
+if (!window.localization) window.localization = {}
+
+window.urls.checkInvite = '/register/check_invite/'
+window.urls.register = '/register'
+window.urls.successRegistration = '/register/success'
+window.values.inviteRequired = <%= Settings.security.registration_mode == :invites ? 'true' : 'false' %>
+window.localization.invalidInvite = '<%= I18n.t "errors.messages.invalid_invite_code" %>'

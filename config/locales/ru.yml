@@ -16,6 +16,11 @@ ru:
         unlock: 'Разблокировать'
         search: 'Поиск'
         send_activation_email: 'Отправить запрос на активацию'
+        login: 'Войти'
+        logout: 'Выйти'
+        register: 'Регистрация'
+        next: 'Далее'
+        back: 'Назад'
     messages:
         confirm_deletion: 'Подтвердите удаление:'
         user_not_found: 'Пользователь не существует'
@@ -84,6 +89,10 @@ ru:
                 filter_all: 'Все инвайты'
                 filter_free: 'Не активированные'
                 filter_activated: 'Активированные'
+
+                registration_mode_free: 'Включена регистрация без инвайтов.'
+                registration_mode_invites: 'Включена регистрация по инвайтам.'
+                registration_mode_disabled: 'Регистрация отключена.'
     settings:
         profile:
             edit:
@@ -146,11 +155,13 @@ ru:
     registration:
         new:
             page_header: 'Регистрация нового пользователя'
-            name: 'Имя пользователя'
-            display_name: 'Отображаемое имя'
-            email: 'Email'
-            password: 'Пароль'
-            password_confirmation: 'Подтверждение пароля'
+            invite_required: 'Для регистрации требуется приглашение. Приглашение вы можете получить у администратора сайта.'
+            invite: 'Приглашение'
+            user_name: 'Имя пользователя'
+            user_display_name: 'Полное имя'
+            user_email: 'Email'
+            user_password: 'Пароль'
+            user_password_confirmation: 'Подтверждение пароля'
         success:
             page_header: 'Регистрация нового пользователя'
             success_registration_message: 'Вы успешно зарегистрированы на сайте, но ваш аккаунт пока не активен.<br/> Для активации аккаунта перейдите по ссылке которая отправлена вам в письме на адрес указанный при регистрации.'

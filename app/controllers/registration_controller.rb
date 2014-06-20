@@ -12,20 +12,42 @@ class RegistrationController < ApplicationController
   end
 
   def create
-    params.require(:user).permit! #(:name, :display_name, :email, :password, :password_confirmation, :commit)
-    @user = User.new params[:user]
-    @user.activation_code = SecureRandom.uuid
-    if @user.valid?
-      @user.save!
-      UserMailer.success_registration(@user).deliver
-      redirect_to action: 'success'
+    invite = nil
+    if Settings.security.registration_mode == :invites
+      invite = Invite.find_by_code params.require(:invite)
+      if (!invite || invite.activated)
+        return render_api_resp :bad_request, message: 'invalid_invite'
+      end
+    end
+    params.require(:user).permit! #(:name, :display_name, :email, :password)
+    user = User.new params[:user]
+    user.password_confirmation = user.password
+    user.activation_code = SecureRandom.uuid
+    if user.valid?
+      user.save!
+      if invite
+        invite.activated = true
+        invite.user = user
+        invite.save!
+      end
+      UserMailer.success_registration(user).deliver
+      render_api_resp :ok
     else
-      render 'new'
+      render_model_errors_api_resp user
     end
   end
 
   def success
 
+  end
+
+  def check_invite
+    invite = Invite.find_by_code params.require(:code)
+    if (invite && !invite.activated)
+      render_api_resp :ok
+    else
+      render_not_found
+    end
   end
 
   def activate

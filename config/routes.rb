@@ -9,6 +9,7 @@ FilesBrowser::Application.routes.draw do
   post '/register', to: 'registration#create', as: :create_user
   get '/register/success', to: 'registration#success', as: :register_user_success
   get '/register/activate', to: 'registration#activate', as: :activate_user
+  post '/register/check_invite/:code', to: 'registration#check_invite', as: :check_invite
 
   get '/get/:user_name(/*path)', to: 'file#get', as: :get_item, :format => false
   get '/preview/:user_name(/*path)', to: 'file#preview', as: :preview_item, :format => false
