@@ -12,40 +12,41 @@ module RenderHelper
 
   def render_api_resp status, options = {}
     default_message = ''
-    status_code = case status
+    status_code = 0
+    case status
     when :ok
       default_message = 'Ok'
-      200
+      status_code = 200
     when :bad_request
       default_message = 'Bad Request'
-      400
+      status_code = 400
     when :unauthorized
       default_message = 'Unauthorized'
-      401
+      status_code = 401
     when :forbidden
       default_message = 'Forbidden'
-      403
+      status_code = 403
     when :not_found
       default_message = 'Not Found'
-      404
+      status_code = 404
     when :not_acceptable
       default_message = 'Not Acceptable'
-      406
+      status_code = 406
     when :internal_server_error
       default_message = 'Internal Server Error'
-      500
+      status_code = 500
     else
       raise ArgumentError, "Unknown status '#{ status.to_s }'"
     end
-    resp = {}
-    resp['status'] = status_code
-    resp['message'] = options[:message] || default_message
-    resp['data'] = options[:data]
-    render json: resp, status: status_code
+    render status: status_code, json: {
+      status: status_code.to_s,
+      message: options[:message] || default_message,
+      data: options[:data]
+    }
   end
 
   def render_model_errors_api_resp model
-    render_api_resp :bad_request, message: 'Invalid request', data: model.errors
+    render_api_resp :bad_request, message: 'validation_error', data: model.errors
   end
 
 end
