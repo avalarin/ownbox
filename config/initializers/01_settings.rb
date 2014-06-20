@@ -15,6 +15,12 @@ class Settings < Settingslogic
     Settings[:security] ||= Settingslogic.new({})
     Settings.security[:session_lifetime] ||= 1.hours
     Settings.security[:persistent_session_lifetime] ||= 30.days
+    Settings.security[:registration_mode] = Settings.security[:registration_mode] ? 
+        Settings.security[:registration_mode].to_sym : :free
+
+    unless [:free, :invites, :disabled].include? Settings.security[:registration_mode]
+        raise "Unknown registration mode " + Settings.security[:registration_mode].to_s
+    end
 
     # Настройки отправки почты
     Settings[:mailer] ||= Settingslogic.new({})

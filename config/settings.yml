@@ -1,4 +1,6 @@
 defaults: &defaults
+  security:
+    registration_mode: invites
   file_types:
     image: [ '.jpg', '.jpeg', '.png' ]
     document: [ '.doc', '.docx', '.pdf', '.txt', '.djvu', '.epub', 'fb2' ]
