@@ -71,7 +71,7 @@
                         error.insertAfter(el);
                     },
                     errorElement: 'small',
-                    errorClass: 'text-danger'
+                    errorClass: 'text-danger validation-message'
                 },
                 attachValidation: function () {
                     $form.validate(this.options);
