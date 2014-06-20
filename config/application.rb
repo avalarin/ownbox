@@ -30,5 +30,6 @@ module Ownbox
     config.i18n.default_locale = :ru;
 
     Rails.application.routes.default_url_options[:host] = 'ownbox.local:3000'
+    config.middleware.use Captcha::Middleware
   end
 end
