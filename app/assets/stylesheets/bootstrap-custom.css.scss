@@ -67,3 +67,26 @@ $navbar-inverse-toggle-border-color:        $navbar-inverse-border;
 .validation-message {
   display: block;
 }
+
+.captcha {
+  position: relative;
+
+  & > img {
+    width: 160px;
+    height: 64px;
+    vertical-align: top;
+    cursor: pointer;
+  }
+
+  & > div {
+    position: relative;
+    top: 0;
+    display: inline-block;
+    margin-left: 10px;
+
+    span {
+      margin-top: 0;
+    }
+
+  }
+}

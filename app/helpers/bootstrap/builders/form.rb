@@ -16,9 +16,9 @@ module Bootstrap
         options[:style] ||= :default
         case options[:style]
         when :horizontal
-          css = "form-horizontal "
+          css = 'form-horizontal '
         else
-          css = ""
+          css = ''
         end
 
         html = get_html_attributes css, options, {
@@ -27,15 +27,15 @@ module Bootstrap
           method: method
         }
 
-        pre_content = template.content_tag :input, "", {
-          type: "hidden",
+        pre_content = template.content_tag :input, '', {
+          type: 'hidden',
           value: template.form_authenticity_token,
-          name: "authenticity_token"
+          name: 'authenticity_token'
         }
-        pre_content << template.content_tag(:input, "", {
-          type: "hidden",
+        pre_content << template.content_tag(:input, '', {
+          type: 'hidden',
           value: original_method,
-          name: "_method"
+          name: '_method'
         })
 
         template.content_tag :form, pre_content + capture_content, html
@@ -48,49 +48,74 @@ module Bootstrap
 
       def text_input options = {}
         property_name = options[:property] || @property_name
-        value = model.respond_to?(property_name) ? model.send(property_name) : ""
+        value = model.respond_to?(property_name) ? model.send(property_name) : ''
 
-        html = get_html_attributes "form-control", options, {
+        html = get_html_attributes 'form-control', options, {
           id: options[:id] || @element_id || generate_element_id(property_name),
           name: options[:name] || @element_name || generate_full_name(property_name),
           placeholder: options[:placeholder] || @element_placeholder,
           value: options[:value] || value,
-          type: "text"
+          type: 'text'
         }
         html.merge! validation_attributes(property_name)
 
-        template.content_tag :input, "", html
+        template.content_tag :input, '', html
       end
 
       def hidden_input options = {} 
         property_name = options[:property] || @property_name
-        value = model.respond_to?(property_name) ? model.send(property_name) : ""
+        value = model.respond_to?(property_name) ? model.send(property_name) : ''
 
-        html = get_html_attributes "form-control", options, {
+        html = get_html_attributes 'form-control', options, {
           id: options[:id] || @element_id || generate_element_id(property_name),
           name: options[:name] || @element_name || generate_full_name(property_name),
           value: options[:value] || value,
-          type: "hidden"
+          type: 'hidden'
         }
         html.merge! validation_attributes(property_name)
 
-        template.content_tag :input, "", html
+        template.content_tag :input, '', html
       end
 
       def password_input options = {}
         property_name = options[:property] || @property_name
-        value = model.respond_to?(property_name) ? model.send(property_name) : ""
+        value = model.respond_to?(property_name) ? model.send(property_name) : ''
 
-        html = get_html_attributes "form-control", options, {
+        html = get_html_attributes 'form-control', options, {
           id: options[:id] || @element_id || generate_element_id(property_name),
           name: options[:name] || @element_name || generate_full_name(property_name),
           placeholder: options[:placeholder] || @element_placeholder,
           value: options[:value] || value,
-          type: "password"
+          type: 'password'
         }
         html.merge! validation_attributes(property_name)
 
-        template.content_tag :input, "", html
+        template.content_tag :input, '', html
+      end
+
+      def captcha captcha, options = {}
+        html = get_html_attributes 'captcha', options, { }
+        value_input_html = get_html_attributes 'form-control captcha-value', options[:value_input] || { }, {
+          placeholder: options[:placeholder] || @element_placeholder,
+          name: 'captcha[value]',
+          type: 'text',
+          :'data-val' => 'true',
+          :'data-val-required' => I18n.t('errors.messages.blank')
+        }
+        code_input_html = get_html_attributes 'form-control captcha-code', options[:code_input] || { }, {
+          placeholder: options[:placeholder] || @element_placeholder,
+          name: 'captcha[code]',
+          type: 'hidden',
+          value: captcha.code
+        }
+        template.content_tag :div, html do
+          html = template.content_tag(:img, '', { src: captcha.url, :class => "img-thumbnail" })
+          html << template.content_tag(:div, '', {}) do
+            html2 = template.content_tag(:input, '', code_input_html)
+            html2 << template.content_tag(:span, I18n.t('messages.enter_captcha'), { :'class' => 'help-block' })
+            html2 << template.content_tag(:input, '', value_input_html)
+          end
+        end
       end
 
       def submit_button options = {}
@@ -98,7 +123,7 @@ module Bootstrap
         css = Button.get_button_class options
         html = get_html_attributes css, options, {
           id: options[:id] || @element_id || generate_element_id(property_name),
-          type: "submit"
+          type: 'submit'
         }
         template.content_tag :button, options[:text], html
       end
@@ -106,7 +131,7 @@ module Bootstrap
       protected
 
       def initialize_model options
-        raise ArgumentError, "Option required: record" unless options[:record]
+        raise ArgumentError, 'Option required: record' unless options[:record]
         case options[:record]
           when String, Symbol
             @model_name = options[:record]
@@ -114,7 +139,7 @@ module Bootstrap
             @model = @model_class.new
           else
             @model = options[:record].is_a?(Array) ? options[:record].last : options[:record]
-            raise ArgumentError, "First argument in form cannot contain nil or be empty" unless @model
+            raise ArgumentError, 'First argument in form cannot contain nil or be empty' unless @model
             @model_name  = options[:as] || @model.class.model_name.param_key
             @model_class = @model.class
         end
@@ -124,7 +149,7 @@ module Bootstrap
       end
 
       def validation_attributes property
-        attrs = { :'data-val' => "true" }
+        attrs = { :'data-val' => 'true' }
         errors = ActiveModel::Errors.new model
         model_class.validators.each do |validator| 
           next unless validator.attributes.include? property
@@ -153,9 +178,9 @@ module Bootstrap
             end
           when EmailFormatValidator
             attrs[:'data-val-regex'] = errors.generate_message(property, :invalid_email_address)
-            attrs[:'data-val-regex-pattern'] = "^[^@]+@[^@]+$"
+            attrs[:'data-val-regex-pattern'] = '^[^@]+@[^@]+$'
           when ActiveModel::Validations::ConfirmationValidator
-            other = property.to_s + "_confirmation"
+            other = property.to_s + '_confirmation'
             attrs[:'data-val-equalto'] = errors.generate_message(property, other.to_sym)
             attrs[:'data-val-equalto-other'] = generate_full_name other
           end
@@ -176,13 +201,13 @@ module Bootstrap
       end
 
       def generate_element_id property_name
-        return "" if property_name == "" || !property_name
-        model_name.to_s + "_" + property_name.to_s
+        return '' if property_name == '' || !property_name
+        model_name.to_s + '_' + property_name.to_s
       end
 
       def generate_full_name property_name
-        return "" if property_name == "" || !property_name
-        model_name.to_s + "[" + property_name.to_s + "]"
+        return '' if property_name == '' || !property_name
+        model_name.to_s + '[' + property_name.to_s + ']'
       end
     end
 
@@ -205,10 +230,10 @@ module Bootstrap
           @control_col_size = 9
         end
                 
-        @property_name = options[:property] || ""
+        @property_name = options[:property] || ''
         @element_name = options[:input_name] || generate_full_name(@property_name)
         @element_id = options[:input_id] || generate_element_id(@property_name)
-        @element_placeholder = options[:label] || ""
+        @element_placeholder = options[:label] || ''
         super template, options, &block
       end
 
@@ -219,15 +244,15 @@ module Bootstrap
         
         template.capture do
           if options[:style] == :horizontal
-            label_class = "col-sm-#{label_size} "
-            ctrl_class = "col-sm-#{ctrl_size} "
+            label_class = 'col-sm-#{label_size} '
+            ctrl_class = 'col-sm-#{ctrl_size} '
           else
-            label_class = ""
-            ctrl_class = ""
+            label_class = ''
+            ctrl_class = ''
           end
-          template.content_tag(:div, class: "form-group") do
+          template.content_tag(:div, class: 'form-group') do
             if options[:label]
-              html = template.content_tag(:label, options[:label], class: label_class + "control-label", for: @element_id)
+              html = template.content_tag(:label, options[:label], class: label_class + 'control-label', for: @element_id)
               html << template.content_tag(:div, content, class: ctrl_class)
               html
             else
