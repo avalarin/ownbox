@@ -10,7 +10,7 @@ Bundler.require(*Rails.groups)
 
 module Ownbox
   class Application < Rails::Application
-    VERSION = '0.1.0'
+    VERSION = '1.0.0'
 
     attr_accessor :version
 
