@@ -1,0 +1,18 @@
+%script(type="text/html" id="uploading-template")
+  = bt_panel html: { :class => 'browser-uploading' } do |p|
+    - p.header do
+      %span=t('.uploading')
+      %span(data-bind="text: '(' + uploadingFiles().length + ')'")
+    - p.table do
+      %table
+        %tbody(data-bind="foreach: uploadingFiles")
+          %tr(data-bind="css: { error: isError }")
+            %td
+              .item-progress(data-bind="style: { width: uploadedPercentage() + '%' }")
+              .item-text
+                = bt_icon 'upload'
+                %span(data-bind="text: name")
+                %span.text-muted(data-bind="text: humanSize")
+                %span.text-muted(data-bind="text: uploadedPercentage() + '%'")
+              %a(href="javascript:" class="item-delete" data-bind="click: $data.delete")
+                = bt_icon 'times'

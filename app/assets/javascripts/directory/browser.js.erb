@@ -1,3 +1,5 @@
+//= require directory/human_size
+
 function Browser(currentItem) {
   var http = require('http')
   var messages = require('messages')
@@ -178,6 +180,7 @@ function Browser(currentItem) {
         original: file,
         name: file.name,
         size: file.size,
+        humanSize: window.humanSize(file.size),
         type: file.type,
         delete: function() {
           browser.waitConfirmFiles.remove(this)
@@ -191,6 +194,7 @@ function Browser(currentItem) {
     var uploadingFile = {
       name: file.name,
       size: file.size,
+      humanSize: window.humanSize(file.size),
       type: file,
       uploaded: ko.observable(0),
       uploadedPercentage: ko.observable(0),
@@ -215,7 +219,7 @@ function Browser(currentItem) {
       },
       progress: function (evt){
         uploadingFile.uploaded(evt.loaded)
-        uploadingFile.uploadedPercentage(evt.loaded/evt.total*100)
+        uploadingFile.uploadedPercentage(Math.ceil(evt.loaded/evt.total*100))
       },
       complete: function (err, xhr) {
         if (err) {

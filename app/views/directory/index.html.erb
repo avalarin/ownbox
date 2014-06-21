@@ -4,23 +4,7 @@
 
 <div class="browser">
   <!-- ko if: uploadingFiles().length > 0 -->
-  <div class="panel panel-default browser-uploading">
-    <div class="panel-heading"><%= t '.uploading' %></div>
-    <table>
-      <tbody data-bind="foreach: uploadingFiles">
-        <tr data-bind="css: { error: isError }">
-          <td>
-            <div class="item-progress" data-bind="style: { width: uploadedPercentage() + '%' }"></div>
-            <div class="item-text">
-              <%= bt_icon 'upload' %>
-              <span data-bind="text: name"></span>
-            </div>
-            <a href="javascript:" class="item-delete" data-bind="click: $data.delete"><%= bt_icon 'times' %></a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <div data-bind="template: { name: 'uploading-template' }"></div>
   <!-- /ko -->
 
   <div class="browser-toolbar">
@@ -120,7 +104,7 @@
           <tbody data-bind="foreach: waitConfirmFiles">
             <tr>
               <td class="column-name" data-bind="text: name"></td>
-              <td class="column-size" data-bind="text: size"></td>
+              <td class="column-size" data-bind="text: humanSize"></td>
               <td class="column-actions">
                 <a href="javascript:" data-bind="click: $data.delete"><%= bt_icon 'times' %></a>
               </td>
@@ -143,3 +127,5 @@
     </div>
   </div>
 </div>
+
+<%= render 'uploading' %>
