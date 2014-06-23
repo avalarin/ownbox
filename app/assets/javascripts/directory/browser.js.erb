@@ -154,12 +154,31 @@ function Browser(currentItem) {
   }
 
   this.selectUnselect = function(item, event) {
-    if (!event.ctrlKey) {
-      browser.unselectAll()
+    if (event.shiftKey) {
+      if (typeof(browser.lastSelectId) !== "undefined" && browser.lastSelectId != null) {
+        browser.unselectAll()
+        var currentIndex = browser.items.indexOf(this)
+        var min = Math.min(browser.lastSelectId, currentIndex)
+        var max = Math.max(browser.lastSelectId, currentIndex)
+        var localItems = browser.items()
+        for (var i = min; i <= max; i++) {
+          localItems[i].select()
+        }
+        event.preventDefault()
+        return
+      }
     }
-    if (!item.isSelected()) {
-      browser.selected.push(item)
-      item.isSelected(true)
+    if (event.ctrlKey) {
+      browser.lastSelectId = this.selectUnselect() ? browser.items.indexOf(this) : null
+    } else {
+      var selected = this.isSelected()
+      browser.unselectAll()
+      if (!selected) {
+        this.select()
+        browser.lastSelectId = browser.items.indexOf(this)
+      } else {
+        browser.lastSelectId = null
+      }
     }
   }
 
@@ -247,7 +266,25 @@ function Browser(currentItem) {
       directoryType: item.directory_type,
       isSelected: ko.observable(false),
       isNew: ko.observable(false),
-      isDeleted: ko.observable(false)
+      isDeleted: ko.observable(false),
+
+      select: function() {
+        browser.selected.push(this)
+        this.isSelected(true)
+      },
+      unselect: function() {
+        browser.selected.remove(this)
+        this.isSelected(false)
+      },
+      selectUnselect: function() {
+        if (this.isSelected()) {
+          this.unselect()
+          return false
+        } else {
+          this.select()
+          return true
+        }
+      }
     }
   }
 }
