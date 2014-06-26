@@ -44,7 +44,8 @@ define('messages', ['jquery'], function ($) {
     show: show,
     info: info,
     success: success,
-    danger: danger
+    danger: danger,
+    warning: warning
   }
 
 });
