@@ -16,6 +16,12 @@ class Settings::SharesController < ApplicationController
     share_params = params.require(:share).permit(:name, :path)
     share = Share.new share_params
     share.user = current_user
+
+    exist_share = Share.find_by_user_and_name current_user, share_params[:name]
+    if exist_share
+      share.errors[:name] << t('errors.messages.share_already_exists')
+      return render_model_errors_api_resp share
+    end
     if share.valid?
       share.save!
       render_api_resp :ok, data: wrap_share(share)
@@ -28,6 +34,13 @@ class Settings::SharesController < ApplicationController
     share_params = params.require(:share).permit(:id, :name, :path)
     share = Share.find_by_id(share_params[:id].to_i)
     return render_api_resp :not_found unless share
+
+    exist_share = Share.find_by_user_and_name current_user, share_params[:name]
+    if exist_share
+      share.errors[:name] << t('errors.messages.share_already_exists')
+      return render_model_errors_api_resp share
+    end
+    
     share[:name] = share_params[:name]
     share[:path] = share_params[:path]
     share.save!
