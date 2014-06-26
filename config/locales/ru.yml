@@ -143,7 +143,6 @@ ru:
             create_directory: 'Создать папку'
             upload_file: 'Загрузить'
             delete_item: 'Удалить'
-            uploading: 'Загрузка...'
             refresh: 'Обновить'
             directory_created: 'Папка создана'
             item_deleted: 'Удалено'
@@ -155,6 +154,8 @@ ru:
                 message: 'Выберите файлы которые вы хотите загрузить в папку <b data-bind="text: currentItem().name"></b>.'
                 name_column: 'Название'
                 size_column: 'Размер'
+        uploading:
+            uploading: 'Загрузка...'
     registration:
         new:
             page_header: 'Регистрация нового пользователя'
