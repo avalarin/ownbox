@@ -7,7 +7,6 @@ Modal = (function() {
     this.reset = function() { }
 
     this.show = function() {
-      that.reset()
       that.element.modal('show')
     }
 
