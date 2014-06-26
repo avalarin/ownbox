@@ -117,6 +117,9 @@ ru:
                 security_readonly: 'Только чтение'
                 security_readwrite: 'Чтение и запись'
                 permissions_updated: 'Разрешения обновлены'
+                share_created: 'Общая папка создана'
+                share_updated: 'Общая папка изменена'
+                share_deleted: 'Общая папка удалена'
         security:
             edit:
                 change_password_header: 'Смена пароля'

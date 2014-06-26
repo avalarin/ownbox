@@ -1,6 +1,9 @@
-= bt_panel header: t(".page_header") do |p|
+= bt_panel data: { bind: 'with: datatable' } do |p|
+  - p.header do
+    = t(".page_header")
+    %span{ "data-bind" => "text: '(' + items().length + ')'" }
   - p.body do
-    = bt_button icon: "plus", text: t("commands.create"), size: :small, data: { toggle: "modal", target: "#edit-modal" }
+    = bt_button icon: "plus", text: t("commands.create"), size: :small, data: { bind: 'click: $root.editModal.show' }
     = bt_button icon: "refresh", text: t("commands.refresh"), size: :small, data: { bind: 'click: refresh' }
   - p.table do
     %table.table.table-bordered.table-stripped
@@ -15,9 +18,9 @@
           %td.column-name{ "data-bind" => "text: name" }
           %td.column-path{ "data-bind" => "text: path" }
           %td.column-actions
-            = bt_button icon: 'shield', size: :xsmall, title: t('commands.security'), data: { bind: 'click: $data.editSecurity' }
-            = bt_button icon: 'pencil', size: :xsmall, title: t('commands.edit'), data: { bind: 'click: $data.edit' }
-            = bt_button icon: 'trash-o', size: :xsmall, style: :danger, title: t('commands.delete'), data: { bind: 'click: $data.delete' }
+            = bt_button icon: 'shield', size: :xsmall, title: t('commands.security'), data: { bind: 'click: $parent.editSecurity' }
+            = bt_button icon: 'pencil', size: :xsmall, title: t('commands.edit'), data: { bind: 'click: $parent.edit' }
+            = bt_button icon: 'trash-o', size: :xsmall, style: :danger, title: t('commands.delete'), data: { bind: 'click: $parent.delete' }
         / /ko
 
 = bt_modal id: "edit-modal", header: t('.create_share_modal_header'), data: { bind: 'with: editModal' } do |m| 
@@ -26,14 +29,14 @@
       = f.hidden_input property: :id, data: { bind: 'value: id' } 
       = f.group property: :name, label: t('.share_name') do |g| 
         = g.text_input data: { bind: 'value: name' } 
-      = f.group property: :path, label: t('.share_path') do |g| 
-        = g.text_input data: { bind: 'value: path' } 
+      = f.group label: t('.share_path') do |g| 
+        = render 'shared/mini_browser'
   - m.footer do 
     / ko if: mode() == 'create'
-    = bt_button style: :primary, text: t("commands.create"), data: { bind: "click: $root.createShare" } 
+    = bt_button style: :primary, text: t("commands.create"), data: { bind: "click: save" } 
     / /ko
     / ko if: mode() == 'edit'
-    = bt_button style: :primary, text: t("commands.save"), data: { bind: "click: $root.updateShare" } 
+    = bt_button style: :primary, text: t("commands.save"), data: { bind: "click: save" } 
     / /ko
     = bt_button text: t("commands.cancel"), size: :small, data: { bind: "click: close" } 
 

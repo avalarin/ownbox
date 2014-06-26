@@ -1,0 +1,17 @@
+if (!window.values) window.values = {}
+if (!window.urls) window.urls = {}
+if (!window.localization) window.localization = {}
+
+window.urls.shares = '/settings/shares/'
+window.urls.users = '/users.json'
+window.urls.user = '/users/{userName}.json'
+window.urls.sharePermissions = '/settings/shares/{shareId}/permissions.json'
+
+window.localization.confirmDeletion = '<%= I18n.t "messages.confirm_deletion" %>'
+window.localization.userNotFound = '<%= I18n.t "messages.user_not_found" %>'
+window.localization.itemAlreadyFound = '<%= I18n.t "messages.item_already_found" %>'
+window.localization.permissionsUpdated = '<%= I18n.t "settings.shares.index.permissions_updated" %>'
+
+window.localization.shareCreated = '<%= I18n.t "settings.shares.index.share_created" %>'
+window.localization.shareUpdated = '<%= I18n.t "settings.shares.index.share_updated" %>'
+window.localization.shareDeleted = '<%= I18n.t "settings.shares.index.share_deleted" %>'

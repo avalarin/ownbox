@@ -1,0 +1,17 @@
+.browser-toolbar
+  %ul.browser-location(data-bind="foreach: path")
+    %li
+      %a(href="javascript:" data-bind="click: $parent.go")
+        / ko if: directoryType == "home_directory"
+        = bt_icon 'home'
+        / /ko
+        / ko if: directoryType == "users_directory"
+        = bt_icon 'group'
+        / /ko
+        / ko if: directoryType == "shares_directory"
+        = bt_icon 'user'
+        / /ko
+        / ko if: directoryType == "general"
+        = bt_icon 'folder'
+        / /ko
+        %span(data-bind="html: name")

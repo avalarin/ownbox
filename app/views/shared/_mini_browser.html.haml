@@ -1,0 +1,16 @@
+.browser.mini-browser(data-bind="with: browser")
+  = render 'shared/browser/toolbar'
+  .browser-items
+    %table.table
+      %tbody
+        / ko foreach: items
+        %tr
+          %td
+            / ko if: type == 'directory'
+            = bt_icon 'folder'
+            / /ko
+            / ko if: type != 'directory'
+            = bt_icon 'file'
+            / /ko
+            %a(href="javascript:" data-bind="click: $parent.go, text: name")
+        / /ko
