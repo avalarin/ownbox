@@ -148,7 +148,7 @@ ru:
             item_deleted: 'Удалено'
             confirm_item_deletion: 'Подтвердите удаление.'
             shared_directories: 'Общие папки'
-
+            directory_is_empty: 'Папка пуста'
             upload_modal:
                 header: 'Загрузить файлы'
                 message: 'Выберите файлы которые вы хотите загрузить в папку <b data-bind="text: currentItem().name"></b>.'

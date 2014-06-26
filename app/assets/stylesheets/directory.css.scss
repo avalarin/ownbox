@@ -102,6 +102,22 @@
   outline-width: 0!important;
 }
 
+#empty-dir-message {
+  
+  td {
+    text-align: center;
+    user-select: text; /* CSS3 (little to no support) */
+    -ms-user-select: text; /* IE 10+ */
+    -moz-user-select: text; /* Gecko (Firefox) */
+    -webkit-user-select: text; /* Webkit (Safari, Chrome) */
+  }
+
+  &:hover > td {
+    background-color: inherit;
+  }
+
+}
+
 #upload-file-modal {
   .column-name {
     width: auto;

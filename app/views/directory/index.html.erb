@@ -65,6 +65,13 @@
         <td class="column-name"><input name="name" type="text"></input></td>
         <td class="column-size"></td>
       </tr>
+      <tr id="empty-dir-message" data-bind="visible: items().length == 0">
+        <td colspan="3">
+          <span class="text-muted" >
+            <%= t('.directory_is_empty') %>
+          </span>
+        </td>
+      </tr>
       <!-- ko foreach: items -->
       <tr data-bind="css: { selected: isSelected, deleted: isDeleted, new: isNew }, click: $parent.selectUnselect">
         <td class="column-icon">
