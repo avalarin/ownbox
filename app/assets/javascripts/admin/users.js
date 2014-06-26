@@ -52,12 +52,17 @@
   }
 
   createModal.formElement = createModal.element.find('form')
+  createModal.name = ko.observable('')
+  createModal.displayName = ko.observable('')
+  createModal.email = ko.observable('')
+  createModal.password = ko.observable('')
+  createModal.passwordConfirmation = ko.observable('')
   createModal.reset = function() {
-    createModal.name = ko.observable('')
-    createModal.displayName = ko.observable('')
-    createModal.email = ko.observable('')
-    createModal.password = ko.observable('')
-    createModal.passwordConfirmation = ko.observable('')
+    createModal.name('')
+    createModal.displayName('')
+    createModal.email('')
+    createModal.password('')
+    createModal.passwordConfirmation('')
     createModal.formElement[0].reset()
   }
   createModal.reset()
