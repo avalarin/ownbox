@@ -51,6 +51,7 @@ class Settings::SharesController < ApplicationController
     id = params[:id].to_i
     share = Share.find_by_id(id)
     return render_api_resp :not_found unless share
+    SharePermission.where(share_id: share.id).delete_all
     share.delete
     render_api_resp :ok
   end
