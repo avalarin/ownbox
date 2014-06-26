@@ -1,4 +1,4 @@
-$navbar-height:                    45px !default;
+$navbar-height:                    40px !default;
 $navbar-margin-bottom:             0 !default;
 
 // Inverted navbar
@@ -27,6 +27,14 @@ $navbar-inverse-toggle-icon-bar-bg:         $navbar-inverse-link-hover-bg;
 $navbar-inverse-toggle-border-color:        $navbar-inverse-border;
 
 @import "bootstrap";
+
+.navbar-nav {
+  & > li {
+    & > a {
+      border: 0;
+    }
+  }
+}
 
 .navbar-brand {
   img {
