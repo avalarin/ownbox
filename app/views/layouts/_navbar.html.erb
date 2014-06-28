@@ -22,12 +22,6 @@
                     <%= bt_button id: "shared-data", text: t(".shared_data"), icon: "group", 
                                   href: shares_index_path, style: :link %>
                 </li>
-                <% if current_user.is_admin? %>
-                    <li>
-                        <%= bt_button text: t(".admin_area"), icon: "gears", 
-                                      href: admin_home_path, style: :link %>
-                    <li>
-                <% end %>
             <% end %>       
         </ul>
         <ul class="nav navbar-nav navbar-right nav-condensed">
@@ -39,13 +33,24 @@
                     <ul class="dropdown-menu">
                         <li role="presentation" class="dropdown-header"><%= current_user.display_name %></li>
                         <li role="presentation" class="dropdown-header"><%= current_user.email %></li>
-                        <li role="presentation" class="divider"></li>
+
                         <li role="button">
                             <%= link_with_icon t(".settings"), "gears", settings_edit_profile_path %>
                         </li>
                         <li role="button">
                             <%= link_with_icon t(".logout"), "sign-out", logout_path %>
                         </li>
+                        
+                        <% if current_user.is_admin? %>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation" class="dropdown-header">
+                                <%= t '.admin_area' %>
+                            </li>
+                            <li role="button">
+                                <%= bt_button text: t(".administration"), icon: "gears", 
+                                              href: admin_home_path, style: :link %>
+                            <li>
+                        <% end %>
                     </ul>
                 </li>
             <% else %>
