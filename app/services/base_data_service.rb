@@ -44,8 +44,9 @@ class BaseDataService < BaseService
 
   def get_file_type extension
     Settings.file_types.each do |type, extensions|
-      return type if extensions.include? extension
+      return type if extensions.include? extension.downcase
     end
+    'other'
   end
 
   def get_full_path home_directory, path
