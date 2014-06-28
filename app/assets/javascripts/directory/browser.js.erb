@@ -11,6 +11,10 @@ function Browser(currentItem) {
   this.path = ko.observableArray([])
   this.selected = ko.observableArray([])
 
+  this.allHumanSize = ko.observable('')
+  this.allSize = ko.observable(0)
+  this.allCount = ko.observable('')
+
   this.uploadingFiles = ko.observableArray([])
   this.waitConfirmFiles = ko.observableArray([])
 
@@ -45,6 +49,11 @@ function Browser(currentItem) {
         if (currentItem.url != history.state.url) {
           history.pushState(currentItem.historyState, currentItem.name, currentItem.url)
         }
+        browser.allSize(data.stat.allSize)
+        browser.allHumanSize(data.stat.allHumanSize)
+        browser.allCount(data.stat.allCount)
+        
+                
         $('title').text(currentItem.name)
         browser.currentItem(currentItem)
         if (event) $('.browser').removeClass('loading')

@@ -1,4 +1,6 @@
 class DirectoryController < ItemsController
+  include ActionView::Helpers::NumberHelper
+
   before_filter :authorize
   
   def index
@@ -6,7 +8,7 @@ class DirectoryController < ItemsController
     if  request.xhr?
       items = service.get_items(item_path).collect { |i| collect_item i }
       path = service.get_path_parts(item_path).collect { |i| collect_item i }
-      render json: { items: items, path: path, currentItem: collect_item(item) }
+      render json: { items: items, path: path, currentItem: collect_item(item), stat: stat(items) }
     else
       @items = service.get_items item_path
       @path_parts = service.get_path_parts item_path
@@ -46,7 +48,30 @@ class DirectoryController < ItemsController
 
   private
 
-  def collect_item item
+  def stat(items)
+    allCount = items.length
+    dirsCount = (items.select{|i| i[:type] == 'directory' }).length
+    filesCount = allCount - dirsCount
+    dirsMessage = t('.directories_count', count: dirsCount)
+    filesMessage = t('.files_count', count: filesCount)
+    if (dirsCount == 0)
+      allMessage = filesMessage
+    elsif (filesCount == 0)
+      allMessage = dirsMessage
+    else
+      allMessage = t('.all_count', dirs: dirsMessage, files: filesMessage)
+    end
+    all_size = items.select {|i| i[:type] != 'directory' }
+                    .collect { |i| i[:size] }
+                    .reduce(:+)
+    {
+      allSize: all_size,
+      allHumanSize: number_to_human_size(all_size),
+      allCount: allMessage
+    }
+  end
+
+  def collect_item(item)
     nitem = {
       name: item.name,
       path: item.path.to_s_non_rooted,

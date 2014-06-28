@@ -48,7 +48,8 @@ ru:
         navbar:
             private_data: 'Мои файлы'
             shared_data: 'Общие папки'
-            admin_area: 'Администрирование'
+            admin_area: 'Администратор'
+            administration: 'Администрирование'
             home: 'Домашняя страница'
             settings: 'Настройки'
             logout: 'Выйти'
@@ -149,6 +150,17 @@ ru:
             confirm_item_deletion: 'Подтвердите удаление.'
             shared_directories: 'Общие папки'
             directory_is_empty: 'Папка пуста'
+            directories_count:
+                few: '%{count} папки'
+                many: '%{count} папок'
+                one: '%{count} папка'
+                other: '%{count} папки'
+            files_count:
+                few: '%{count} файла'
+                many: '%{count} файлов'
+                one: '%{count} файл'
+                other: '%{count} файлa'
+            all_count: '%{dirs} и %{files}'
             upload_modal:
                 header: 'Загрузить файлы'
                 message: 'Выберите файлы которые вы хотите загрузить в папку <b data-bind="text: currentItem().name"></b>.'

@@ -65,13 +65,6 @@
         <td class="column-name"><input name="name" type="text"></input></td>
         <td class="column-size"></td>
       </tr>
-      <tr id="empty-dir-message" data-bind="visible: items().length == 0">
-        <td colspan="3">
-          <span class="text-muted" >
-            <%= t('.directory_is_empty') %>
-          </span>
-        </td>
-      </tr>
       <!-- ko foreach: items -->
       <tr data-bind="css: { selected: isSelected, deleted: isDeleted, new: isNew }, click: $parent.selectUnselect">
         <td class="column-icon">
@@ -80,9 +73,27 @@
         <td class="column-name">
           <a href="javascript:" data-bind="click: $parent.go, text: name"></a>
         </td>
-        <td class="column-size" data-bind="text: humanSize"></td>
+        <td class="column-size">
+          <span data-bind="text: humanSize"></span>
+        </td>
       </tr>
       <!-- /ko -->
+      <tr class="empty-dir-row" data-bind="visible: items().length == 0">
+        <td colspan="3">
+          <span class="text-muted" >
+            <%= t('.directory_is_empty') %>
+          </span>
+        </td>
+      </tr>
+      <tr class="stat-row" data-bind="visible: items().length > 0">
+        <td class="column-icon"></td>
+        <td class="column-name">
+          <span data-bind="text: allCount"></span>
+        </td>
+        <td class="column-size">
+          <span data-bind="text: allHumanSize"></span>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
