@@ -26,7 +26,7 @@ function Browser(currentItem) {
     if (item.type != 'directory') {
       return browser.goFile(item);
     }
-    $('.browser').addClass('loading')
+    if (event) $('.browser').addClass('loading')
     http.request({
       url: item.url,
       success: function(data) {
@@ -47,7 +47,7 @@ function Browser(currentItem) {
         }
         $('title').text(currentItem.name)
         browser.currentItem(currentItem)
-        $('.browser').removeClass('loading')
+        if (event) $('.browser').removeClass('loading')
       }
     })
   }
@@ -131,14 +131,7 @@ function Browser(currentItem) {
           name: _.map(selected, function(item) { return item.name; }).join('|')
         },
         success: function() {
-          _.each(selected, function(item) {
-            item.isDeleted(true)
-          })
-          setTimeout(function() {
-            _.each(selected, function(item) {
-              browser.items.remove(item)
-            })
-          }, 450);
+          browser.refresh()
           messages.info('<%= I18n.t "directory.index.item_deleted" %>')
         }
       })
