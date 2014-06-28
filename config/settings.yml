@@ -3,17 +3,23 @@ defaults: &defaults
     registration_mode: invites
   file_types:
     image: [ '.jpg', '.jpeg', '.png' ]
+    image_np: [ '.gif' ]
     document: [ '.doc', '.docx', '.pdf', '.txt', '.djvu', '.epub', 'fb2' ]
     archive: [ '.rar', '.zip' ]
     video: [ '.avi', '.mkv' ]
     table: [ '.xls', '.xlsx' ]
+    disk_image: [ '.iso' ]
+    source_code: [ '.js' ]
   type_images:
     directory: 'directory.png'
     image: 'image.png'
+    image_np: 'image.png'
     document: 'document.png'
     archive: 'archive.png'
     video: 'video.png'
     table: 'table.png'
+    disk_image: 'disk-image.png'
+    source_code: 'source-code.png'
     other: 'file.png'
 development:
   <<: *defaults
