@@ -98,3 +98,13 @@ $navbar-inverse-toggle-border-color:        $navbar-inverse-border;
 
   }
 }
+
+.btn-link {
+  color: #999;
+
+  &:hover {
+    color: #333;
+    text-decoration: none;
+  }
+
+}
