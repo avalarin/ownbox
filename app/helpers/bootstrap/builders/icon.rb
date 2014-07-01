@@ -18,6 +18,7 @@ module Bootstrap
           when :x5
             css += " fa-5x"
         end
+        css += " " + options[:class] if options[:class]
         template.content_tag :i, "", class: css
       end
 
