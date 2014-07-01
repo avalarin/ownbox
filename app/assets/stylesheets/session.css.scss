@@ -1,7 +1,7 @@
 .form-signin {
     max-width: 330px;
     padding: 15px;
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
 }
 .form-signin .form-signin-heading, .form-signin .checkbox {
     margin-bottom: 10px;
@@ -60,4 +60,7 @@
 .new-account {
     display: block;
     margin-top: 10px;
+}
+.form-box {
+    margin-bottom: 15px;
 }
