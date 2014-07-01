@@ -1,0 +1,16 @@
+= bt_modal size: :large, id: "image-viewer-modal", data: { bind: 'with: imageViewer' } do |m|
+  - m.body do
+    .image-toolbar
+      %span.image-info
+        %span(data-bind="text: (currentIndex() + 1) + '/' + items().length")
+        %span(data-bind="text: current().name")
+        %span(data-bind="text: current().humanSize")
+      .pull-right
+        = bt_button style: :link, icon: :download, text: t('commands.download'), size: :xsmall, data: { bind: 'click: download' }
+        = bt_button style: :link, icon: :'chevron-left', text: t('commands.back'), size: :xsmall, data: { bind: 'click: prev' }
+        = bt_button style: :link, icon: :'chevron-right', text: t('commands.next'), size: :xsmall, data: { bind: 'click: next' }
+        = bt_button style: :link, icon: :expand, text: t('commands.enter_full_screen'), size: :xsmall, data: { bind: 'click: enterFullScreen, visible: !fullScreen()' }
+        = bt_button style: :link, icon: :compress, text: t('commands.exit_full_screen'), size: :xsmall, data: { bind: 'click: exitFullScreen, visible: fullScreen()' }
+        = bt_button style: :link, icon: :times, text: t('commands.close'), size: :xsmall, data: { bind: 'click: close' }
+    .image(data-bind="css: { loading: loading }")
+      %img(data-bind="attr: { src: current().url }, click: next, event: { load: loaded }")

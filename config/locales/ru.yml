@@ -21,6 +21,9 @@ ru:
         register: 'Регистрация'
         next: 'Далее'
         back: 'Назад'
+        download: 'Скачать'
+        enter_full_screen: 'Во весь экран'
+        exit_full_screen:  'Свернуть'
     messages:
         confirm_deletion: 'Подтвердите удаление:'
         user_not_found: 'Пользователь не существует'
