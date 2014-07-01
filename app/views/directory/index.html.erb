@@ -71,7 +71,7 @@
           <img data-bind="attr: { src: previewUrl }" />
         </td>
         <td class="column-name">
-          <a href="javascript:" data-bind="click: $parent.go, text: name"></a>
+          <a data-bind="click: $parent.go, text: name, attr: { href: url }"></a>
         </td>
         <td class="column-size">
           <span data-bind="text: humanSize"></span>
@@ -147,3 +147,4 @@
 </div>
 
 <%= render 'uploading' %>
+<%= render 'image_viewer' %>

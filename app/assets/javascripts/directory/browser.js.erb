@@ -1,4 +1,5 @@
 //= require directory/human_size
+//= require controls/image_viewer
 
 function Browser(currentItem) {
   var http = require('http')
@@ -18,6 +19,8 @@ function Browser(currentItem) {
   this.uploadingFiles = ko.observableArray([])
   this.waitConfirmFiles = ko.observableArray([])
 
+  this.imageViewer = new ImageViewer($('#image-viewer-modal'))
+
   window.history.replaceState(currentItem, currentItem.name)
   window.onpopstate = function() { browser.go(history.state); }
 
@@ -28,7 +31,14 @@ function Browser(currentItem) {
   this.go = function(item, event) {
     if (event) event.stopPropagation()
     if (item.type != 'directory') {
-      return browser.goFile(item);
+      if (item.type == 'image') {
+        browser.imageViewer.setItems(browser.items())
+        var index = browser.items().indexOf(item)
+        browser.imageViewer.show(index)
+        return
+      } else {
+        return browser.goFile(item)
+      }
     }
     if (event) $('.browser').addClass('loading')
     http.request({
