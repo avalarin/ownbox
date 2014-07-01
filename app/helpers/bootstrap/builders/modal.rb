@@ -9,7 +9,7 @@ module Bootstrap
           template.concat(template.link_to("×", "#",class: 'close', data: { dismiss: 'modal'}))
           
           template.concat(template.content_tag(:h4, options[:header], class: "modal-title"))
-        end
+        end if options[:header]
       end
 
       def header &block
@@ -35,12 +35,17 @@ module Bootstrap
           id: options[:id]
         }
 
+        modal_dialog_css = "modal-dialog" 
+        modal_dialog_css << " modal-lg" if options[:size] == :large 
+        modal_dialog_css << " modal-sm" if options[:size] == :small 
+
         template.content_tag :div, html do
-          template.content_tag :div, class: "modal-dialog" do
+          template.content_tag :div, class: modal_dialog_css do
             template.content_tag :div, class: "modal-content" do
-              html =  template.content_tag(:div, @header_html, class: "modal-header")
-              html << template.content_tag(:div, @body_html, class: "modal-body")
-              html << template.content_tag(:div, @footer_html, class: "modal-footer")
+              html = ActiveSupport::SafeBuffer.new()
+              html << template.content_tag(:div, @header_html, class: "modal-header") unless @header_html.empty?
+              html << template.content_tag(:div, @body_html, class: "modal-body") unless @body_html.empty?
+              html << template.content_tag(:div, @footer_html, class: "modal-footer") unless @footer_html.empty?
               html
             end
           end
