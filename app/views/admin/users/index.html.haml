@@ -26,8 +26,8 @@
             = bt_label t('.is_locked'), style: :danger, data: { bind: 'visible: locked' }
             = bt_label t('.not_approved'), style: :warning, data: { bind: 'visible: !approved' }
           %td.column-right
-            = bt_icon :envelope
-            %span{ "data-bind" => "text: email" }
+            = bt_icon :envelope, class: 'hidden-xs'
+            %span.hidden-xs{ "data-bind" => "text: email" }
             = bt_button icon: 'envelope', size: :xsmall, title: t('commands.send_activation_email'), data: { bind: 'click: $parent.sendActivationEmail, visible: !approved' }
             = bt_button icon: 'lock', size: :xsmall, style: :danger, title: t('commands.lock'), data: { bind: 'click: $parent.lockUser, visible: !locked && !current' }
             = bt_button icon: 'lock', size: :xsmall, style: :success, title: t('commands.unlock'), data: { bind: 'click: $parent.unlockUser, visible: locked' }
