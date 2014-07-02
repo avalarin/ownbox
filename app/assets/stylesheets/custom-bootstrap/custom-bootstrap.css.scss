@@ -1,0 +1,35 @@
+@import "custom-bootstrap/variables";
+@import "bootstrap";
+@import "custom-bootstrap/navbar";
+@import "custom-bootstrap/button";
+
+.site-content > .main-container {
+  margin-top: 20px;
+}
+
+.validation-message {
+  display: block;
+}
+
+.captcha {
+  position: relative;
+
+  & > img {
+    width: 160px;
+    height: 64px;
+    vertical-align: top;
+    cursor: pointer;
+  }
+
+  & > div {
+    position: relative;
+    top: 0;
+    display: inline-block;
+    margin-left: 10px;
+
+    span {
+      margin-top: 0;
+    }
+
+  }
+}

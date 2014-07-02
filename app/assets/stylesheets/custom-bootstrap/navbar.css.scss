@@ -1,0 +1,39 @@
+.navbar-nav {
+  & > li {
+    & > a {
+      border: 0;
+    }
+  }
+}
+
+.navbar-brand {
+  img {
+    height: 28px;
+    width: 28px;
+    margin-top: -4px;
+  }
+}
+
+.nav-condensed a {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+} 
+
+.navbar-nav-justified {
+  margin: 0 auto;
+  display: table;
+  table-layout: auto;
+  float: none;
+  width: 100%;
+
+  li {
+    display: table-cell;
+    float: none;
+    text-align: center;
+  }
+
+}
+
+.navbar-second {
+  z-index: auto;
+}
