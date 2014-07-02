@@ -32,8 +32,11 @@ function Browser(currentItem) {
     if (event) event.stopPropagation()
     if (item.type != 'directory') {
       if (item.type == 'image') {
-        browser.imageViewer.setItems(browser.items())
-        var index = browser.items().indexOf(item)
+        var imageItems = _.filter(browser.items(), function (file) {
+          return file.type == 'image'
+        })
+        browser.imageViewer.setItems(imageItems)
+        var index = imageItems.indexOf(item)
         browser.imageViewer.show(index)
         return
       } else {
