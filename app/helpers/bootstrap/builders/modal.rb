@@ -36,8 +36,12 @@ module Bootstrap
         }
 
         modal_dialog_css = "modal-dialog" 
-        modal_dialog_css << " modal-lg" if options[:size] == :large 
-        modal_dialog_css << " modal-sm" if options[:size] == :small 
+        case options[:size]
+        when :large
+          modal_dialog_css << " modal-lg"
+        when :small
+          modal_dialog_css << " modal-sm"
+        end
 
         template.content_tag :div, html do
           template.content_tag :div, class: modal_dialog_css do
