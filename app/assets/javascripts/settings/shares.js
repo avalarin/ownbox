@@ -89,20 +89,20 @@
     filter: function(item) { return item.type == 'directory' },
     editable: false
   })
-  editModal.browser.goPath('/')
+  editModal.browser.browsePath('/')
   var oldShow = editModal.show
   var oldReset = editModal.reset
   editModal.show = function() {
     oldShow()
   }
   editModal.reset = function() {
-    editModal.browser.goPath('/')
+    editModal.browser.browsePath('/')
     oldReset()
   }
   editModal.edit = function(item) {
     editModal.mode('edit')
     editModal.name(item.name)
-    editModal.browser.goPath(item.path)
+    editModal.browser.browsePath(item.path)
     editModal.id(item.id)
   }
   
