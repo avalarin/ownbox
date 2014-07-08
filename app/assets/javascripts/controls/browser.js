@@ -14,7 +14,7 @@ Browser = (function() {
     var filter = options.filter || function(item) { return true }
     var changeHistory = options.history == true
 
-    if (UploaderModal) {
+    if (typeof UploaderModal !== 'undefined') {
       browser.uploaderModal = new UploaderModal({
         onUpload: function(files) {
           _.each(files, uploadFile)
@@ -22,7 +22,7 @@ Browser = (function() {
       })
     }
    
-    if (ImageViewer) {
+    if (typeof ImageViewer !== 'undefined') {
       browser.imageViewer = new ImageViewer($('#image-viewer-modal'))
     }
 
