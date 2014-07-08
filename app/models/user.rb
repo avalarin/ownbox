@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   
   validates :name, :email, :display_name, presence: true
   validates :name, :email, uniqueness: { case_sensitive: true }
-  validates :name, length: { minimum: 5 }
   validates :email, email_format: { message: "doesn't look like an email address" }
 
   has_secure_password
