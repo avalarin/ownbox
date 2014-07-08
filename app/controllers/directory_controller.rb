@@ -6,9 +6,15 @@ class DirectoryController < ItemsController
   def index
     return render_not_found if item.type != 'directory'
     if  request.xhr?
+
+      page = params[:page] ? [1, params[:page].to_i].max : 1
+      per_page = params[:per_page] ? [1, params[:per_page].to_i].max : nil
+
       items = service.get_items(item_path).collect { |i| collect_item i }
+      all_stat = stat(items)
+      items = items.drop((page - 1) * per_page).take(per_page) if per_page 
       path = service.get_path_parts(item_path).collect { |i| collect_item i }
-      render json: { items: items, path: path, currentItem: collect_item(item), stat: stat(items) }
+      render json: { items: items, path: path, currentItem: collect_item(item), stat: all_stat }
     else
       @items = service.get_items item_path
       @path_parts = service.get_path_parts item_path
@@ -67,7 +73,8 @@ class DirectoryController < ItemsController
     {
       allSize: all_size,
       allHumanSize: number_to_human_size(all_size),
-      allCount: allMessage
+      allHumanCount: allMessage,
+      allCount: allCount
     }
   end
 

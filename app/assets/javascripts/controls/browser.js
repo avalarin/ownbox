@@ -31,9 +31,12 @@ Browser = (function() {
     browser.path = ko.observableArray([])
     browser.selected = ko.observableArray([])
 
-    this.allHumanSize = ko.observable('')
-    this.allSize = ko.observable(0)
-    this.allCount = ko.observable('')
+    this.stat = {
+      allHumanSize : ko.observable(''),
+      allSize : ko.observable(0),
+      allCount : ko.observable(''),
+      allHumanCount : ko.observable('')
+    }
     
     browser.editable = ko.observable(options.hasOwnProperty('editable') ? options['editable'] : true)
     browser.isLoading = ko.observable(false)
@@ -107,6 +110,10 @@ Browser = (function() {
             }
             $('title').text(currentItem.name)
           }
+          browser.stat.allSize(data.stat.allSize)
+          browser.stat.allHumanSize(data.stat.allHumanSize)
+          browser.stat.allHumanCount(data.stat.allHumanCount)
+          browser.stat.allCount(data.stat.allCount)
           browser.currentItem(currentItem)
           browser.isLoading(false)
         }
