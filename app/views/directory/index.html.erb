@@ -2,53 +2,11 @@
   currentItem = <%= raw @current_item.to_json  %>
 </script>
 
-<div class="browser">
+<div class="browser" data-bind="with: browser, css: { loading: browser.isLoading }">
   <!-- ko if: uploadingFiles().length > 0 -->
   <div data-bind="template: { name: 'uploading-template' }"></div>
   <!-- /ko -->
-
-  <div class="browser-toolbar">
-    <ul class="browser-location" data-bind="foreach: path">
-      <li>
-        <a href="javascript:" data-bind="click: $parent.go">
-          <!-- ko if: directoryType == "home_directory" -->
-          <%= bt_icon 'home' %>
-          <!-- /ko -->
-          <!-- ko if: directoryType == "users_directory" -->
-          <%= bt_icon 'group' %>
-          <!-- /ko -->
-          <!-- ko if: directoryType == "shares_directory" -->
-          <%= bt_icon 'user' %>
-          <!-- /ko -->
-          <!-- ko if: directoryType == "general" -->
-          <%= bt_icon 'folder' %>
-          <!-- /ko -->
-          <span data-bind="html: name"></span>
-        </a>
-      </li>
-    </ul>
-    <div class="btn-toolbar">
-      <a href="javascript:" class="btn btn-xs btn-default" data-bind="click: refresh">
-        <%= bt_icon 'refresh' %>
-        <%= t ".refresh" %>
-      </a>
-      <!-- ko if: currentItem().permission == "readwrite" -->
-      <a href="javascript:" class="btn btn-xs btn-default" data-bind="click: createDir, visible: canCreateDir">
-        <%= bt_icon 'folder' %>
-        <%= t ".create_directory" %>
-      </a>
-      <a href="javascript:" class="btn btn-xs btn-default" data-bind="click: uploadFile">
-        <%= bt_icon 'upload' %>
-        <%= t ".upload_file" %>
-      </a>
-      <a href="javascript:" class="btn btn-xs btn-danger" data-bind="click: deleteItem, visible: selected().length">
-        <%= bt_icon 'trash-o' %>
-        <%= t ".delete_item" %>
-      </a>
-      <!-- /ko -->
-    </div>
-  </div>
-
+  <%= render 'shared/browser/toolbar' %>
   <table class="browser-table">
     <thead>
       <tr>
@@ -66,7 +24,7 @@
         <td class="column-size"></td>
       </tr>
       <!-- ko foreach: items -->
-      <tr data-bind="css: { selected: isSelected, deleted: isDeleted, new: isNew }, click: $parent.selectUnselect">
+      <tr data-bind="css: { selected: isSelected }, click: $parent.selectUnselect">
         <td class="column-icon">
           <img data-bind="attr: { src: previewUrl }" />
         </td>
@@ -98,53 +56,6 @@
   </table>
 </div>
 
-<!-- upload file modal window -->
-<div class="modal fade" id="upload-file-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title"><%= t '.upload_modal.header' %></h4>
-      </div>
-      <div class="modal-body">
-        <!-- ko if: waitConfirmFiles().length == 0 -->
-        <p><%= raw t '.upload_modal.message' %></p>
-        <!-- /ko -->
-        <!-- ko if: waitConfirmFiles().length > 0 -->
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="column-name"><%= t '.upload_modal.name_column' %></th>
-              <th class="column-size"><%= t '.upload_modal.size_column' %></th>
-              <th class="column-actions"></th>
-            </tr>
-          </thead>
-          <tbody data-bind="foreach: waitConfirmFiles">
-            <tr>
-              <td class="column-name" data-bind="text: name"></td>
-              <td class="column-size" data-bind="text: humanSize"></td>
-              <td class="column-actions">
-                <a href="javascript:" data-bind="click: $data.delete"><%= bt_icon 'times' %></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- /ko -->
-      </div>
-      <div class="modal-footer">
-        <div type="button" class="btn btn-primary btn-uploader">
-          <span><%= t 'commands.choose' %></span>
-          <input type="file" multiple="true"/>
-        </div>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" 
-                data-bind="visible: waitConfirmFiles().length > 0, click: startUpload">
-          <%= t 'commands.upload' %>
-        </button>
-        <button type="button" class="btn btn-default" data-dismiss="modal"><%= t 'commands.close' %></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<%= render 'uploading' %>
-<%= render 'image_viewer' %>
+<%= render 'shared/browser/uploader_modal' %>
+<%= render 'shared/browser/uploading' %>
+<%= render 'shared/browser/image_viewer' %>

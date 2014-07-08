@@ -86,7 +86,8 @@
     }
   }
   editModal.browser = new Browser({ 
-    filter: function(item) { return item.type == 'directory' } 
+    filter: function(item) { return item.type == 'directory' },
+    editable: false
   })
   editModal.browser.goPath('/')
   var oldShow = editModal.show

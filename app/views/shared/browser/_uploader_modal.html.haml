@@ -1,0 +1,26 @@
+= bt_modal id: "uploader-modal", header: t('.modal_header'), data: { bind: 'with: browser.uploaderModal' } do |m|
+  - m.body do
+    / ko if: files().length == 0
+    %p=raw(t('.message'))
+    / /ko
+    / ko if: files().length > 0
+    %table.table
+      %thead
+        %tr
+          %th.column-name= t '.name_column'
+          %th.column-size= t '.size_column'
+          %th.column-actions
+      %tbody(data-bind="foreach: files")
+        %tr
+          %td(class="column-name" data-bind="text: name")
+          %td(class="column-size" data-bind="text: humanSize")
+          %td(class="column-actions")
+            %a(href="javascript:" data-bind="click: $data.delete")
+              = bt_icon 'times'
+    / /ko
+  - m.footer do
+    .btn.btn-primary.btn-uploader
+      %span= t 'commands.choose'
+      %input(type="file" multiple="true")
+    = bt_button style: :primary, text: t('commands.upload'), data: { dismiss: 'modal', bind: 'visible: files().length > 0, click: upload'}
+    = bt_button text: t('commands.close'), data: { bind: 'click: close' }

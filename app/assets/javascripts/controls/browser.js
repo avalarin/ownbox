@@ -1,25 +1,56 @@
 //= require knockout
 //= require modules/http
+//= require modules/messages
+//= require utils/human_size
+//= require controls/browser_values
 
 Browser = (function() {
   var http = require('http')
+  var messages = require('messages')
 
   function Browser(options) {
     var browser = this
     options = options || {}
     var filter = options.filter || function(item) { return true }
+    var changeHistory = options.history == true
 
-    browser.items = ko.observableArray([])
-    browser.selected = ko.observableArray([])
-    browser.path = ko.observableArray([])
+    if (UploaderModal) {
+      browser.uploaderModal = new UploaderModal({
+        onUpload: function(files) {
+          _.each(files, uploadFile)
+        }
+      })
+    }
+   
+    if (ImageViewer) {
+      browser.imageViewer = new ImageViewer($('#image-viewer-modal'))
+    }
+
     browser.currentItem = ko.observable(BrowserItem.empty)
+    browser.items = ko.observableArray([])
+    browser.path = ko.observableArray([])
+    browser.selected = ko.observableArray([])
+
+    this.allHumanSize = ko.observable('')
+    this.allSize = ko.observable(0)
+    this.allCount = ko.observable('')
+    
+    browser.editable = ko.observable(options.hasOwnProperty('editable') ? options['editable'] : true)
     browser.isLoading = ko.observable(false)
+
+    this.uploadingFiles = ko.observableArray([])
+
+    if (changeHistory) {
+      window.history.replaceState(currentItem, currentItem.name)
+      window.onpopstate = function() { browser.go(history.state); }
+    }
 
     browser.refresh = function() {
       browser.go(browser.currentItem())
     }
 
-    browser.go = function(item) {
+    browser.go = function(item, event) {
+      if (event) event.stopPropagation();
       if (!item) {
         if (typeof (this) == 'BrowserItem') {
           item = this
@@ -27,16 +58,31 @@ Browser = (function() {
           throw "item required"
         }
       }
-      browser.goUrl(item.url)
+
+      if (item.type != 'directory') {
+        if (item.type == 'image') {
+          var imageItems = _.filter(browser.items(), function (file) {
+            return file.type == 'image'
+          })
+          browser.imageViewer.setItems(imageItems)
+          var index = imageItems.indexOf(item)
+          browser.imageViewer.show(index)
+          return
+        } else {
+          return browser.goFile(item)
+        }
+      }
+
+      browser.browseUrl(item.url)
     }
 
-    browser.goPath = function(path) {
+    browser.browsePath = function(path) {
       if (path[0] == '/') path = path.substr(1)
       var url = Browser.baseUrl + '/' + path
-      browser.goUrl(url)
+      browser.browseUrl(url)
     }
 
-    browser.goUrl = function(url) {
+    browser.browseUrl = function(url) {
       browser.isLoading(true)
       http.request({
         url: url,
@@ -55,14 +101,138 @@ Browser = (function() {
             browser.path.push(BrowserItem.wrap(path[i]))
           }
           currentItem = BrowserItem.wrap(data.currentItem)
-          // if (currentItem.url != history.state.url) {
-          //   history.pushState(currentItem.historyState, currentItem.name, currentItem.url)
-          // }
-          // $('title').text(currentItem.name)
+          if (changeHistory){
+            if (currentItem.url != history.state.url) {
+              history.pushState(currentItem.historyState, currentItem.name, currentItem.url)
+            }
+            $('title').text(currentItem.name)
+          }
           browser.currentItem(currentItem)
           browser.isLoading(false)
         }
       })
+    }
+
+    // directory creating
+    this.canCreateDir = ko.observable(true)
+    this.createDir = function(data, event) {
+      browser.canCreateDir(false)
+      var newDirectory = $('#new-directory')
+      var input = newDirectory.find('input[name=name]')
+      newDirectory.removeClass('hidden')
+      var validate = function() {
+        var value = input.val()
+        if (value.trim() == '') {
+          messages.danger(window.localization.directoryNameCannotBeEmpty)
+          return false
+        }
+        return true
+      }
+      var save = function () {
+        if (!validate()) return
+        http.request({
+          url: '/directory/create',
+          type: 'POST',
+          data: {
+            user_name: browser.currentItem().owner,
+            path: browser.currentItem().path,
+            name: input.val()
+          },
+          success: function() {
+            browser.refresh()
+            messages.success(window.localization.directoryCreated)
+          }
+        })
+        close()
+      }
+      var close = function () {
+        input.val('')
+        newDirectory.addClass('hidden')
+        input.off('.createdir')
+        browser.canCreateDir(true)
+      }
+      input.on('keyup.createdir', function (e) {
+        var code = e.keyCode || e.which
+        if(code == 13) {
+          save()
+        } else if (code == 27) {
+          close()
+        }
+      }).on('blur.createdir', function (e) {
+        if (input.val().trim() == '') {
+          close()
+        } else {
+          save()
+        }
+      })
+      input.focus()
+    }    
+
+    this.upload = function () {
+      browser.uploaderModal.show()
+    }
+
+    function uploadFile(file) {
+      var uploadingFile = {
+        name: file.name,
+        size: file.size,
+        humanSize: window.humanSize(file.size),
+        type: file,
+        uploaded: ko.observable(0),
+        uploadedPercentage: ko.observable(0),
+        isError: ko.observable(false),
+        delete: function() {
+          browser.uploadingFiles.remove(this)
+          if (this.xhr && this.xhr.readystate != 4) {
+              this.xhr.abort();
+          }
+        }
+      }
+      browser.uploadingFiles.push(uploadingFile)
+      uploadingFile.xhr = FileAPI.upload({
+        url: '/file/upload',
+        files: { file: file.original },
+        data: {
+          path: browser.currentItem().path,
+          user_name: browser.currentItem().owner,
+        },
+        headers: {
+          "X-CSRF-Token": $('meta[name=csrf-token]').attr('content')
+        },
+        progress: function (evt){
+          uploadingFile.uploaded(evt.loaded)
+          uploadingFile.uploadedPercentage(Math.ceil(evt.loaded/evt.total*100))
+        },
+        complete: function (err, xhr) {
+          if (err) {
+            uploadingFile.isError(true)
+          } else {
+            browser.uploadingFiles.remove(uploadingFile)
+            if (browser.uploadingFiles().length == 0) browser.refresh()
+          }
+        }
+      })
+    }
+
+    // deletion
+    this.deleteItem = function(data, event) {
+      var selected = _.clone(browser.selected());
+      if (confirm(window.localization.confirmDeletion)) {
+        http.request({
+          url: '/directory/destroy',
+          type: 'POST',
+          data: {
+            user_name: browser.currentItem().owner,
+            path: browser.currentItem().path,
+            name: _.map(selected, function(item) { return item.name; }).join('|')
+          },
+          success: function() {
+            browser.refresh()
+            messages.warning(window.localization.itemDeleted)
+          }
+        })
+      }
+      browser.unselectAll()
     }
 
     // selection
@@ -88,12 +258,12 @@ Browser = (function() {
         }
       }
       if (event.ctrlKey) {
-        browser.lastSelectId = this.selectUnselect() ? browser.items.indexOf(this) : null
+        browser.lastSelectId = selectUnselectItem(this) ? browser.items.indexOf(this) : null
       } else {
         var selected = this.isSelected()
         browser.unselectAll()
         if (!selected) {
-          this.select()
+          selectItem(item)
           browser.lastSelectId = browser.items.indexOf(this)
         } else {
           browser.lastSelectId = null
@@ -102,21 +272,21 @@ Browser = (function() {
     }
 
     function unselectItem(item) {
-      if (item.selected()) {
+      if (item.isSelected()) {
         browser.selected.remove(item)
-        item.selected(false)
+        item.isSelected(false)
       }
     }
 
     function selectItem(item) {
-      if (!item.selected()) {
+      if (!item.isSelected()) {
         browser.selected.push(item)
-        item.selected(true)
+        item.isSelected(true)
       }
     }
 
     function selectUnselectItem(item) {
-      if (item.selected()) {
+      if (item.isSelected()) {
         unselectItem(item)
         return false
       } else {
@@ -137,7 +307,6 @@ BrowserItem = (function() {
     this.name = options.name
     this.size = options.size
     this.url = options.url
-
     this.historyState = options
     this.owner = options.owner
     this.previewUrl = options.preview_url
@@ -145,8 +314,9 @@ BrowserItem = (function() {
     this.permission = options.permission
     this.humanSize = options.human_size
     this.directoryType = options.directory_type
+    this.humanSize = options.human_size,
 
-    this.selected = ko.observable(false)
+    this.isSelected = ko.observable(false)
   }
 
   BrowserItem.wrap = function(item) {

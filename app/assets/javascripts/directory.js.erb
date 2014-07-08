@@ -1,12 +1,31 @@
 //= require knockout
-//= require fileapi
 //= require modules/http
 //= require modules/messages
-//= require directory/browser
+//= require controls/page
+//= require controls/browser
 
-<% environment.context_class.instance_eval { include ActionView::Helpers::UrlHelper } %>
-<% environment.context_class.instance_eval { include ActionView::Helpers::TagHelper } %>
+//= require controls/uploader_modal
+//= require controls/image_viewer
 
-browser = new Browser(window.currentItem);
-delete window.currentItem;
-ko.applyBindings(browser);
+$(function() {
+
+  var page = new Page()
+  
+  var browser = new Browser({
+    history: true
+  })
+
+  page.addControl('browser', browser)
+  page.attach()
+
+  browser.go(window.currentItem)
+  delete window.currentItem
+
+  $('#private-data, #shared-data').click(function(e) {
+    var url = $(this).attr('href')
+    var item = { type: 'directory', url: url }
+    browser.go(item)
+    return false
+  })
+})
+

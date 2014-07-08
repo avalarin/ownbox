@@ -15,3 +15,10 @@
         = bt_icon 'folder'
         / /ko
         %span(data-bind="html: name")
+  .btn-toolbar
+    = bt_button size: :xsmall, icon: :refresh, text:  t("commands.refresh"), data: { bind: 'click: refresh' }
+    / ko if: currentItem().permission == "readwrite" && editable
+    = bt_button size: :xsmall, icon: :folder, text:  t("commands.create_directory"), data: { bind: 'click: createDir, visible: canCreateDir' }
+    = bt_button size: :xsmall, icon: :upload, text:  t("commands.upload"), data: { bind: 'click: upload' }
+    = bt_button size: :xsmall, style: :danger, icon: :'trash-o', text:  t("commands.delete"), data: { bind: 'click: deleteItem, visible: selected().length' }
+    / /ko

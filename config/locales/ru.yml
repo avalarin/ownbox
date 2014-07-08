@@ -12,6 +12,7 @@ ru:
         edit: 'Редактировать'
         security: 'Безопасность'
         refresh: 'Обновить'
+        create_directory: 'Создать папку'
         lock: 'Заблокировать'
         unlock: 'Разблокировать'
         search: 'Поиск'
@@ -144,9 +145,6 @@ ru:
             root_directory: 'Домашняя папка'
             name_column: 'Название'
             size_column: 'Размер'
-            create_directory: 'Создать папку'
-            upload_file: 'Загрузить'
-            delete_item: 'Удалить'
             refresh: 'Обновить'
             directory_created: 'Папка создана'
             item_deleted: 'Удалено'
@@ -164,11 +162,6 @@ ru:
                 one: '%{count} файл'
                 other: '%{count} файлa'
             all_count: '%{dirs} и %{files}'
-            upload_modal:
-                header: 'Загрузить файлы'
-                message: 'Выберите файлы которые вы хотите загрузить в папку <b data-bind="text: currentItem().name"></b>.'
-                name_column: 'Название'
-                size_column: 'Размер'
         uploading:
             uploading: 'Загрузка...'
     registration:
@@ -195,3 +188,11 @@ ru:
             currencies: 'Валюты'
             units: 'Ед. измерения'
             users: 'Пользователи'
+    shared:
+        browser:
+            toolbar:
+            uploader_modal:
+                modal_header: 'Загрузить файлы'
+                message: 'Выберите файлы которые вы хотите загрузить в папку <b data-bind="text: $root.browser.currentItem().name"></b>.'
+                name_column: 'Название'
+                size_column: 'Размер'
