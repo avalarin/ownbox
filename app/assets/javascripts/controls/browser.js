@@ -90,14 +90,28 @@ Browser = (function() {
       http.request({
         url: url,
         success: function(data) {
+          browser.isLoading(false)
           browser.items.removeAll()
           browser.selected.removeAll()
-          var items = data.items
-          for (var i = 0; i < items.length; i++) {
-            var item = BrowserItem.wrap(items[i])
-            if (!filter(item)) continue
-            browser.items.push(item)
+          var items = _.filter(_.map(data.items, BrowserItem.wrap), filter)
+
+          var oneCount = 50
+          var oneTimeout = 100
+          for (var i = 0; i < Math.ceil(items.length / oneCount); i++) {
+            var f = function() {
+              for (var z = i * oneCount; z < Math.min(items.length, (i + 1) * oneCount); z++) {
+                browser.items.push(items[z])
+              }
+            }
+            var timeout = oneTimeout * i;
+            if (timeout > 0) {
+              setTimeout(f, timeout)
+            } else {
+              f()
+            }
           }
+
+
           browser.path.removeAll()
           var path = data.path
           for (var i = 0; i < path.length; i++) {
@@ -115,7 +129,6 @@ Browser = (function() {
           browser.stat.allHumanCount(data.stat.allHumanCount)
           browser.stat.allCount(data.stat.allCount)
           browser.currentItem(currentItem)
-          browser.isLoading(false)
         }
       })
     }
