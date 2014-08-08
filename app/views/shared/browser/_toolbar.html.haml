@@ -16,9 +16,15 @@
         / /ko
         %span(data-bind="html: name")
   .btn-toolbar
+    / ko foreach: controls
+    %a(href="javascript:" data-bind="visible: canExecute, click: execute, attr: { title: text, class: 'btn btn-default btn-xs btn-' + style}")
+      %i(data-bind="attr: { class: 'fa fa-' + icon }")
+      %span(data-bind="text: text")
+    / /ko
+
     = bt_button size: :xsmall, icon: :refresh, text:  t("commands.refresh"), data: { bind: 'click: refresh' }
     / ko if: currentItem().permission == "readwrite" && editable
     = bt_button size: :xsmall, icon: :folder, text:  t("commands.create_directory"), data: { bind: 'click: createDir, visible: canCreateDir' }
     = bt_button size: :xsmall, icon: :upload, text:  t("commands.upload"), data: { bind: 'click: upload' }
-    = bt_button size: :xsmall, style: :danger, icon: :'trash-o', text:  t("commands.delete"), data: { bind: 'click: deleteItem, visible: selected().length' }
+    = bt_button size: :xsmall, style: :danger, icon: :'trash-o', text:  t("commands.delete"), data: { bind: 'click: deleteSelected, visible: selected().length' }
     / /ko

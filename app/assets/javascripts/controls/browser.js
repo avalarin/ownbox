@@ -31,6 +31,8 @@ Browser = (function() {
     browser.path = ko.observableArray([])
     browser.selected = ko.observableArray([])
 
+    browser.controls = ko.observableArray([])
+
     this.stat = {
       allHumanSize : ko.observable(''),
       allSize : ko.observable(0),
