@@ -14,8 +14,15 @@ class Settings::SharesController < ApplicationController
 
   def create
     share_params = params.require(:share).permit(:name, :path)
-    share = Share.new share_params
-    share.user = current_user
+
+    service = PrivateDataService.new(current_user)
+    item = service.get_item(Path.parse(share_params[:path]))
+    if (!item)
+      share.errors[:name] << t('errors.messages.directory_not_found')
+      return render_model_errors_api_resp share
+    end
+    
+    share = Share.new(name: share_params[:name], item: item)
 
     exist_share = Share.find_by_user_and_name current_user, share_params[:name]
     if exist_share
@@ -59,7 +66,7 @@ class Settings::SharesController < ApplicationController
   private
 
   def wrap_share share
-    { id: share.id, name: share.name, path: share.path }
+    { id: share.id, name: share.name, path: share.item.path.to_s }
   end
 
 end

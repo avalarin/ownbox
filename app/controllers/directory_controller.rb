@@ -86,7 +86,8 @@ class DirectoryController < ItemsController
       type: item.type,
       url: create_item_link(item),
       preview_url: ActionController::Base.helpers.asset_path(create_item_preview_link(item, 24)),
-      permission: item.permission
+      permission: item.permission,
+      shared: item.shares.count > 0
     }
     if item.is_a? FileItem
       nitem[:size] = item.size;

@@ -7,6 +7,7 @@ ru:
             access_denied: Доступ запрещен.
             directory_name_cannot_be_empty: Введите имя папки.
             directory_already_exists: Папка уже существует.
+            directory_not_found: Папка не существует.
             share_already_exists: Общая папка с таким именем уже существует.
             invalid_email_or_password: Email или пароль введены неверно.
             invalid_email_address: Введен неверный email.
