@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140618181851) do
+ActiveRecord::Schema.define(version: 20140711025455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "items", force: true do |t|
+    t.string  "name"
+    t.string  "path"
+    t.string  "full_path"
+    t.integer "user_id"
+    t.string  "type"
+    t.string  "class_name"
+  end
+
+  add_index "items", ["path", "user_id"], name: "index_items_on_path_and_user_id", using: :btree
 
   create_table "previews", force: true do |t|
     t.string  "path"
@@ -29,9 +40,8 @@ ActiveRecord::Schema.define(version: 20140618181851) do
   end
 
   create_table "shares", force: true do |t|
-    t.integer "user_id"
     t.string  "name"
-    t.string  "path"
+    t.integer "item_id"
   end
 
 end
