@@ -16,11 +16,11 @@
             <ul class="nav navbar-nav">
                 <% if authenticated? %>
                     <li>
-                        <%= bt_button id: "private-data", text: t(".private_data"), icon: "home", 
+                        <%= bt_button id: "private-data", text: t(".private_data"), 
                                       href: current_user_items_index_path, style: :link %>
                     </li>
                     <li>
-                        <%= bt_button id: "shared-data", text: t(".shared_data"), icon: "group", 
+                        <%= bt_button id: "shared-data", text: t(".shared_data"),
                                       href: shares_index_path, style: :link %>
                     </li>
                 <% end %>       
