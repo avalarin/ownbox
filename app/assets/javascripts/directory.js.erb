@@ -3,19 +3,66 @@
 //= require modules/messages
 //= require controls/page
 //= require controls/browser
-
 //= require controls/uploader_modal
 //= require controls/image_viewer
+//= require controls/exporter
+//= require directory_values
 
 $(function() {
+  var http = require('http')
 
   var page = new Page()
   
   var browser = new Browser({
     history: true
   })
+  var exporter = new Exporter()
+
+  var downloadControl = {
+    text: window.localization.download,
+    icon: 'download',
+    style: '',
+    execute: function() { 
+      var selected = browser.selected()
+      var current = browser.currentItem()
+
+      if (selected.length == 1) {
+        if (selected[0].type == 'directory') {
+          exporter.modal.show(selected[0], [])
+        } else {
+          http.downloadURL(selected[0].url)
+        }
+      } else {
+        var filter = _.map(selected, function(item) { 
+          if (item.type == 'directory') {
+            return item.name + "/**/**"
+          } else {
+            return item.name
+          }
+        })
+        exporter.modal.show(current, filter)
+      }
+    },
+    canExecute: ko.observable(false)
+  }
+  browser.controls.push(downloadControl)
+
+  browser.selected.subscribe(function(selected) {
+    downloadControl.canExecute(selected.length > 0)
+  })
+
+  var oldDownloadItem = browser.downloadItem;
+  browser.downloadItem = function(data, event) {
+    if (event) event.stopPropagation()
+    if (data.type == 'directory') {
+      exporter.modal.show(data, [])
+    } else {
+      oldDownloadItem(data, event)
+    }
+  }
 
   page.addControl('browser', browser)
+  page.addControl('exporter', exporter)
   page.attach()
 
   browser.go(window.currentItem)

@@ -25,6 +25,7 @@ ru:
         download: 'Скачать'
         enter_full_screen: 'Во весь экран'
         exit_full_screen:  'Свернуть'
+        start: 'Начать'
     messages:
         confirm_deletion: 'Подтвердите удаление:'
         user_not_found: 'Пользователь не существует'
@@ -191,6 +192,9 @@ ru:
     shared:
         browser:
             toolbar:
+            exporter:
+                modal_header: 'Экспорт'
+                modal_message: 'Папка <b data-bind="text: item().name"></b> будет загружена на Ваш компьютер в виде zip архива. Подготовка архива может занять некоторое время.'
             uploader_modal:
                 modal_header: 'Загрузить файлы'
                 message: 'Выберите файлы которые вы хотите загрузить в папку <b data-bind="text: $root.browser.currentItem().name"></b>.'

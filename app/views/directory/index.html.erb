@@ -6,6 +6,9 @@
   <!-- ko if: uploadingFiles().length > 0 -->
   <div data-bind="template: { name: 'uploading-template' }"></div>
   <!-- /ko -->
+  <!-- ko if: $root.exporter.items().length > 0 -->
+  <div data-bind="template: { name: 'exporter-template' }"></div>
+  <!-- /ko -->
   <%= render 'shared/browser/toolbar' %>
   <table class="browser-table">
     <thead>
@@ -66,5 +69,6 @@
 </div>
 
 <%= render 'shared/browser/uploader_modal' %>
+<%= render 'shared/browser/exporter' %>
 <%= render 'shared/browser/uploading' %>
 <%= render 'shared/browser/image_viewer' %>

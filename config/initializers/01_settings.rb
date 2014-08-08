@@ -11,6 +11,9 @@ class Settings < Settingslogic
       raise 'Directory ' + File.expand_path(Settings[:home_directories_path]) + ' not found'
     end
     
+    # Папка для хранения сгенерированных zip архивов
+    Settings[:zip_storage_path] ||= 'tmp/zip'
+    
     # Настройки безопасности   
     Settings[:security] ||= Settingslogic.new({})
     Settings.security[:session_lifetime] ||= 1.hours

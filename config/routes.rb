@@ -21,6 +21,11 @@ Ownbox::Application.routes.draw do
   get '/directory/deleteModal', to: 'directory#delete_modal'
   post '/directory/destroy', to: 'directory#destroy'
 
+  post '/export', to: 'export#begin'
+  get '/export/status', to: 'export#status'
+  get '/export/result', to: 'export#result'
+  get '/export/delete', to: 'export#delete'
+
   post '/file/upload', to: 'file#upload'
 
   get '/users', to: 'users#index', as: :users_index

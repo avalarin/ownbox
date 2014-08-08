@@ -1,0 +1,40 @@
+%script(type="text/html" id="exporter-template")
+  = bt_panel html: { :class => 'browser-progress-block' }, data: { bind: 'with: $root.exporter' }  do |p|
+    - p.header do
+      %span=t('.exporting')
+      %span(data-bind="text: '(' + items().length + ')'")
+    - p.table do
+      %table
+        %tbody(data-bind="foreach: items")
+          %tr(data-bind="css: { error: isError }")
+            %td
+              .item-progress(data-bind="style: { width:progress() + '%' }")
+              .item-text
+                / ko if: isProgress
+                = bt_icon 'circle-o-notch', spin: true
+                / /ko
+                / ko if: isCompleted
+                = bt_icon 'check'
+                / /ko
+                / ko if: isError
+                = bt_icon 'warning'
+                / /ko
+                %span(data-bind="text: name")
+                / ko if: resultName().length > 0
+                = bt_icon 'long-arrow-right'
+                %span(data-bind="text: resultName")
+                / /ko
+                %span.text-muted(data-bind="text: progress() + '%'")
+              %span.item-buttons
+                / ko if: status() == "completed"
+                = bt_button text: t('commands.download'), icon: :download, size: :xsmall, style: :link, data: { bind: 'click: $data.download' }
+                / /ko
+                = bt_button title: t('commands.delete'), icon: :times, size: :xsmall, style: :link, data: { bind: 'click: $data.delete' }
+
+
+= bt_modal id: "export-modal", header: t('.modal_header'), data: { bind: 'with: exporter.modal' } do |m|
+  - m.body do
+    %p=raw(t('.modal_message'))
+  - m.footer do
+    = bt_button style: :primary, text: t('commands.start'), data: { dismiss: 'modal', bind: 'click: start'}
+    = bt_button text: t('commands.cancel'), data: { bind: 'click: close' }
