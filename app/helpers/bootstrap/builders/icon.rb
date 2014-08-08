@@ -19,7 +19,10 @@ module Bootstrap
             css += " fa-5x"
         end
         css += " " + options[:class] if options[:class]
-        template.content_tag :i, "", class: css
+        html = get_html_attributes css, options, {
+          id: options[:id]
+        }
+        template.content_tag :i, "", html
       end
 
     end
