@@ -22,6 +22,7 @@
         </td>
         <td class="column-name"><input name="name" type="text"></input></td>
         <td class="column-size"></td>
+        <td class="column-controls"></td>
       </tr>
       <!-- ko foreach: items -->
       <tr data-bind="css: { selected: isSelected }, click: $parent.selectUnselect">
@@ -34,6 +35,12 @@
         </td>
         <td class="column-size">
           <span data-bind="text: humanSize"></span>
+        </td>
+        <td class="column-controls">
+          <div>
+            <%= bt_button icon: 'download', size: :xsmall, style: :link, title: t('commands.download'), data: { bind: 'click: $parent.downloadItem' } %>
+            <%= bt_button icon: 'trash-o', size: :xsmall, style: :link, title: t('commands.delete'), data: { bind: 'click: $parent.deleteItem' } %>
+          </div>
         </td>
       </tr>
       <!-- /ko -->
@@ -52,6 +59,7 @@
         <td class="column-size">
           <span data-bind="text: stat.allHumanSize"></span>
         </td>
+        <td class="column-controls"></td>
       </tr>
     </tbody>
   </table>

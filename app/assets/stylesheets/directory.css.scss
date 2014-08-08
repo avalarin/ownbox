@@ -58,8 +58,14 @@
 
     }
 
-    tr:hover > td {
-      background-color: #f5f5f5;
+    tr:hover {
+      td {
+        background-color: #f5f5f5;
+      }
+
+      .column-controls div {
+        display: block;
+      }
     }
 
     tr.selected > td {
@@ -104,10 +110,16 @@
   .column-size {
     font-size: 90%;
     width: 100px;
+    text-align: right;
   }
 
-  .column-status {
-    width: 60px;
+  .column-controls {
+    width: 58px;
+
+    div {
+      display: none;
+    }
+
   }
 
   .empty-dir-row, .stat-row {
