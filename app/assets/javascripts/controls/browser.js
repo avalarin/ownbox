@@ -72,7 +72,7 @@ Browser = (function() {
           browser.imageViewer.show(index)
           return
         } else {
-          return browser.goFile(item)
+          return browser.downloadItem(item)
         }
       }
 
@@ -234,9 +234,17 @@ Browser = (function() {
       })
     }
 
+    this.downloadItem = function(data, event) {
+      if (event) event.stopPropagation()
+      if (data.type == 'directory') {
+        throw "Cannot download directory."
+      }
+      http.downloadURL(data.url)
+    }
+
     // deletion
-    this.deleteItem = function(data, event) {
-      var selected = _.clone(browser.selected());
+    this.deleteSelected = function(data, event) {
+      var selected = _.clone(browser.selected())
       if (confirm(window.localization.confirmDeletion)) {
         http.request({
           url: '/directory/destroy',
@@ -253,6 +261,25 @@ Browser = (function() {
         })
       }
       browser.unselectAll()
+    }
+
+    this.deleteItem = function(data, event) {
+      if (event) event.stopPropagation()
+      if (confirm(window.localization.confirmDeletion)) {
+        http.request({
+          url: '/directory/destroy',
+          type: 'POST',
+          data: {
+            user_name: browser.currentItem().owner,
+            path: browser.currentItem().path,
+            name: data.name
+          },
+          success: function() {
+            browser.refresh()
+            messages.warning(window.localization.itemDeleted)
+          }
+        })
+      }
     }
 
     // selection
