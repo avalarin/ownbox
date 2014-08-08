@@ -27,6 +27,7 @@
       <tr data-bind="css: { selected: isSelected }, click: $parent.selectUnselect">
         <td class="column-icon">
           <img data-bind="attr: { src: previewUrl }" />
+          <%= bt_icon :users, :class => "overlay overlay-shared", data: { bind: "visible: shared" } %>
         </td>
         <td class="column-name">
           <a data-bind="click: $parent.go, text: name, attr: { href: url }"></a>

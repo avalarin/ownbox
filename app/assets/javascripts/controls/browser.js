@@ -335,6 +335,7 @@ BrowserItem = (function() {
     this.humanSize = options.human_size
     this.directoryType = options.directory_type
     this.humanSize = options.human_size,
+    this.shared = options.shared,
 
     this.isSelected = ko.observable(false)
   }
