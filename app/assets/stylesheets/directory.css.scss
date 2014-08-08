@@ -172,7 +172,7 @@
   }
 }
 
-.browser-uploading {
+.browser-progress-block {
   border-radius: 4px 4px 0 0;
 
   table {
@@ -203,7 +203,7 @@
         padding: 6px 5px;
       }
 
-      .item-delete {
+      .item-buttons {
         position: absolute;
         right: 5px;
         top: 6px;
@@ -223,5 +223,4 @@
       }
     }
   }
-
 }

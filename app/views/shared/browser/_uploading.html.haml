@@ -1,5 +1,5 @@
 %script(type="text/html" id="uploading-template")
-  = bt_panel html: { :class => 'browser-uploading' } do |p|
+  = bt_panel html: { :class => 'browser-progress-block' } do |p|
     - p.header do
       %span=t('.uploading')
       %span(data-bind="text: '(' + uploadingFiles().length + ')'")
@@ -14,5 +14,5 @@
                 %span(data-bind="text: name")
                 %span.text-muted(data-bind="text: humanSize")
                 %span.text-muted(data-bind="text: uploadedPercentage() + '%'")
-              %a(href="javascript:" class="item-delete" data-bind="click: $data.delete")
-                = bt_icon 'times'
+              %span.item-buttons
+                = bt_button title: t('commands.delete'), icon: :times, size: :xsmall, style: :link, data: { bind: 'click: $data.delete' }
