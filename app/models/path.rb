@@ -3,9 +3,9 @@ class Path
 
   def initialize parts, options = nil
     options ||= { }
-    @is_rooted = true
+    @rooted = true
     if options.has_key? :rooted
-       @is_rooted = options[:rooted]
+       @rooted = options[:rooted]
     end
     @parts = parts
     @path = @parts.join('/')
@@ -14,24 +14,32 @@ class Path
   def self.parse str
     parts = str.split('/')
     if parts[0] == ''
-      is_rooted = true
+      rooted = true
       parts = parts.slice 1, parts.length - 1 
     else
-      is_rooted = false
+      rooted = false
     end
-    Path.new parts, { rooted: is_rooted }
+    Path.new parts, { rooted: rooted }
   end
 
-  def is_rooted?
-    @is_rooted
+  def rooted?
+    @rooted
   end
 
-  def is_empty?
+  def empty?
     @parts.length == 0
   end
 
+  def +(b)
+    if (b.is_a? Path)
+      Path.new(self.parts + b.parts, rooted: self.rooted?)
+    else
+      self + Path.parse(b)
+    end
+  end
+
   def to_s
-    @is_rooted ? '/' + @path : @path
+    rooted? ? '/' + @path : @path
   end
 
   def to_str
@@ -40,6 +48,10 @@ class Path
 
   def to_s_non_rooted
     @path
+  end
+
+  def to_s_rooted
+    '/' + @path
   end
 
 end

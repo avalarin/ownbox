@@ -14,7 +14,7 @@ class PrivateDataService < BaseDataService
 
   def get_items path
     full_path = File.join home_directory, path
-    get_items_safe full_path, path
+    get_items_safe full_path, path, current_user, :readwrite
   end
 
   def get_path_parts path

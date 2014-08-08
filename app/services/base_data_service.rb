@@ -53,26 +53,39 @@ class BaseDataService < BaseService
     Path.parse(File.join home_directory, path.to_s)
   end
 
-  def get_items_safe full_path, path
+  def get_items_safe full_path, path, owner, permission = :unknown
     raise ArgumentError, "full_path requried" unless full_path
     raise ArgumentError, "full_path must be String" unless full_path.is_a? String
 
     raise ArgumentError, "path requried" unless path
     raise ArgumentError, "path must be Path" unless path.is_a? Path
 
-    Dir.entries(full_path)
-      .select { |item| item != '.' && item != '..' }
-      .map do |item| 
-        item_path = Path.parse(File.join path, item)
-        get_item item_path
+    raise ArgumentError, "permission requried" unless permission
+
+    dir_entries = Dir.entries(full_path).select { |name| name != '.' && name != '..' }
+    db_entries = DataItem.includes(:shares).where(user_id: owner.id, path: dir_entries.map { |name| (path + name).to_s_rooted })
+    db_entries.each do |item|
+      item.permission = permission
+      if (File.file? item.full_path)
+        item.size = File.size(item.full_path)
+        item.type = get_file_type(File.extname(item.full_path))
       end
-      .sort do |a, b| 
-        if a.type == b.type
-          a.name <=> b.name
-        else
-          a.type == 'directory' ? -1 : 1
-        end
+    end
+
+    nf_entries = (dir_entries - (db_entries.map { |i| i.name })).map do |name| 
+      get_item_from_fs(File.join(full_path, name), path + name, name, owner, permission)
+    end
+    if nf_entries.count > 0
+      DataItem.save_all(nf_entries)
+      db_entries += nf_entries
+    end
+    db_entries.sort do |a, b| 
+      if a.type == b.type
+        a.name <=> b.name
+      else
+        a.type == 'directory' ? -1 : 1
       end
+    end
   end
 
   def get_item_safe full_path, item_path, item_name, owner, permission = :unknown
@@ -82,27 +95,22 @@ class BaseDataService < BaseService
     raise ArgumentError, "item_path requried" unless item_path
     raise ArgumentError, "item_path must be Path" unless item_path.is_a? Path
 
+    raise ArgumentError, "permission requried" unless permission
+
     return nil unless File.exists? full_path
-    if (File.directory? full_path)
-      DirectoryItem.new({
-        name: item_name,
-        path: item_path,
-        full_path: full_path,
-        owner: owner,
-        permission: permission
-      })
+    db_item = DataItem.find_by_user_and_path(current_user, item_path.to_s_rooted)
+    if (!db_item)
+      item = get_item_from_fs full_path, item_path, item_name, owner, permission
+      item.save!
+      return item
     else
-      item_type = get_file_type(File.extname(item_name))
-      FileItem.new({
-        name: item_name,
-        path: item_path,
-        full_path: full_path,
-        type: item_type,
-        size: File.size(full_path),
-        owner: owner,
-        permission: permission
-      })
+      db_item.permission = permission
+      if (File.file? full_path)
+        db_item.size = File.size(full_path)
+        db_item.type = get_file_type(File.extname(item_name))
+      end
     end
+    return db_item
   end
 
   def create_directory_safe full_path, name
@@ -172,6 +180,32 @@ class BaseDataService < BaseService
     raise ArgumentError, "full_path must be String" unless full_path.is_a? String
 
     FileUtils.rm full_path
+  end
+
+  private 
+
+  def get_item_from_fs full_path, item_path, item_name, owner, permission = :unknown
+    raise ArgumentError, "full_path requried" unless full_path
+    raise ArgumentError, "full_path must be String" unless full_path.is_a? String
+
+    raise ArgumentError, "item_path requried" unless item_path
+    raise ArgumentError, "item_path must be Path" unless item_path.is_a? Path
+
+    raise ArgumentError, "permission required" unless permission
+
+    data = {
+      name: item_name,
+      path: item_path,
+      full_path: full_path,
+      owner: owner,
+      permission: permission
+    }
+    db_item = File.directory?(full_path) ? DirectoryItem.new(data) : FileItem.new(data)
+    if (db_item.is_a? FileItem)
+      db_item.size = File.size(full_path)
+      db_item.type = get_file_type(File.extname(item_name))
+    end
+    db_item
   end
 
 end

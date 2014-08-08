@@ -50,7 +50,7 @@ class SharedDataService < BaseDataService
     share = get_share share_name
     return nil unless share
     item_full_path = get_full_path_for_share share, path_in_share
-    get_items_safe item_full_path, path
+    get_items_safe item_full_path, path, target_user, share.permission
   end
 
   def get_path_parts path
