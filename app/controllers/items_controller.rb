@@ -3,7 +3,11 @@ class ItemsController < ApplicationController
   attr_reader :target_user, :item_path, :service, :item
 
   before_filter :authorize
-  before_action do
+  before_action :initialize_item
+
+  private
+
+  def initialize_item
     @target_user = get_user
     @item_path = get_path
 
@@ -18,8 +22,6 @@ class ItemsController < ApplicationController
       false
     end
   end
-
-  private
 
   def get_user
     if (params['user_name'] == :current_user)

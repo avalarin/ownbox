@@ -2,6 +2,7 @@ class DirectoryController < ItemsController
   include ActionView::Helpers::NumberHelper
 
   before_filter :authorize
+  before_action :initialize_item
   
   def index
     return render_not_found if item.type != 'directory'

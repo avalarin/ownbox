@@ -1,5 +1,6 @@
 class FileController < ItemsController
   before_filter :authorize
+  before_action :initialize_item
 
   def get
     File.open(item.full_path) do |f|
