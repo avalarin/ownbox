@@ -22,20 +22,46 @@ module DataItemHelper
     end
   end
 
-  def create_item_preview_link item, size = 24
+  def create_item_preview_link item, size = "24x24"
     if item.type == 'image'
-      url_for({ only_path: true,
+      original_url = url_for({ only_path: true,
         controller: :file, 
         action: :preview, 
         user_name: item.owner.name, 
-        path: item.path.to_s_non_rooted
+        path: item.path.to_s_non_rooted,
+        size: size
       })
+      preview = PreviewManager.get item, size
+      if (preview[:exist])
+        {
+          url: original_url,
+          exist: true
+        }
+      else
+        {
+          url: ActionController::Base.helpers.asset_path('spinner.gif'),
+          exist: false,
+          statusUrl: url_for({ only_path: true,
+            controller: :file, 
+            action: :preview, 
+            user_name: item.owner.name, 
+            path: item.path.to_s_non_rooted,
+            size: size,
+            status: true
+          }),
+          originalUrl: original_url
+        }
+      end
     else
       if Settings.type_images.include? item.type
-        Settings.type_images[item.type]
+        path = Settings.type_images[item.type]
       else
-        Settings.type_images.other
+        path = Settings.type_images.other
       end
+      {
+        url: ActionController::Base.helpers.asset_path(path),
+        exist: true
+      }
     end
   end
 end

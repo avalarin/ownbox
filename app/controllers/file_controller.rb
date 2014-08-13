@@ -9,8 +9,11 @@ class FileController < ItemsController
   end
 
   def preview
-    preview = service.get_item_preview item.path
-    send_data preview.data, disposition: 'attachment'
+    size = params[:size] || "24x24"
+    preview = PreviewManager.get item, size
+    return render_api_resp :ok, data: { exist: false } unless preview[:exist]
+    return render_api_resp :ok, data: { exist: true } if params[:status] == 'true'
+    send_file preview[:path], type: 'image/png', disposition: 'inline'
   end
 
   def upload

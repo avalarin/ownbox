@@ -16,10 +16,6 @@ class BaseDataService < BaseService
     raise NotImplementedException, 'Not implemented'
   end
 
-  def get_item_preview path, size = 24
-    raise NotImplementedException, 'Not implemented'
-  end
-
   def create_directory path, name
     raise NotImplementedException, 'Not implemented'
   end
@@ -97,24 +93,6 @@ class BaseDataService < BaseService
     item_full_path = File.join full_path, name
     raise IOError, "Item #{item_full_path} already exists." if (File.exists? item_full_path)
     FileUtils.mkdir item_full_path
-  end
-
-  def get_item_preview_safe full_path, size = 24
-    raise ArgumentError, "full_path requried" unless full_path
-    raise ArgumentError, "full_path must be String" unless full_path.is_a? String
-
-    preview = Preview.find_by_path full_path
-    unless (preview)
-      image = MiniMagick::Image.open(full_path)
-      image.resize "#{size}x#{size}"
-      preview = Preview.new({
-        path: full_path,
-        size: size,
-        data: image.to_blob
-      })
-      preview.save
-    end
-    preview
   end
 
   def upload_file_safe full_path, file

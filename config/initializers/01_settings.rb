@@ -6,11 +6,18 @@ class Settings < Settingslogic
     Settings[:app_name] ||= 'Ownbox'
 
     # Папка для хранения пользовательских данных
-    Settings[:home_directories_path] ||= 'data'
+    Settings[:home_directories_path] ||= 'data/users/'
     unless File.directory?(Settings[:home_directories_path])
       raise 'Directory ' + File.expand_path(Settings[:home_directories_path]) + ' not found'
     end
     
+    Settings[:previews] ||= Settingslogic.new({})
+    Settings.previews[:sizes] ||= [ '24x24' ]
+    Settings.previews[:directory] ||= 'data/previews/'
+    unless File.directory?(Settings.previews[:directory])
+      raise 'Directory ' + File.expand_path(Settings.previews[:directory]) + ' not found'
+    end
+
     # Папка для хранения сгенерированных zip архивов
     Settings[:zip_storage_path] ||= 'tmp/zip'
     

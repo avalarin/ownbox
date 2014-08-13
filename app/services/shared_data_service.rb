@@ -97,14 +97,6 @@ class SharedDataService < BaseDataService
     parts
   end
 
-  def get_item_preview path, size = 24
-    share_name, path_in_share = split_shared_path path
-    share = get_share share_name
-    raise AccessDeniedError, "Access denied" unless share
-    item_full_path = get_full_path_for_share share, path_in_share
-    get_item_preview_safe item_full_path, size
-  end
-
   def create_directory path, name
     share_name, path_in_share = split_shared_path path
     share = get_share share_name

@@ -42,12 +42,6 @@ class PrivateDataService < BaseDataService
     parts
   end
 
-  def get_item_preview path, size = 24
-    item = get_item path
-    raise Errors::NotFoundError, "Item #{path} not found" unless item
-    get_item_preview_safe item.full_path, size
-  end
-
   def create_directory path, name
     item = get_item path
     raise Errors::NotFoundError, "Directory #{path} not found" unless item && item.is_a?(DirectoryItem)
