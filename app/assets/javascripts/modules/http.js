@@ -141,7 +141,7 @@ define('http', ['jquery'], function ($) {
             } else if (hasSourceElement && data.autoLoader) {
                 origHtml = sourceElement.html();
                 sourceElement.css({ width: sourceElement.outerWidth(), height: sourceElement.outerHeight() }).html(loaderHtml);
-            } else {
+            } else if (!data.disableLoader) {
                 showLoader();
             }
             return false;
