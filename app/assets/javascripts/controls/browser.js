@@ -8,11 +8,62 @@ Browser = (function() {
   var http = require('http')
   var messages = require('messages')
 
+  function PreviewsUpdater(b) {
+    var current = 0
+    var browser = b
+    var working = false
+    var items = []
+
+    function worker() {
+      var lcurrent = current
+      if (items.length == 0) {
+        working = false
+        return
+      }
+      item = items[current]
+      if (item && !item.inProcess) {
+        checkPreview(item, current)
+      }
+      current++
+      if (current > items.length - 1) current = 0
+      setTimeout(worker, 100)
+    }
+
+    function checkPreview(item, index) {
+      item.inProcess = true
+      http.request({
+        disableLoader: true,
+        url: item.preview.statusUrl,
+        success: function(data) {
+          if (data.exist) {
+            item.preview.url(item.preview.originalUrl)
+            items = _.without(items, item)
+          }
+        },
+        complete: function() {
+          item.inProcess = false
+        }
+      })
+    }
+
+    this.update = function() {
+      items = _.filter(browser.items(), function(item) {
+        return !item.preview.exist
+      })
+      current = 0
+      if (!working && items.length) {
+        working = true
+        setTimeout(worker, 100)
+      }
+    }
+  }
+
   function Browser(options) {
     var browser = this
     options = options || {}
     var filter = options.filter || function(item) { return true }
     var changeHistory = options.history == true
+    var previewsUpdater = new PreviewsUpdater(browser)
 
     if (typeof UploaderModal !== 'undefined') {
       browser.uploaderModal = new UploaderModal({
@@ -96,7 +147,7 @@ Browser = (function() {
           browser.items.removeAll()
           browser.selected.removeAll()
           var items = _.filter(_.map(data.items, BrowserItem.wrap), filter)
-
+          
           var oneCount = 50
           var oneTimeout = 100
           for (var i = 0; i < Math.ceil(items.length / oneCount); i++) {
@@ -104,6 +155,7 @@ Browser = (function() {
               for (var z = i * oneCount; z < Math.min(items.length, (i + 1) * oneCount); z++) {
                 browser.items.push(items[z])
               }
+              previewsUpdater.update()
             }
             var timeout = oneTimeout * i;
             if (timeout > 0) {
@@ -343,7 +395,6 @@ Browser = (function() {
         return true
       }
     }
-
   }
 
   Browser.baseUrl = '/home'
@@ -358,7 +409,15 @@ BrowserItem = (function() {
     this.url = options.url
     this.historyState = options
     this.owner = options.owner
-    this.previewUrl = options.preview_url
+    this.preview = options.preview ? {
+      url: ko.observable(options.preview.url),
+      exist: options.preview.exist,
+      originalUrl: options.preview.originalUrl,
+      statusUrl: options.preview.statusUrl
+    } : {
+      url: ko.observable(''),
+      exist: true
+    }
     this.type = options.type
     this.permission = options.permission
     this.humanSize = options.human_size

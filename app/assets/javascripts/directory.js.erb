@@ -74,5 +74,31 @@ $(function() {
     browser.go(item)
     return false
   })
+
 })
 
+
+$(document).on('error', '.column-icon img', function() {
+  console.log('image error')
+})
+
+function handlePreviewError(element) {
+  var http = require('http')
+  var $element = $(element)
+  // var originalSource = $element.attr('src')
+  // $element.attr('src', '/assets/loading.gif')
+  // var timeout = 1000
+  // var checkPreview = function() {
+  //   http.request({
+  //     url: originalSource + "?status=true",
+  //     success: function() {
+  //       $element.attr('src', originalSource)
+  //     }, 
+  //     error: function() {
+  //       setTimeout(checkPreview, timeout)
+  //       timeout *= 1.2
+  //     }
+  //   })
+  // }
+  // setTimeout(checkPreview, timeout)
+}

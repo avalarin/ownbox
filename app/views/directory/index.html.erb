@@ -30,7 +30,7 @@
       <!-- ko foreach: items -->
       <tr data-bind="css: { selected: isSelected }, click: $parent.selectUnselect">
         <td class="column-icon">
-          <img data-bind="attr: { src: previewUrl }" />
+          <img data-bind="attr: { src: preview.url }" />
           <%= bt_icon :users, :class => "overlay overlay-shared", data: { bind: "visible: shared" } %>
         </td>
         <td class="column-name">
