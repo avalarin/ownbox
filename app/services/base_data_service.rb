@@ -62,24 +62,11 @@ class BaseDataService < BaseService
 
     raise ArgumentError, "permission requried" unless permission
 
-    dir_entries = Dir.entries(full_path).select { |name| name != '.' && name != '..' }
-    db_entries = DataItem.includes(:shares).where(user_id: owner.id, path: dir_entries.map { |name| (path + name).to_s_rooted })
-    db_entries.each do |item|
-      item.permission = permission
-      if (File.file? item.full_path)
-        item.size = File.size(item.full_path)
-        item.type = get_file_type(File.extname(item.full_path))
-      end
-    end
-
-    nf_entries = (dir_entries - (db_entries.map { |i| i.name })).map do |name| 
-      get_item_from_fs(File.join(full_path, name), path + name, name, owner, permission)
-    end
-    if nf_entries.count > 0
-      DataItem.save_all(nf_entries)
-      db_entries += nf_entries
-    end
-    db_entries.sort do |a, b| 
+    items = Dir.entries(full_path).select { |name| name != '.' && name != '..' }
+               .map do |name|
+                  get_item_from_fs(File.join(full_path, name), path + name, name, owner, permission)
+                end
+    items.sort do |a, b| 
       if a.type == b.type
         a.name <=> b.name
       else
@@ -98,19 +85,7 @@ class BaseDataService < BaseService
     raise ArgumentError, "permission requried" unless permission
 
     return nil unless File.exists? full_path
-    db_item = DataItem.find_by_user_and_path(current_user, item_path.to_s_rooted)
-    if (!db_item)
-      item = get_item_from_fs full_path, item_path, item_name, owner, permission
-      item.save!
-      return item
-    else
-      db_item.permission = permission
-      if (File.file? full_path)
-        db_item.size = File.size(full_path)
-        db_item.type = get_file_type(File.extname(item_name))
-      end
-    end
-    return db_item
+    get_item_from_fs full_path, item_path, item_name, owner, permission
   end
 
   def create_directory_safe full_path, name
@@ -119,9 +94,9 @@ class BaseDataService < BaseService
 
     raise ArgumentError, "name requried" if !name || name.empty? 
 
-    full_path = File.join full_path, name
-    raise IOError, "Item #{full_path} already exists." if (File.exists? full_path)
-    FileUtils.mkdir full_path
+    item_full_path = File.join full_path, name
+    raise IOError, "Item #{item_full_path} already exists." if (File.exists? item_full_path)
+    FileUtils.mkdir item_full_path
   end
 
   def get_item_preview_safe full_path, size = 24
@@ -146,19 +121,21 @@ class BaseDataService < BaseService
     raise ArgumentError, "full_path requried" unless full_path
     raise ArgumentError, "full_path must be String" unless full_path.is_a? String
 
-    file_name = file.original_filename
-    full_file_name = File.join full_path, file_name
+    item_name = file.original_filename
+    item_full_path = File.join full_path, item_name
+
     iteration = 1
-    while File.exists? full_file_name
+    while File.exists? item_full_path
       if (iteration == 1)
         extension = File.extname file.original_filename
         base_name = File.basename file.original_filename, extension
       end
-      file_name = base_name + "_" + iteration.to_s + extension
-      full_file_name = File.join full_path, file_name
+      item_name = base_name + "_" + iteration.to_s + extension
+      item_full_path = File.join full_path, item_name
       iteration += 1
     end
-    File.open(full_file_name, 'wb') do |newfile|
+
+    File.open(item_full_path, 'wb') do |newfile|
       newfile.write(file.read)
     end
   end
