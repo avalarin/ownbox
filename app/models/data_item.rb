@@ -20,14 +20,14 @@ class DataItem
 
   def set_attr key, value
     if (!value)
-      `attr -r #{key} #{full_path}`   
+      `attr -r #{key} "#{full_path}"`   
     else
-      `attr -s #{key} -V #{value} #{full_path}`   
+      `attr -s #{key} -V #{value} "#{full_path}"`
     end
   end
 
   def get_attr key
-    `attr -g #{key} #{full_path}` =~ /^.*\n(.*)\n$/
+    `attr -g #{key} "#{full_path}"` =~ /^.*\n(.*)\n$/
     $1
   end
 
